@@ -1,0 +1,7 @@
+# This is a configuration file for cargo release tool
+# https://github.com/crate-ci/cargo-release
+
+publish = false
+push = false
+pre-release-commit-message = "v{{version}}"
+tag-name = "v{{version}}"
