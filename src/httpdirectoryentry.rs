@@ -28,7 +28,7 @@ impl HttpDirectoryEntry {
 
         let entry = Entry::new(name.trim(), link.trim(), date.trim(), size.trim());
 
-        if size.contains(" - ") {
+        if size.contains("-") {
             return HttpDirectoryEntry::Directory(entry);
         } else {
             return HttpDirectoryEntry::File(entry);
