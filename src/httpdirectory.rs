@@ -12,6 +12,14 @@ pub struct HttpDirectory {
     request: Request,
 }
 
+// @todo: implement sorting by size, date, name
+// @todo: implement files(), dirs() and parent() functions
+//        that will return respectively all files, all
+//        directories and the parent directory
+// @todo: implement cd() function to go to a specific
+//        directory if possible
+// @todo: implement a filter() function to keep only the
+//        entries that fulfil a condition ?
 impl HttpDirectory {
     pub fn default() -> Self {
         HttpDirectory {
@@ -46,6 +54,10 @@ impl HttpDirectory {
     pub fn len(&self) -> usize {
         self.entries.len()
     }
+
+    pub fn entries(&self) -> &Vec<HttpDirectoryEntry> {
+        &self.entries
+    }
 }
 
 impl fmt::Display for HttpDirectory {
@@ -57,6 +69,8 @@ impl fmt::Display for HttpDirectory {
         Ok(())
     }
 }
+
+// @todo: ? implement an iterator ?
 
 #[test]
 fn test_httpdirectory_default() {

@@ -80,6 +80,15 @@ impl Entry {
             Err(_) => 0,
         }
     }
+
+    // Returns the name of the file or directory
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+
+    pub fn date(&self) -> NaiveDateTime {
+        self.date
+    }
 }
 
 impl fmt::Display for Entry {
