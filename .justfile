@@ -20,7 +20,7 @@ bump patch:
     cargo doc --no-deps
 
     # Generetaing a Software Bills of Materials in SPDX∘format (sorting will reduce the diff size and allow one to figure out what has really changed)
-    cargo sbom | jq --sort-keys | jq '.files = (.files| sort_by(.SPDXID))' | jq '.packages = (.packages| sort_by(.SPDXID))' | jq '.relationships = (.relationships| sort_by(.spdxElementId))'>{{name}}.sbom.spdx.json
+    cargo sbom | jq --sort-keys | jq '.files = (.files| sort_by(.SPDXID))' | jq '.packages = (.packages| sort_by(.SPDXID))' | jq '.relationships = (.relationships| sort_by(.spdxElementId, .relatedSpdxElement))'>{{name}}.sbom.spdx.json
 
     # Creating the release
     git add Cargo.toml Cargo.lock {{name}}.sbom.spdx.json
