@@ -25,22 +25,24 @@ impl Request {
         }
     }
 
-    /// Returns the content of an url if any
+    /// Returns the content of an url if any and if the request engine has
+    /// been selected
     pub async fn get(&self, url: &str) -> Result<Response, HttpDirError> {
         match self {
             Request::Reqwest(client) => match client.get(url).send().await {
                 Ok(response) => match response.status() {
                     StatusCode::OK => Ok(response),
                     _ => {
-                        error!("Error while retrieving url {url} content {}", response.status());
+                        error!("Error while retrieving url {url} content: {}", response.status());
                         Err(HttpDirError::ContentError(format!(
-                            "Error while retrieving url {url} content {}",
+                            "Error while retrieving url {url} content: {}",
                             response.status()
                         )))
                     }
                 },
                 Err(e) => return Err(HttpDirError::HttpError(e)),
             },
+            Request::None => return Err(HttpDirError::NoHttpEngine),
         }
     }
 }
