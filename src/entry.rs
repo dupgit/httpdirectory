@@ -7,14 +7,15 @@ use std::fmt;
 pub struct Entry {
     /// Name of file or directory
     name: String,
+
     /// Link to that file or directory (Generally identical to name)
     link: String,
 
     /// Date of that file or directory
     date: NaiveDateTime,
 
-    /// Apparent size @todo: use a usize or a String ?
-    size: usize,
+    /// Apparent size as reported by the HTTP page
+    size: String,
 }
 
 impl Entry {
@@ -33,41 +34,50 @@ impl Entry {
             }
         };
 
-        // @todo manage size
-        let real_size: usize;
-        let new_size;
-        if size.contains("-") {
-            real_size = 0;
-            new_size = size.to_string();
-        } else if size.contains("K") {
-            real_size = 1024;
-            new_size = size.replace("K", "");
-        } else if size.contains("M") {
-            real_size = 1_048_576;
-            new_size = size.replace("M", "");
-        } else if size.contains("G") {
-            real_size = 1_073_741_824;
-            new_size = size.replace("G", "");
-        } else if size.contains("T") {
-            real_size = 1_099_511_627_776;
-            new_size = size.replace("T", "");
-        } else if size.contains("P") {
-            real_size = 1_125_899_906_842_624;
-            new_size = size.replace("P", "");
-        } else {
-            real_size = 1;
-            new_size = size.to_string();
-        }
-        let real_size = match new_size.parse::<usize>() {
-            Ok(number) => real_size * number,
-            Err(_) => 0,
-        };
-
         Entry {
             name,
             link,
             date,
-            size: real_size,
+            size: size.to_string(),
+        }
+    }
+
+    /// Returns the apparent size as a usize number.
+    /// It is not an accurate size as 42K results in
+    /// 42 * 1024 = 43008 (the real size in bytes may
+    /// be a bit greater or a bit lower to this)
+    pub fn apparent_size(&self) -> usize {
+        let real_size: usize;
+        let new_size;
+        if self.size.contains('-') {
+            // Directory
+            real_size = 0;
+            new_size = self.size.to_string();
+        } else if self.size.contains('K') {
+            real_size = 1024;
+            new_size = self.size.replace('K', "");
+        } else if self.size.contains('M') {
+            real_size = 1_048_576;
+            new_size = self.size.replace('M', "");
+        } else if self.size.contains('G') {
+            real_size = 1_073_741_824;
+            new_size = self.size.replace('G', "");
+        } else if self.size.contains('T') {
+            real_size = 1_099_511_627_776;
+            new_size = self.size.replace('T', "");
+        } else if self.size.contains('P') {
+            real_size = 1_125_899_906_842_624;
+            new_size = self.size.replace('P', "");
+        } else {
+            // size may not have any modifier and be expressed
+            // directly in bytes
+            real_size = 1;
+            new_size = self.size.to_string();
+        }
+
+        match new_size.parse::<usize>() {
+            Ok(number) => real_size * number,
+            Err(_) => 0,
         }
     }
 }
