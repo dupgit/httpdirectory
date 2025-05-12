@@ -6,6 +6,7 @@ use reqwest::{Client, Response, StatusCode};
 #[derive(Debug)]
 pub enum Request {
     Reqwest(Client),
+    None,
 }
 
 impl Request {

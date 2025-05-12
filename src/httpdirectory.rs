@@ -9,7 +9,7 @@ use std::fmt;
 pub struct HttpDirectory {
     entries: Vec<HttpDirectoryEntry>,
     url: String,
-    request: Option<Request>,
+    request: Request,
 }
 
 impl HttpDirectory {
@@ -17,7 +17,7 @@ impl HttpDirectory {
         HttpDirectory {
             entries: vec![],
             url: "".to_string(),
-            request: None,
+            request: Request::None,
         }
     }
 
@@ -35,7 +35,7 @@ impl HttpDirectory {
         Ok(HttpDirectory {
             entries,
             url: url.to_string(),
-            request: Some(client),
+            request: client,
         })
     }
 
@@ -65,7 +65,7 @@ fn test_httpdirectory_default() {
     assert!(httpdir.entries.is_empty());
     assert_eq!(httpdir.url, "".to_string());
     match httpdir.request {
-        Some(request) => panic!("{request:?} should be None"),
-        None => (),
+        Request::Reqwest(request) => panic!("{request:?} should be None"),
+        Request::None => (),
     }
 }
