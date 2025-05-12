@@ -32,7 +32,7 @@ impl HttpDirectoryEntry {
 impl fmt::Display for HttpDirectoryEntry {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            HttpDirectoryEntry::ParentDirectory(_) => write!(f, "DIR  0  ..")?,
+            HttpDirectoryEntry::ParentDirectory(_) => write!(f, "DIR  {:>5}  {:>16}  {}", "-", "", "..")?,
             HttpDirectoryEntry::Directory(entry) => write!(f, "DIR  {entry}")?,
             HttpDirectoryEntry::File(entry) => write!(f, "FILE {entry}")?,
         };

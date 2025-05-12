@@ -84,6 +84,6 @@ impl Entry {
 
 impl fmt::Display for Entry {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{} {} {}", self.size, self.date.format("%Y-%m-%d %H:%M"), self.name)
+        write!(f, "{:>5}  {}  {}", self.size, self.date.format("%Y-%m-%d %H:%M"), self.name)
     }
 }
