@@ -19,6 +19,7 @@ async fn main() {
         "https://mirrors.ircam.fr/pub/fedora/linux/releases",
         "https://cloud.debian.org/images/cloud/",
         "https://mirrors.ircam.fr/pub/",
+        "https://ftp.lip6.fr/pub/OpenBSD/",
     ];
 
     for url in url_array {

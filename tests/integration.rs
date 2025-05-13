@@ -1,6 +1,6 @@
 extern crate httpdirectory;
 use chrono::NaiveDate;
-use httpdirectory::{entry::Entry, httpdirectory::HttpDirectory, httpdirectoryentry::HttpDirectoryEntry};
+use httpdirectory::{httpdirectory::HttpDirectory, httpdirectoryentry::HttpDirectoryEntry};
 use httpmock::prelude::*;
 
 #[tokio::test]
@@ -49,16 +49,19 @@ fn assert_entry(
     dir: bool,
     file: bool,
     name: &str,
+    size: usize,
     year: i32,
     month: u32,
     day: u32,
     hour: u32,
     minutes: u32,
 ) {
+    // Use cargo t -- --show-output
+    println!("{dir_entry:?}, {parent}, {dir}, {file}, {name}, {size}, {year}, {month}, {day}, {hour}, {minutes}");
     match dir_entry {
         HttpDirectoryEntry::Directory(entry) => {
             assert_eq!(dir, true);
-            assert_eq!(entry.apparent_size(), 0);
+            assert_eq!(entry.apparent_size(), size);
             assert_eq!(entry.name(), name);
             assert_eq!(
                 entry.date(),
@@ -67,7 +70,7 @@ fn assert_entry(
         }
         HttpDirectoryEntry::File(entry) => {
             assert_eq!(file, true);
-            assert_eq!(entry.apparent_size(), 0);
+            assert_eq!(entry.apparent_size(), size);
             assert_eq!(entry.name(), name);
             assert_eq!(
                 entry.date(),
@@ -236,18 +239,18 @@ async fn test_debian_example() {
     assert_eq!(httpdir.len(), 12);
     let entries = httpdir.entries();
 
-    assert_entry(&entries[0], true, false, false, "/images/", 0, 0, 0, 0, 0);
-    assert_entry(&entries[1], false, true, false, "OpenStack/", 2024, 7, 1, 23, 19);
-    assert_entry(&entries[2], false, true, false, "bookworm-backports/", 2025, 4, 28, 21, 33);
-    assert_entry(&entries[3], false, true, false, "bookworm/", 2025, 4, 28, 20, 53);
-    assert_entry(&entries[4], false, true, false, "bullseye-backports/", 2025, 5, 5, 17, 45);
-    assert_entry(&entries[5], false, true, false, "bullseye/", 2025, 5, 5, 16, 52);
-    assert_entry(&entries[6], false, true, false, "buster-backports/", 2024, 7, 3, 21, 46);
-    assert_entry(&entries[7], false, true, false, "buster/", 2024, 7, 3, 21, 46);
-    assert_entry(&entries[8], false, true, false, "sid/", 2024, 4, 1, 14, 20);
-    assert_entry(&entries[9], false, true, false, "stretch-backports/", 2019, 7, 18, 10, 40);
-    assert_entry(&entries[10], false, true, false, "stretch/", 2019, 7, 18, 10, 40);
-    assert_entry(&entries[11], false, true, false, "trixie/", 2023, 7, 25, 7, 43);
+    assert_entry(&entries[0], true, false, false, "/images/", 0, 0, 0, 0, 0, 0);
+    assert_entry(&entries[1], false, true, false, "OpenStack/", 0, 2024, 7, 1, 23, 19);
+    assert_entry(&entries[2], false, true, false, "bookworm-backports/", 0, 2025, 4, 28, 21, 33);
+    assert_entry(&entries[3], false, true, false, "bookworm/", 0, 2025, 4, 28, 20, 53);
+    assert_entry(&entries[4], false, true, false, "bullseye-backports/", 0, 2025, 5, 5, 17, 45);
+    assert_entry(&entries[5], false, true, false, "bullseye/", 0, 2025, 5, 5, 16, 52);
+    assert_entry(&entries[6], false, true, false, "buster-backports/", 0, 2024, 7, 3, 21, 46);
+    assert_entry(&entries[7], false, true, false, "buster/", 0, 2024, 7, 3, 21, 46);
+    assert_entry(&entries[8], false, true, false, "sid/", 0, 2024, 4, 1, 14, 20);
+    assert_entry(&entries[9], false, true, false, "stretch-backports/", 0, 2019, 7, 18, 10, 40);
+    assert_entry(&entries[10], false, true, false, "stretch/", 0, 2019, 7, 18, 10, 40);
+    assert_entry(&entries[11], false, true, false, "trixie/", 0, 2023, 7, 25, 7, 43);
 
     mock.assert();
 }
@@ -294,7 +297,31 @@ async fn test_bsd_example() {
     };
 
     // The library fails to get this directory properly
-    assert!(httpdir.is_empty());
+    assert_eq!(httpdir.len(), 22);
+    let entries = httpdir.entries();
+
+    assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
+    assert_entry(&entries[1], false, true, false, "7.5/", 0, 2024, 4, 05, 11, 59);
+    assert_entry(&entries[2], false, true, false, "7.6/", 0, 2024, 10, 08, 17, 17);
+    assert_entry(&entries[3], false, true, false, "7.7/", 0, 2025, 4, 27, 17, 58);
+    assert_entry(&entries[4], false, true, false, "Changelogs/", 0, 2025, 5, 12, 17, 21);
+    assert_entry(&entries[5], false, true, false, "LibreSSL/", 0, 2025, 04, 30, 06, 55);
+    assert_entry(&entries[6], false, true, false, "OpenBGPD/", 0, 2025, 02, 06, 15, 30);
+    assert_entry(&entries[7], false, true, false, "OpenIKED/", 0, 2025, 04, 10, 17, 10);
+    assert_entry(&entries[8], false, true, false, "OpenNTPD/", 0, 2020, 12, 09, 14, 56);
+    assert_entry(&entries[9], false, true, false, "OpenSSH/", 0, 2025, 04, 09, 07, 08);
+    assert_entry(&entries[10], false, true, false, "doc/", 0, 2013, 04, 28, 15, 57);
+    assert_entry(&entries[11], false, true, false, "patches/", 0, 2025, 05, 04, 21, 25);
+    assert_entry(&entries[12], false, true, false, "rpki-client/", 0, 2025, 04, 11, 22, 09);
+    assert_entry(&entries[13], false, true, false, "signify/", 0, 2025, 05, 06, 15, 03);
+    assert_entry(&entries[14], false, true, false, "snapshots/", 0, 2025, 05, 13, 04, 06);
+    assert_entry(&entries[15], false, true, false, "songs/", 0, 2023, 04, 06, 22, 15);
+    assert_entry(&entries[16], false, true, false, "stable/", 0, 2022, 01, 18, 16, 25);
+    assert_entry(&entries[17], false, true, false, "syspatch/", 0, 2025, 03, 03, 15, 17);
+    assert_entry(&entries[18], false, true, false, "tools/", 0, 2005, 01, 07, 19, 40);
+    assert_entry(&entries[19], false, false, true, "README", 1329, 2017, 10, 06, 11, 51);
+    assert_entry(&entries[20], false, false, true, "ftplist", 4836, 2025, 05, 13, 03, 57);
+    assert_entry(&entries[21], false, false, true, "timestamp", 11, 2025, 05, 13, 04, 00);
 
     mock.assert();
 }

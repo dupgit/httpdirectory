@@ -56,7 +56,7 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     Ok(http_dir_entry)
 }
 
-fn scrape_pre(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
+fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     let mut should_be_considered_valid = false;
     let mut http_dir_entry = vec![];
 
@@ -103,26 +103,37 @@ fn scrape_pre(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
                 debug!("Unable to get entry from this body (no headers ?):\n{body}");
             }
         } else {
-            debug!("Unable to get entry from this body (no <img> tag):\n{body}");
+            debug!("Unable to get entry from this body (no <img> tag):\n{}", pre.inner_html());
         }
     }
 
     Ok(http_dir_entry)
 }
 
-// Form of the line:
+// Forms of the line:
 // '2025-04-30 16:31  256M  Ubuntu Server 24.04 LTS (Noble Numbat) daily builds'
+// '13-May-2025 03:57                4836'  (no description here and date format is bigger)
 fn get_date_and_size(line: &str) -> (&str, &str) {
-    let (date, size_and_description) = line.split_at(16);
+    let index = match line.find(' ') {
+        Some(index) => match line[index + 1..].find(' ') {
+            Some(index2) => index + index2 + 1,
+            None => index,
+        },
+        None => 0,
+    };
+    trace!("index: {index}");
+    let date = &line[0..index];
+    let size_and_description = &line[index..];
+
     let line_split: Vec<&str> = size_and_description.trim().split(" ").collect();
     let size;
     if line_split.len() >= 2 {
         size = line_split[0];
     } else {
-        size = size_and_description;
+        size = &size_and_description;
     }
     trace!(" -> date: {date}, size: {size}");
-    (date, size)
+    (&date, size)
 }
 
 // Form of the line:  '<a href="bionic/">bionic/'
@@ -181,6 +192,39 @@ fn strip_until_greater(line: &str) -> &str {
     }
 }
 
+fn scrape_pre_simple(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
+    let mut http_dir_entry = vec![];
+
+    let html = Html::parse_document(body);
+    let pre_selector = Selector::parse("pre").unwrap();
+    let pre_iter = html.select(&pre_selector);
+
+    for pre in pre_iter {
+        for line in pre.inner_html().lines() {
+            if line.len() > 0 {
+                // Considering only non empty lines
+                trace!("{line}");
+                let href =
+                    line.split("</a>").collect::<Vec<&str>>().into_iter().map(|x| x.trim()).collect::<Vec<&str>>();
+                trace!("{href:?}");
+                if href.len() >= 2 {
+                    // Rows with a link and a name and may be the rest of the data (date, size and description)
+                    let (link, name) = get_link_and_name(href[0]);
+                    if name.to_lowercase() == "../" {
+                        http_dir_entry.push(HttpDirectoryEntry::ParentDirectory(link.to_string()));
+                    } else {
+                        let (date, size) = get_date_and_size(href[1]);
+                        http_dir_entry.push(HttpDirectoryEntry::new(name, date, size, link));
+                    }
+                }
+            }
+        }
+        return Ok(http_dir_entry);
+    }
+
+    Ok(http_dir_entry)
+}
+
 // @todo: manage Results and Options ie: remove unwrap()
 pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     if body.contains("<table") {
@@ -188,7 +232,13 @@ pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> 
         return scrape_table(body);
     } else if body.contains("<pre>") {
         debug!("body has <pre> tag, trying this");
-        return scrape_pre(body);
+        let http_dir_entry = scrape_pre_with_img(body)?;
+        if http_dir_entry.is_empty() {
+            let http_dir_entry = scrape_pre_simple(body)?;
+            return Ok(http_dir_entry);
+        } else {
+            return Ok(http_dir_entry);
+        }
     } else {
         return Ok(vec![]);
     }
