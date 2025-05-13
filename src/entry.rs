@@ -1,4 +1,4 @@
-use chrono::{NaiveDate, NaiveDateTime, NaiveTime};
+use chrono::{NaiveDate, NaiveDateTime, NaiveTime, format::ParseErrorKind};
 use log::{error, trace};
 use std::fmt;
 
@@ -24,15 +24,24 @@ impl Entry {
         trace!("name: {name}, date: {date}, size: {size}, link: {link}");
         let name = name.to_string();
         let link = link.to_string();
-        let date = match NaiveDateTime::parse_from_str(date, "%Y-%m-%d %H:%M") {
-            Ok(date) => date,
-            Err(e) => {
-                error!("Error while parsing date: {e}. Using 1970-01-01 08:00");
-                let d = NaiveDate::from_ymd_opt(1970, 1, 1).unwrap();
-                let t = NaiveTime::from_hms_opt(8, 0, 0).unwrap();
-                NaiveDateTime::new(d, t)
-            }
-        };
+        let ndt_date: NaiveDateTime;
+
+        // Trying ISO like format (2023-12-03 17:33)
+        if let Ok(ndt) = NaiveDateTime::parse_from_str(date, "%Y-%m-%d %H:%M") {
+            ndt_date = ndt;
+        } else {
+            // Trying with abbreviated month name (05-Apr-2024 11:59)
+            ndt_date = match NaiveDateTime::parse_from_str(date, "%d-%b-%Y %H:%M") {
+                Ok(ndt) => ndt,
+                Err(e) => {
+                    error!("Error while parsing date: {:?}. Using 1970-01-01 08:00", e.kind());
+                    let d = NaiveDate::from_ymd_opt(1970, 1, 1).unwrap();
+                    let t = NaiveTime::from_hms_opt(8, 0, 0).unwrap();
+                    NaiveDateTime::new(d, t)
+                }
+            };
+        }
+        let date = ndt_date;
 
         Entry {
             name,
