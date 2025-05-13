@@ -1,5 +1,5 @@
 use crate::{error::HttpDirError, httpdirectoryentry::HttpDirectoryEntry};
-use log::trace;
+use log::{debug, trace};
 use scraper::{Html, Selector};
 
 // @todo: add some validation statistics to decide if
@@ -66,11 +66,11 @@ fn scrape_pre(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
 
     for pre in pre_iter {
         if pre.inner_html().contains("<img") {
+            trace!("Analyzing <pre> tag");
             // <img> tag represents the icon at the beginning of the line
             for line in pre.inner_html().split("<img") {
                 // Removing the img tag (we know that > exists in line)
                 let new_line = strip_until_greater(line);
-
                 if new_line.len() > 0 {
                     // Considering only non empty lines
                     trace!("{new_line}");
@@ -85,7 +85,7 @@ fn scrape_pre(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
                         // Headers with Name, Last modified, Size, Description columns
                         should_be_considered_valid = is_this_a_real_header(href);
                     } else if href.len() >= 2 {
-                        // Rows with a linx and a name and the rest of the data (date, size and description)
+                        // Rows with a link and a name and the rest of the data (date, size and description)
                         let (link, name) = get_link_and_name(href[0]);
                         if name.to_lowercase() == "parent directory" {
                             http_dir_entry.push(HttpDirectoryEntry::ParentDirectory(link.to_string()));
@@ -99,7 +99,11 @@ fn scrape_pre(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
             if should_be_considered_valid {
                 // We have analyzed valid entries: no need to inspect other <pre> tags
                 return Ok(http_dir_entry);
+            } else {
+                debug!("Unable to get entry from this body (no headers ?):\n{body}");
             }
+        } else {
+            debug!("Unable to get entry from this body (no <img> tag):\n{body}");
         }
     }
 
@@ -180,8 +184,10 @@ fn strip_until_greater(line: &str) -> &str {
 // @todo: manage Results and Options ie: remove unwrap()
 pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     if body.contains("<table") {
+        debug!("body has <table> tag, trying this");
         return scrape_table(body);
     } else if body.contains("<pre>") {
+        debug!("body has <pre> tag, trying this");
         return scrape_pre(body);
     } else {
         return Ok(vec![]);

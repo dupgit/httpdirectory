@@ -251,3 +251,50 @@ async fn test_debian_example() {
 
     mock.assert();
 }
+
+// Tests <pre> tag with other formatted columns
+#[tokio::test]
+async fn test_bsd_example() {
+    // Start a lightweight mock server.
+    let server = MockServer::start();
+    let url = server.url("/bsd");
+
+    let mock = server.mock(|when, then| {
+        when.path("/bsd");
+        then.status(200).body(r##"
+        <h1>Index of /pub/OpenBSD/</h1><hr><pre><a href="../">../</a>
+        <a href="7.5/">7.5/</a>                                               05-Apr-2024 11:59                   -
+        <a href="7.6/">7.6/</a>                                               08-Oct-2024 17:17                   -
+        <a href="7.7/">7.7/</a>                                               27-Apr-2025 17:58                   -
+        <a href="Changelogs/">Changelogs/</a>                                        12-May-2025 17:21                   -
+        <a href="LibreSSL/">LibreSSL/</a>                                          30-Apr-2025 06:55                   -
+        <a href="OpenBGPD/">OpenBGPD/</a>                                          06-Feb-2025 15:30                   -
+        <a href="OpenIKED/">OpenIKED/</a>                                          10-Apr-2025 17:10                   -
+        <a href="OpenNTPD/">OpenNTPD/</a>                                          09-Dec-2020 14:56                   -
+        <a href="OpenSSH/">OpenSSH/</a>                                           09-Apr-2025 07:08                   -
+        <a href="doc/">doc/</a>                                               28-Apr-2013 15:57                   -
+        <a href="patches/">patches/</a>                                           04-May-2025 21:25                   -
+        <a href="rpki-client/">rpki-client/</a>                                       11-Apr-2025 22:09                   -
+        <a href="signify/">signify/</a>                                           06-May-2025 15:03                   -
+        <a href="snapshots/">snapshots/</a>                                         13-May-2025 04:06                   -
+        <a href="songs/">songs/</a>                                             06-Apr-2023 22:15                   -
+        <a href="stable/">stable/</a>                                            18-Jan-2022 16:25                   -
+        <a href="syspatch/">syspatch/</a>                                          03-Mar-2025 15:17                   -
+        <a href="tools/">tools/</a>                                             07-Jan-2005 19:40                   -
+        <a href="README">README</a>                                             06-Oct-2017 11:51                1329
+        <a href="ftplist">ftplist</a>                                            13-May-2025 03:57                4836
+        <a href="timestamp">timestamp</a>                                          13-May-2025 04:00                  11
+        </pre><hr>
+        "##);
+    });
+
+    let httpdir = match HttpDirectory::new(&url).await {
+        Ok(httpdir) => httpdir,
+        Err(e) => panic!("{e}"),
+    };
+
+    // The library fails to get this directory properly
+    assert!(httpdir.is_empty());
+
+    mock.assert();
+}
