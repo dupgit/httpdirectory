@@ -12,10 +12,46 @@ pub struct Entry {
     link: String,
 
     /// Date of that file or directory
-    date: NaiveDateTime,
+    date: Option<NaiveDateTime>,
 
     /// Apparent size as reported by the HTTP page
     size: String,
+}
+
+// Tries to parse a string that should contain a date
+// with an array of known formats
+fn try_parse_date(date: &str) -> Option<NaiveDateTime> {
+    // formats that respectively parses 2023-12-03 17:33, 05-Apr-2024 11:59, 2021-May-25 20:15
+    let parse_format = ["%Y-%m-%d %H:%M", "%d-%b-%Y %H:%M", "%Y-%b-%d %H:%M"];
+
+    for pf in parse_format {
+        match NaiveDateTime::parse_from_str(date, pf) {
+            Ok(d) => {
+                trace!("Successfully parsed date ({date}) with format '{pf}'");
+                return Some(d);
+            }
+            Err(e) => trace!("Error while parsing date ({date}) with format '{pf}': {e}"),
+        }
+    }
+    None
+}
+
+// Tries to parse a date within date or size fields that
+// may be in reverse order in the html page
+// reversed is true when we are already testing size instead of date
+// so there is no need to reverse twice.
+fn get_date_from_inputs<'a>(date: &'a str, size: &'a str, reversed: bool) -> Option<(NaiveDateTime, &'a str)> {
+    if let Some(parsed_date) = try_parse_date(date) {
+        return Some((parsed_date, size));
+    } else if !reversed {
+        if let Some((parsed_date, _)) = get_date_from_inputs(size, date, true) {
+            return Some((parsed_date, date));
+        } else {
+            None
+        }
+    } else {
+        None
+    }
 }
 
 impl Entry {
@@ -24,22 +60,15 @@ impl Entry {
         trace!("name: {name}, date: {date}, size: {size}, link: {link}");
         let name = name.to_string();
         let link = link.to_string();
-        let ndt_date: NaiveDateTime;
+        let ndt_date: Option<NaiveDateTime>;
+        let guessed_size: &str;
 
-        // Trying ISO like format (2023-12-03 17:33)
-        if let Ok(ndt) = NaiveDateTime::parse_from_str(date, "%Y-%m-%d %H:%M") {
-            ndt_date = ndt;
+        if let Some((date, parsed_size)) = get_date_from_inputs(date, size, false) {
+            ndt_date = Some(date);
+            guessed_size = parsed_size;
         } else {
-            // Trying with abbreviated month name (05-Apr-2024 11:59)
-            ndt_date = match NaiveDateTime::parse_from_str(date, "%d-%b-%Y %H:%M") {
-                Ok(ndt) => ndt,
-                Err(e) => {
-                    error!("Error while parsing date: {:?}. Using 1970-01-01 08:00", e.kind());
-                    let d = NaiveDate::from_ymd_opt(1970, 1, 1).unwrap();
-                    let t = NaiveTime::from_hms_opt(8, 0, 0).unwrap();
-                    NaiveDateTime::new(d, t)
-                }
-            };
+            ndt_date = None;
+            guessed_size = size; // size here is assumed to be "correct" somehow
         }
         let date = ndt_date;
 
@@ -47,7 +76,7 @@ impl Entry {
             name,
             link,
             date,
-            size: size.to_string(),
+            size: guessed_size.to_string(),
         }
     }
 
@@ -95,13 +124,16 @@ impl Entry {
         &self.name
     }
 
-    pub fn date(&self) -> NaiveDateTime {
+    pub fn date(&self) -> Option<NaiveDateTime> {
         self.date
     }
 }
 
 impl fmt::Display for Entry {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{:>5}  {}  {}", self.size, self.date.format("%Y-%m-%d %H:%M"), self.name)
+        match self.date {
+            Some(date) => write!(f, "{:>5}  {}  {}", self.size, date.format("%Y-%m-%d %H:%M"), self.name),
+            None => write!(f, "{:>5}  {:>16}  {}", self.size, "", self.name),
+        }
     }
 }

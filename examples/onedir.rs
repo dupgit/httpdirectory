@@ -20,6 +20,7 @@ async fn main() {
         "https://cloud.debian.org/images/cloud/",
         "https://mirrors.ircam.fr/pub/",
         "https://ftp.lip6.fr/pub/OpenBSD/",
+        "https://ftp.lysator.liu.se/pub/OpenBSD/",
     ];
 
     for url in url_array {

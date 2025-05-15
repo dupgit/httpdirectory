@@ -20,33 +20,54 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
         let link_selector = Selector::parse("a").unwrap();
         for row in table.select(&row_selector) {
             let one_line: Vec<_> = row.select(&col_selector).map(|c| c).collect();
-
             let mut one_line_iter = one_line.iter();
-            // First column in the line is the icon that represents the entry (folder, file, parentdir,…)
-            let _ = one_line_iter.next();
+
             let mut name = vec![];
             let mut link = "";
             let mut date = vec![];
             let mut size = vec![];
 
-            // Second column is the name of the file or directory with its link
-            if let Some(name_col) = one_line_iter.next() {
-                name = name_col.text().collect::<Vec<_>>();
-                for link_selected in name_col.select(&link_selector) {
-                    link = link_selected.value().attr("href").unwrap();
+            // First column in the line is the icon that represents the entry
+            // (folder, file, parentdir,…) it has no text. Sometimes the website
+            // has no icon column but a text one it is likely to be the name of
+            // the file or directory along with it's link
+            if let Some(first_col) = one_line_iter.next() {
+                let first_col_txt = first_col.text().collect::<Vec<_>>();
+                trace!("first_col: {first_col_txt:?}",);
+                if !first_col_txt.is_empty() {
+                    name = first_col_txt;
+                    // Text exists so we have a name, now getting the link
+                    for link_selected in first_col.select(&link_selector) {
+                        link = link_selected.value().attr("href").unwrap();
+                    }
+                } else {
+                    // First column was empty, the name should be in the second one
+                    if let Some(name_col) = one_line_iter.next() {
+                        // Second column is the name of the file or directory with its link
+                        name = name_col.text().collect::<Vec<_>>();
+                        for link_selected in name_col.select(&link_selector) {
+                            link = link_selected.value().attr("href").unwrap();
+                        }
+                    }
                 }
+                trace!("name: {name:?}, link: {link}");
             }
 
             // Third column contains the date of the file or directory
+            // In some case it can be the size of the file Entry::new()
+            // handles this
             if let Some(date_col) = one_line_iter.next() {
                 date = date_col.text().collect::<Vec<_>>();
             }
 
-            // Fourth column contains the size of the file (' - ' for a directory)
+            // Fourth column contains the size of the file (' - ' for a
+            // directory). In some case it can be the date of the file
+            // (Entry::new() handles this
             if let Some(size_col) = one_line_iter.next() {
                 size = size_col.text().collect::<Vec<_>>();
             }
 
+            trace!("date: {date:?}, size: {size:?}");
             if name.len() > 0 && date.len() > 0 && size.len() > 0 {
                 http_dir_entry.push(HttpDirectoryEntry::new(name[0], date[0], size[0], link));
             }

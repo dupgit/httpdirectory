@@ -65,7 +65,7 @@ fn assert_entry(
             assert_eq!(entry.name(), name);
             assert_eq!(
                 entry.date(),
-                NaiveDate::from_ymd_opt(year, month, day).unwrap().and_hms_opt(hour, minutes, 0).unwrap()
+                Some(NaiveDate::from_ymd_opt(year, month, day).unwrap().and_hms_opt(hour, minutes, 0).unwrap())
             );
         }
         HttpDirectoryEntry::File(entry) => {
@@ -74,7 +74,7 @@ fn assert_entry(
             assert_eq!(entry.name(), name);
             assert_eq!(
                 entry.date(),
-                NaiveDate::from_ymd_opt(year, month, day).unwrap().and_hms_opt(hour, minutes, 0).unwrap()
+                Some(NaiveDate::from_ymd_opt(year, month, day).unwrap().and_hms_opt(hour, minutes, 0).unwrap())
             );
         }
         HttpDirectoryEntry::ParentDirectory(link) => {
