@@ -2,9 +2,9 @@ use crate::entry::Entry;
 use log::trace;
 use std::fmt;
 
-/// HttpDirectoryEntry represents either the ParentDirectory,
-/// a Directory or a File that have a name, link, date and size
-/// Entry.
+/// `HttpDirectoryEntry` represents either the `ParentDirectory`,
+/// a `Directory` or a `File` that have a name, link, date and size
+/// `Entry`.
 #[derive(Debug)]
 pub enum HttpDirectoryEntry {
     /// Parent directory with its link (as a `String`) to the effective parent directory
@@ -18,7 +18,7 @@ pub enum HttpDirectoryEntry {
 }
 
 impl HttpDirectoryEntry {
-    /// Creates a new HttpDirectoryEntry entry with name, date, size and link
+    /// Creates a new `HttpDirectoryEntry` entry with name, date, size and link
     /// string slices
     pub(crate) fn new(name: &str, date: &str, size: &str, link: &str) -> Self {
         trace!("name: {name}, date: {date}, size: {size}, link: {link}");
@@ -35,7 +35,7 @@ impl HttpDirectoryEntry {
         }
     }
 
-    /// Tells whether this HttpDirectoryEntry represents
+    /// Tells whether this `HttpDirectoryEntry` represents
     /// a file or not
     pub fn is_file(&self) -> bool {
         match self {
@@ -45,7 +45,7 @@ impl HttpDirectoryEntry {
         }
     }
 
-    /// Tells whether this HttpDirectoryEntry represents
+    /// Tells whether this `HttpDirectoryEntry` represents
     /// a directory or not
     pub fn is_directory(&self) -> bool {
         match self {
@@ -55,7 +55,7 @@ impl HttpDirectoryEntry {
         }
     }
 
-    /// Tells whether this HttpDirectoryEntry represents
+    /// Tells whether this `HttpDirectoryEntry` represents
     /// a parent directory or not
     pub fn is_parent_directory(&self) -> bool {
         match self {
