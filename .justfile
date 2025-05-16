@@ -36,3 +36,5 @@ git-publish:
 
 rust-publish:
     cargo publish
+
+publish: git-publish rust-publish
