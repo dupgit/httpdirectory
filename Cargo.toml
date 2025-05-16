@@ -3,11 +3,11 @@ name = "httpdirectory"
 version = "0.1.1"
 edition = "2024"
 authors = ["Olivier Delhomme <olivier.delhomme@free.fr>"]
-description = "Crawls directory web pages into a structure"
-repository = ""
+description = "Crawls directory webpage into a structure"
+repository = "https://github.com/dupgit/httpdirectory"
 license = "MIT OR Apache-2.0"
-keywords = ["", "", "", "", "", ""]
-categories = [""]
+keywords = ["http", "directory", "html", "file"]
+categories = ["web-programming", "parsing"]
 
 [dependencies]
 chrono = "0.4.40"
