@@ -21,6 +21,7 @@ pub struct HttpDirectory {
 // @todo: implement a filter() function to keep only the
 //        entries that fulfil a condition ?
 impl HttpDirectory {
+    #[must_use]
     pub fn default() -> Self {
         HttpDirectory {
             entries: vec![],
@@ -47,14 +48,17 @@ impl HttpDirectory {
         })
     }
 
+    #[must_use]
     pub fn is_empty(&self) -> bool {
         self.entries.is_empty()
     }
 
+    #[must_use]
     pub fn len(&self) -> usize {
         self.entries.len()
     }
 
+    #[must_use]
     pub fn entries(&self) -> &Vec<HttpDirectoryEntry> {
         &self.entries
     }

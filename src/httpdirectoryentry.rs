@@ -37,6 +37,7 @@ impl HttpDirectoryEntry {
 
     /// Tells whether this `HttpDirectoryEntry` represents
     /// a file or not
+    #[must_use]
     pub fn is_file(&self) -> bool {
         match self {
             HttpDirectoryEntry::ParentDirectory(_) => false,
@@ -47,6 +48,7 @@ impl HttpDirectoryEntry {
 
     /// Tells whether this `HttpDirectoryEntry` represents
     /// a directory or not
+    #[must_use]
     pub fn is_directory(&self) -> bool {
         match self {
             HttpDirectoryEntry::ParentDirectory(_) => false,
@@ -57,6 +59,7 @@ impl HttpDirectoryEntry {
 
     /// Tells whether this `HttpDirectoryEntry` represents
     /// a parent directory or not
+    #[must_use]
     pub fn is_parent_directory(&self) -> bool {
         match self {
             HttpDirectoryEntry::ParentDirectory(_) => true,

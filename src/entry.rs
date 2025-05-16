@@ -56,6 +56,7 @@ fn get_date_from_inputs<'a>(date: &'a str, size: &'a str, reversed: bool) -> Opt
 
 impl Entry {
     /// Creates a new Entry
+    #[must_use]
     pub fn new(name: &str, link: &str, date: &str, size: &str) -> Self {
         trace!("name: {name}, date: {date}, size: {size}, link: {link}");
         let name = name.to_string();
@@ -84,6 +85,7 @@ impl Entry {
     /// It is not an accurate size as 42K results in
     /// 42 * 1024 = 43008 (the real size in bytes may
     /// be a bit greater or a bit lower to this)
+    #[must_use]
     pub fn apparent_size(&self) -> usize {
         let real_size: usize;
         let new_size;
@@ -124,15 +126,18 @@ impl Entry {
     /// The number may be followed by K, M, G, T or P.
     /// use `apparent_size()` method to get the size of the file
     /// as a usize number.
+    #[must_use]
     pub fn size(&self) -> &str {
         &self.size
     }
 
     // Returns the name of the file or directory
+    #[must_use]
     pub fn name(&self) -> &str {
         &self.name
     }
 
+    #[must_use]
     pub fn date(&self) -> Option<NaiveDateTime> {
         self.date
     }
