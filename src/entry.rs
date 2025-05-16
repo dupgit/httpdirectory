@@ -119,6 +119,10 @@ impl Entry {
         }
     }
 
+    pub fn size(&self) -> &str {
+        &self.size
+    }
+
     // Returns the name of the file or directory
     pub fn name(&self) -> &str {
         &self.name
