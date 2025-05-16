@@ -1,5 +1,5 @@
-use chrono::{NaiveDate, NaiveDateTime, NaiveTime, format::ParseErrorKind};
-use log::{error, trace};
+use chrono::NaiveDateTime;
+use log::trace;
 use std::fmt;
 
 /// Defines an Entry for a file or a directory
@@ -55,7 +55,7 @@ fn get_date_from_inputs<'a>(date: &'a str, size: &'a str, reversed: bool) -> Opt
 }
 
 impl Entry {
-    // todo: Manage Results and Options !
+    /// Creates a new Entry
     pub fn new(name: &str, link: &str, date: &str, size: &str) -> Self {
         trace!("name: {name}, date: {date}, size: {size}, link: {link}");
         let name = name.to_string();
@@ -119,6 +119,11 @@ impl Entry {
         }
     }
 
+    /// Returns the size of the Entry as an &str.
+    /// It may contain a number or ' - ' if the entry is a directory.
+    /// The number may be followed by K, M, G, T or P.
+    /// use `apparent_size()` method to get the size of the file
+    /// as a usize number.
     pub fn size(&self) -> &str {
         &self.size
     }
