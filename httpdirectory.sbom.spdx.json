@@ -1,13 +1,13 @@
 {
   "SPDXID": "SPDXRef-DOCUMENT",
   "creationInfo": {
-    "created": "2025-05-12T21:25:21.368Z",
+    "created": "2025-05-16T20:54:15.219Z",
     "creators": [
       "Tool: cargo-sbom-v0.9.1"
     ]
   },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-0a2de62e-3d18-435c-ad3b-8c8af0cc21dd",
+  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-476609e0-9c6b-418c-b397-97bd7de0fdf8",
   "files": [
     {
       "SPDXID": "SPDXRef-File-httpdirectory",
@@ -236,13 +236,13 @@
       "versionInfo": "0.22.1"
     },
     {
-      "SPDXID": "SPDXRef-Package-bitflags-2.9.0",
+      "SPDXID": "SPDXRef-Package-bitflags-2.9.1",
       "description": "A macro to generate structures which behave like bitflags.\n",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/bitflags@2.9.0",
+          "referenceLocator": "pkg:cargo/bitflags@2.9.1",
           "referenceType": "purl"
         }
       ],
@@ -250,7 +250,7 @@
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "bitflags",
-      "versionInfo": "2.9.0"
+      "versionInfo": "2.9.1"
     },
     {
       "SPDXID": "SPDXRef-Package-bumpalo-3.17.0",
@@ -596,20 +596,20 @@
       "versionInfo": "1.0.2"
     },
     {
-      "SPDXID": "SPDXRef-Package-errno-0.3.11",
+      "SPDXID": "SPDXRef-Package-errno-0.3.12",
       "description": "Cross-platform interface to the `errno` variable.",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/errno@0.3.11",
+          "referenceLocator": "pkg:cargo/errno@0.3.12",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "errno",
-      "versionInfo": "0.3.11"
+      "versionInfo": "0.3.12"
     },
     {
       "SPDXID": "SPDXRef-Package-fastrand-2.3.0",
@@ -1003,13 +1003,13 @@
       "versionInfo": "1.10.1"
     },
     {
-      "SPDXID": "SPDXRef-Package-httpdirectory-0.1.1",
-      "description": "Crawls directory web pages into a structure",
+      "SPDXID": "SPDXRef-Package-httpdirectory-0.2.0",
+      "description": "Crawls directory webpage into a structure",
       "downloadLocation": "NONE",
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "httpdirectory",
-      "versionInfo": "0.1.1"
+      "versionInfo": "0.2.0"
     },
     {
       "SPDXID": "SPDXRef-Package-hyper-1.6.0",
@@ -3183,20 +3183,20 @@
       "versionInfo": "0.3.77"
     },
     {
-      "SPDXID": "SPDXRef-Package-windows-core-0.61.0",
+      "SPDXID": "SPDXRef-Package-windows-core-0.61.1",
       "description": "Core type support for COM and Windows",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/windows-core@0.61.0",
+          "referenceLocator": "pkg:cargo/windows-core@0.61.1",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "windows-core",
-      "versionInfo": "0.61.0"
+      "versionInfo": "0.61.1"
     },
     {
       "SPDXID": "SPDXRef-Package-windows-implement-0.60.0",
@@ -3263,20 +3263,20 @@
       "versionInfo": "0.4.0"
     },
     {
-      "SPDXID": "SPDXRef-Package-windows-result-0.3.2",
+      "SPDXID": "SPDXRef-Package-windows-result-0.3.3",
       "description": "Windows error handling",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/windows-result@0.3.2",
+          "referenceLocator": "pkg:cargo/windows-result@0.3.3",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "windows-result",
-      "versionInfo": "0.3.2"
+      "versionInfo": "0.3.3"
     },
     {
       "SPDXID": "SPDXRef-Package-windows-strings-0.3.1",
@@ -3295,20 +3295,20 @@
       "versionInfo": "0.3.1"
     },
     {
-      "SPDXID": "SPDXRef-Package-windows-strings-0.4.0",
+      "SPDXID": "SPDXRef-Package-windows-strings-0.4.1",
       "description": "Windows string types",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/windows-strings@0.4.0",
+          "referenceLocator": "pkg:cargo/windows-strings@0.4.1",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "windows-strings",
-      "versionInfo": "0.4.0"
+      "versionInfo": "0.4.1"
     },
     {
       "SPDXID": "SPDXRef-Package-windows-sys-0.52.0",
@@ -3795,7 +3795,7 @@
   ],
   "relationships": [
     {
-      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.1.1",
+      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.2.0",
       "relationshipType": "GENERATED_FROM",
       "spdxElementId": "SPDXRef-File-httpdirectory"
     },
@@ -4082,12 +4082,12 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-libc-0.2.172",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-errno-0.3.11"
+      "spdxElementId": "SPDXRef-Package-errno-0.3.12"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-windows-sys-0.59.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-errno-0.3.11"
+      "spdxElementId": "SPDXRef-Package-errno-0.3.12"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-foreign-types-shared-0.1.1",
@@ -4332,37 +4332,37 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-chrono-0.4.41",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.1.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.2.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-const_format-0.2.34",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.1.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.2.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-env_logger-0.11.8",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.1.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.2.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-log-0.4.27",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.1.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.2.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-reqwest-0.12.15",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.1.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.2.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-scraper-0.23.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.1.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.2.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tokio-1.45.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.1.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.2.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-bytes-1.10.1",
@@ -4600,7 +4600,7 @@
       "spdxElementId": "SPDXRef-Package-iana-time-zone-0.1.63"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-windows-core-0.61.0",
+      "relatedSpdxElement": "SPDXRef-Package-windows-core-0.61.1",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-iana-time-zone-0.1.63"
     },
@@ -4975,7 +4975,7 @@
       "spdxElementId": "SPDXRef-Package-object-0.36.7"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.0",
+      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.1",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-openssl-0.10.72"
     },
@@ -5140,7 +5140,7 @@
       "spdxElementId": "SPDXRef-Package-rand-0.8.5"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.0",
+      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.1",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-redox_syscall-0.5.12"
     },
@@ -5385,12 +5385,12 @@
       "spdxElementId": "SPDXRef-Package-ring-0.17.14"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.0",
+      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.1",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-rustix-1.0.7"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-errno-0.3.11",
+      "relatedSpdxElement": "SPDXRef-Package-errno-0.3.12",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-rustix-1.0.7"
     },
@@ -5500,7 +5500,7 @@
       "spdxElementId": "SPDXRef-Package-scraper-0.23.1"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.0",
+      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.1",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-security-framework-2.11.1"
     },
@@ -5535,7 +5535,7 @@
       "spdxElementId": "SPDXRef-Package-security-framework-sys-2.14.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.0",
+      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.1",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-selectors-0.26.0"
     },
@@ -5725,7 +5725,7 @@
       "spdxElementId": "SPDXRef-Package-synstructure-0.13.2"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.0",
+      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.1",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-system-configuration-0.6.1"
     },
@@ -6107,27 +6107,27 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-windows-implement-0.60.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-windows-core-0.61.0"
+      "spdxElementId": "SPDXRef-Package-windows-core-0.61.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-windows-interface-0.59.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-windows-core-0.61.0"
+      "spdxElementId": "SPDXRef-Package-windows-core-0.61.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-windows-core-0.61.0"
+      "spdxElementId": "SPDXRef-Package-windows-core-0.61.1"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-windows-result-0.3.2",
+      "relatedSpdxElement": "SPDXRef-Package-windows-result-0.3.3",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-windows-core-0.61.0"
+      "spdxElementId": "SPDXRef-Package-windows-core-0.61.1"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-windows-strings-0.4.0",
+      "relatedSpdxElement": "SPDXRef-Package-windows-strings-0.4.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-windows-core-0.61.0"
+      "spdxElementId": "SPDXRef-Package-windows-core-0.61.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-proc-macro2-1.0.95",
@@ -6160,7 +6160,7 @@
       "spdxElementId": "SPDXRef-Package-windows-interface-0.59.1"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-windows-result-0.3.2",
+      "relatedSpdxElement": "SPDXRef-Package-windows-result-0.3.3",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-windows-registry-0.4.0"
     },
@@ -6177,7 +6177,7 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-windows-result-0.3.2"
+      "spdxElementId": "SPDXRef-Package-windows-result-0.3.3"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.1",
@@ -6187,7 +6187,7 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-windows-strings-0.4.0"
+      "spdxElementId": "SPDXRef-Package-windows-strings-0.4.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-windows-targets-0.52.6",
@@ -6280,7 +6280,7 @@
       "spdxElementId": "SPDXRef-Package-windows-targets-0.53.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.0",
+      "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.1",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-wit-bindgen-rt-0.39.0"
     },
