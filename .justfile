@@ -26,3 +26,13 @@ bump patch:
     git add Cargo.toml Cargo.lock {{name}}.sbom.spdx.json
     cargo release commit --no-confirm --execute
     cargo release tag --no-confirm --execute
+
+document:
+    cargo doc --no-deps --open
+
+git-publish:
+    git push
+    git push --tags
+
+rust-publish:
+    cargo publish
