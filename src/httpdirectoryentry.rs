@@ -104,7 +104,7 @@ pub fn assert_entry(
     println!("{dir_entry:?}, {parent}, {dir}, {file}, {name}, {size}, {year}, {month}, {day}, {hour}, {minutes}");
     match dir_entry {
         HttpDirectoryEntry::Directory(entry) => {
-            assert_eq!(dir, true);
+            assert!(dir);
             assert_eq!(entry.apparent_size(), size);
             assert_eq!(entry.name(), name);
             assert_eq!(
@@ -113,7 +113,7 @@ pub fn assert_entry(
             );
         }
         HttpDirectoryEntry::File(entry) => {
-            assert_eq!(file, true);
+            assert!(file);
             assert_eq!(entry.apparent_size(), size);
             assert_eq!(entry.name(), name);
             assert_eq!(
@@ -122,7 +122,7 @@ pub fn assert_entry(
             );
         }
         HttpDirectoryEntry::ParentDirectory(link) => {
-            assert_eq!(parent, true);
+            assert!(parent);
             assert_eq!(link, name);
         }
     }
