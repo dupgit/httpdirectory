@@ -180,12 +180,12 @@ fn get_link_and_name(line: &str) -> (&str, &str) {
             let link = link.trim();
             let name = name.trim();
             trace!(" -> link: {link}, name: {name}");
-            return (link.trim(), name.trim());
+            (link.trim(), name.trim())
         }
         None => {
             let name = line.trim();
             trace!(" -> link: , name: {name}");
-            return ("", name);
+            ("", name)
         }
     }
 }
@@ -250,17 +250,17 @@ fn scrape_pre_simple(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError
 pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     if body.contains("<table") {
         debug!("body has <table> tag, trying this");
-        return scrape_table(body);
+        scrape_table(body)
     } else if body.contains("<pre>") {
         debug!("body has <pre> tag, trying this");
         let http_dir_entry = scrape_pre_with_img(body)?;
         if http_dir_entry.is_empty() {
             let http_dir_entry = scrape_pre_simple(body)?;
-            return Ok(http_dir_entry);
+            Ok(http_dir_entry)
         } else {
-            return Ok(http_dir_entry);
+            Ok(http_dir_entry)
         }
     } else {
-        return Ok(vec![]);
+        Ok(vec![])
     }
 }

@@ -42,10 +42,10 @@ fn try_parse_date(date: &str) -> Option<NaiveDateTime> {
 // so there is no need to reverse twice.
 fn get_date_from_inputs<'a>(date: &'a str, size: &'a str, reversed: bool) -> Option<(NaiveDateTime, &'a str)> {
     if let Some(parsed_date) = try_parse_date(date) {
-        return Some((parsed_date, size));
+        Some((parsed_date, size))
     } else if !reversed {
         if let Some((parsed_date, _)) = get_date_from_inputs(size, date, true) {
-            return Some((parsed_date, date));
+            Some((parsed_date, date))
         } else {
             None
         }

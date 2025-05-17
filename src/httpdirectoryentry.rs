@@ -29,10 +29,12 @@ impl HttpDirectoryEntry {
 
         let entry = Entry::new(name.trim(), link.trim(), date.trim(), size.trim());
 
+        // `size` may be flipped with `date` so using the one guessed in entry
+        // that is likely to be more accurate
         if entry.size().contains("-") {
-            return HttpDirectoryEntry::Directory(entry);
+            HttpDirectoryEntry::Directory(entry)
         } else {
-            return HttpDirectoryEntry::File(entry);
+            HttpDirectoryEntry::File(entry)
         }
     }
 

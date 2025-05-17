@@ -103,6 +103,7 @@ impl fmt::Display for HttpDirectory {
 // @todo: ? implement an iterator ?
 mod tests {
     use super::*;
+    use crate::httpdirectoryentry::assert_entry;
 
     #[test]
     fn test_httpdirectory_default() {

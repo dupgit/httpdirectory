@@ -40,9 +40,9 @@ impl Request {
                         )))
                     }
                 },
-                Err(e) => return Err(HttpDirError::HttpError(e)),
+                Err(e) => Err(HttpDirError::HttpError(e)),
             },
-            Request::None => return Err(HttpDirError::NoHttpEngine),
+            Request::None => Err(HttpDirError::NoHttpEngine),
         }
     }
 }
