@@ -209,6 +209,9 @@ async fn test_debian_example() {
     assert_entry(&entries[10], false, true, false, "stretch/", 0, 2019, 7, 18, 10, 40);
     assert_entry(&entries[11], false, true, false, "trixie/", 0, 2023, 7, 25, 7, 43);
 
+    let dirs = httpdir.dirs();
+    assert_eq!(dirs.len(), 11);
+
     mock.assert();
 }
 
@@ -279,6 +282,9 @@ async fn test_bsd_example() {
     assert_entry(&entries[19], false, false, true, "README", 1329, 2017, 10, 06, 11, 51);
     assert_entry(&entries[20], false, false, true, "ftplist", 4836, 2025, 05, 13, 03, 57);
     assert_entry(&entries[21], false, false, true, "timestamp", 11, 2025, 05, 13, 04, 00);
+
+    let files = httpdir.files();
+    assert_eq!(files.len(), 3);
 
     mock.assert();
 }
