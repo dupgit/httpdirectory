@@ -14,7 +14,7 @@ The library will insert in an `HttpDirectory` structure all the
 information that is to say, name, link, size and date of files
 or directories. Printing it will produce the following output:
 
-```
+```text
 https://cloud.debian.org/images/cloud/
 DIR      -                    ..
 DIR      -  2024-07-01 23:19  OpenStack/
@@ -28,4 +28,20 @@ DIR      -  2024-04-01 14:20  sid/
 DIR      -  2019-07-18 10:40  stretch-backports/
 DIR      -  2019-07-18 10:40  stretch/
 DIR      -  2023-07-25 07:43  trixie/
+```
+
+## Usage
+
+First obtain a directory from an url using `HttpDirectory::new(url)`
+function, then you can use `dirs()`, `files()` or `parent_directory()`
+to get respectively all directories, all files or the parent_directory
+of this `HttpDirectory`:
+
+```rust
+  use httpdirectory::httpdirectory::HttpDirectory;
+  async fn first_example() {
+    if let Ok(httpdir) = HttpDirectory::new("https://cloud.debian.org/images/cloud/").await {
+        println!("{:?}", httpdir.dirs());
+    }
+  }
 ```

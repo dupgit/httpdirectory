@@ -1,4 +1,5 @@
 use crate::entry::Entry;
+use chrono::NaiveDate;
 use log::trace;
 use std::fmt;
 
@@ -78,5 +79,49 @@ impl fmt::Display for HttpDirectoryEntry {
         };
 
         Ok(())
+    }
+}
+
+/// Helper function to assert a directory entry is what is expected
+/// This function is used for testing the library and not intended
+/// for any other usage. Compares the size with the apparent size.
+pub fn assert_entry(
+    dir_entry: &HttpDirectoryEntry,
+    parent: bool,
+    dir: bool,
+    file: bool,
+    name: &str,
+    size: usize,
+    year: i32,
+    month: u32,
+    day: u32,
+    hour: u32,
+    minutes: u32,
+) {
+    // Use cargo t -- --show-output to show outputs while testing
+    println!("{dir_entry:?}, {parent}, {dir}, {file}, {name}, {size}, {year}, {month}, {day}, {hour}, {minutes}");
+    match dir_entry {
+        HttpDirectoryEntry::Directory(entry) => {
+            assert_eq!(dir, true);
+            assert_eq!(entry.apparent_size(), size);
+            assert_eq!(entry.name(), name);
+            assert_eq!(
+                entry.date(),
+                Some(NaiveDate::from_ymd_opt(year, month, day).unwrap().and_hms_opt(hour, minutes, 0).unwrap())
+            );
+        }
+        HttpDirectoryEntry::File(entry) => {
+            assert_eq!(file, true);
+            assert_eq!(entry.apparent_size(), size);
+            assert_eq!(entry.name(), name);
+            assert_eq!(
+                entry.date(),
+                Some(NaiveDate::from_ymd_opt(year, month, day).unwrap().and_hms_opt(hour, minutes, 0).unwrap())
+            );
+        }
+        HttpDirectoryEntry::ParentDirectory(link) => {
+            assert_eq!(parent, true);
+            assert_eq!(link, name);
+        }
     }
 }

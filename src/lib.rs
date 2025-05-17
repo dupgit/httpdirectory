@@ -1,7 +1,7 @@
+#![doc = include_str!("../README.md")]
 use const_format::formatcp;
 
 pub(crate) mod requests;
-
 pub(crate) mod scrape;
 
 /// All errors that you might get from httpdirectory library

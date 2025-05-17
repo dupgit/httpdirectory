@@ -1,6 +1,5 @@
 extern crate httpdirectory;
-use chrono::NaiveDate;
-use httpdirectory::{httpdirectory::HttpDirectory, httpdirectoryentry::HttpDirectoryEntry};
+use httpdirectory::{httpdirectory::HttpDirectory, httpdirectoryentry::assert_entry};
 use httpmock::prelude::*;
 
 #[tokio::test]
@@ -40,48 +39,6 @@ async fn test_empty_404_status() {
     };
 
     mock.assert();
-}
-
-// Helper function to assert a directory entry is what is expected
-fn assert_entry(
-    dir_entry: &HttpDirectoryEntry,
-    parent: bool,
-    dir: bool,
-    file: bool,
-    name: &str,
-    size: usize,
-    year: i32,
-    month: u32,
-    day: u32,
-    hour: u32,
-    minutes: u32,
-) {
-    // Use cargo t -- --show-output
-    println!("{dir_entry:?}, {parent}, {dir}, {file}, {name}, {size}, {year}, {month}, {day}, {hour}, {minutes}");
-    match dir_entry {
-        HttpDirectoryEntry::Directory(entry) => {
-            assert_eq!(dir, true);
-            assert_eq!(entry.apparent_size(), size);
-            assert_eq!(entry.name(), name);
-            assert_eq!(
-                entry.date(),
-                Some(NaiveDate::from_ymd_opt(year, month, day).unwrap().and_hms_opt(hour, minutes, 0).unwrap())
-            );
-        }
-        HttpDirectoryEntry::File(entry) => {
-            assert_eq!(file, true);
-            assert_eq!(entry.apparent_size(), size);
-            assert_eq!(entry.name(), name);
-            assert_eq!(
-                entry.date(),
-                Some(NaiveDate::from_ymd_opt(year, month, day).unwrap().and_hms_opt(hour, minutes, 0).unwrap())
-            );
-        }
-        HttpDirectoryEntry::ParentDirectory(link) => {
-            assert_eq!(parent, true);
-            assert_eq!(link, name);
-        }
-    }
 }
 
 #[tokio::test]
