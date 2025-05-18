@@ -1,8 +1,8 @@
 use crate::error::HttpDirError;
 use crate::httpdirectoryentry::HttpDirectoryEntry;
-use crate::requests::Request;
+use crate::requests::{Request, join_url};
 use crate::scrape::scrape_body;
-use log::error;
+use log::{debug, error};
 use regex::Regex;
 use std::fmt;
 
@@ -33,19 +33,25 @@ impl HttpDirectory {
     pub async fn new(url: &str) -> Result<Self, HttpDirError> {
         let client = Request::new().await?;
         let response = client.get(url).await?;
-        let entries = match scrape_body(&response.text().await?) {
-            Ok(entries) => entries,
-            Err(e) => {
-                error!("Error getting entries: {e}");
-                vec![]
-            }
-        };
 
+        let entries = get_entries_from_body(&response.text().await?).await;
         Ok(HttpDirectory {
             entries,
             url: url.to_string(),
             request: client,
         })
+    }
+
+    /// Change directory if possible to dir (from url) and gets the new
+    /// `HttpDirectory` listing if any and returns it.
+    pub async fn cd(&mut self, dir: &str) -> Result<&Self, HttpDirError> {
+        let url = join_url(&self.url, dir)?;
+        debug!("cd is going to {url}");
+        let response = self.request.get(&url).await?;
+        let entries = get_entries_from_body(&response.text().await?).await;
+        self.entries = entries;
+        self.url = url;
+        Ok(self)
     }
 
     /// Returns only directories of the `HttpDirectory` listing
@@ -109,6 +115,16 @@ impl fmt::Display for HttpDirectory {
             writeln!(f, "{entry}")?;
         }
         Ok(())
+    }
+}
+
+async fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
+    match scrape_body(body) {
+        Ok(entries) => entries,
+        Err(e) => {
+            error!("Error getting entries: {e}");
+            vec![]
+        }
     }
 }
 

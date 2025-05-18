@@ -1,7 +1,7 @@
 use crate::HTTPDIR_USER_AGENT;
 use crate::error::HttpDirError;
 use log::{error, trace};
-use reqwest::{Client, Response, StatusCode};
+use reqwest::{Client, Response, StatusCode, Url};
 
 #[derive(Debug)]
 pub enum Request {
@@ -45,4 +45,8 @@ impl Request {
             Request::None => Err(HttpDirError::NoHttpEngine),
         }
     }
+}
+
+pub fn join_url(base: &str, dir: &str) -> Result<String, HttpDirError> {
+    Ok(Url::parse(base)?.join(dir)?.to_string())
 }

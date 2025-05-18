@@ -127,7 +127,6 @@ fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirErr
             debug!("Unable to get entry from this body (no <img> tag):\n{}", pre.inner_html());
         }
     }
-
     Ok(http_dir_entry)
 }
 

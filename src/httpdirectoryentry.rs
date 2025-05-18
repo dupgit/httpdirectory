@@ -44,9 +44,8 @@ impl HttpDirectoryEntry {
     #[must_use]
     pub fn is_file(&self) -> bool {
         match self {
-            HttpDirectoryEntry::ParentDirectory(_) => false,
-            HttpDirectoryEntry::Directory(_) => false,
             HttpDirectoryEntry::File(_) => true,
+            HttpDirectoryEntry::ParentDirectory(_) | HttpDirectoryEntry::Directory(_) => false,
         }
     }
 
@@ -55,9 +54,18 @@ impl HttpDirectoryEntry {
     #[must_use]
     pub fn is_directory(&self) -> bool {
         match self {
-            HttpDirectoryEntry::ParentDirectory(_) => false,
             HttpDirectoryEntry::Directory(_) => true,
-            HttpDirectoryEntry::File(_) => false,
+            HttpDirectoryEntry::File(_) | HttpDirectoryEntry::ParentDirectory(_) => false,
+        }
+    }
+
+    /// Tells whether this `HttpDirectoryEntry` represents
+    /// a parent directory or not
+    #[must_use]
+    pub fn is_parent_directory(&self) -> bool {
+        match self {
+            HttpDirectoryEntry::ParentDirectory(_) => true,
+            HttpDirectoryEntry::File(_) | HttpDirectoryEntry::Directory(_) => false,
         }
     }
 
@@ -73,14 +81,23 @@ impl HttpDirectoryEntry {
         }
     }
 
-    /// Tells whether this `HttpDirectoryEntry` represents
-    /// a parent directory or not
-    #[must_use]
-    pub fn is_parent_directory(&self) -> bool {
+    /// Returns an `Option` with the name of the file corresponding to the
+    /// `HttpDirectoryEntry` if this entry is effectively a file
+    /// Returns None otherwise.
+    pub fn filename(&self) -> Option<&str> {
         match self {
-            HttpDirectoryEntry::ParentDirectory(_) => true,
-            HttpDirectoryEntry::Directory(_) => false,
-            HttpDirectoryEntry::File(_) => false,
+            HttpDirectoryEntry::ParentDirectory(_) | HttpDirectoryEntry::Directory(_) => None,
+            HttpDirectoryEntry::File(file) => Some(file.name()),
+        }
+    }
+
+    /// Returns an `Option` with the name of the directory corresponding to the
+    /// `HttpDirectoryEntry` if this entry is effectively a directory.
+    /// Returns None otherwise
+    pub fn dirname(&self) -> Option<&str> {
+        match self {
+            HttpDirectoryEntry::ParentDirectory(_) | HttpDirectoryEntry::File(_) => None,
+            HttpDirectoryEntry::Directory(dir) => Some(dir.name()),
         }
     }
 }
