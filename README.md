@@ -33,9 +33,10 @@ DIR      -  2023-07-25 07:43  trixie/
 ## Usage
 
 First obtain a directory from an url using `HttpDirectory::new(url)`
-function, then you can use `dirs()`, `files()` or `parent_directory()`
-to get respectively all directories, all files or the parent_directory
-of this `HttpDirectory`:
+method, then you can use `dirs()`, `files()`, `parent_directory()` or
+`filter_by_name()` to get respectively all directories, all files, the
+parent_directory or filtering by the name (with a Regex) of this
+`HttpDirectory` listing entries:
 
 ```rust
   use httpdirectory::httpdirectory::HttpDirectory;

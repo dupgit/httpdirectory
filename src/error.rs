@@ -1,6 +1,6 @@
 use std::error;
 use std::fmt;
-use std::fmt::write;
+// use std::fmt::write;
 
 /// Errors handling
 #[derive(Debug)]
@@ -15,6 +15,8 @@ pub enum HttpDirError {
     /// Errors on the content of a retrieved url
     /// for instance when there is no content at all.
     ContentError(String),
+
+    Regex(regex::Error),
 }
 
 impl fmt::Display for HttpDirError {
@@ -23,6 +25,7 @@ impl fmt::Display for HttpDirError {
             HttpDirError::HttpError(e) => write!(f, "Error: {e}"),
             HttpDirError::ContentError(e) => write!(f, "Error: {e}"),
             HttpDirError::NoHttpEngine => write!(f, "Error no http engine has been selected"),
+            HttpDirError::Regex(e) => write!(f, "Error: {e}"),
         }
     }
 }
@@ -33,6 +36,7 @@ impl error::Error for HttpDirError {
             HttpDirError::HttpError(err) => Some(err),
             HttpDirError::ContentError(err) => Some(Err(err).unwrap()),
             HttpDirError::NoHttpEngine => Some(Err(()).unwrap()),
+            HttpDirError::Regex(err) => Some(err),
         }
     }
 }
@@ -40,6 +44,12 @@ impl error::Error for HttpDirError {
 impl From<reqwest::Error> for HttpDirError {
     fn from(error: reqwest::Error) -> Self {
         HttpDirError::HttpError(error)
+    }
+}
+
+impl From<regex::Error> for HttpDirError {
+    fn from(error: regex::Error) -> Self {
+        HttpDirError::Regex(error)
     }
 }
 

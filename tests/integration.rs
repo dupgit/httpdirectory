@@ -212,6 +212,21 @@ async fn test_debian_example() {
     let dirs = httpdir.dirs();
     assert_eq!(dirs.len(), 11);
 
+    // unwrap is is fine as we know that "b" regex is
+    // a valid regex
+    let filtered = dirs.filter_by_name("b").unwrap();
+    let entries = filtered.entries();
+
+    assert_eq!(filtered.len(), 7);
+
+    assert_entry(&entries[0], false, true, false, "bookworm-backports/", 0, 2025, 4, 28, 21, 33);
+    assert_entry(&entries[1], false, true, false, "bookworm/", 0, 2025, 4, 28, 20, 53);
+    assert_entry(&entries[2], false, true, false, "bullseye-backports/", 0, 2025, 5, 5, 17, 45);
+    assert_entry(&entries[3], false, true, false, "bullseye/", 0, 2025, 5, 5, 16, 52);
+    assert_entry(&entries[4], false, true, false, "buster-backports/", 0, 2024, 7, 3, 21, 46);
+    assert_entry(&entries[5], false, true, false, "buster/", 0, 2024, 7, 3, 21, 46);
+    assert_entry(&entries[6], false, true, false, "stretch-backports/", 0, 2019, 7, 18, 10, 40);
+
     mock.assert();
 }
 

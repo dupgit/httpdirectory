@@ -1,6 +1,7 @@
 use crate::entry::Entry;
 use chrono::NaiveDate;
 use log::trace;
+use regex::Regex;
 use std::fmt;
 
 /// `HttpDirectoryEntry` represents either the `ParentDirectory`,
@@ -57,6 +58,18 @@ impl HttpDirectoryEntry {
             HttpDirectoryEntry::ParentDirectory(_) => false,
             HttpDirectoryEntry::Directory(_) => true,
             HttpDirectoryEntry::File(_) => false,
+        }
+    }
+
+    /// returns true if the regular expression matches
+    /// the name of the entry (only for files and directory)
+    /// ParentDirectory is never matched.
+    #[must_use]
+    pub fn is_match_by_name(&self, re: &Regex) -> bool {
+        match self {
+            HttpDirectoryEntry::ParentDirectory(_) => false,
+            HttpDirectoryEntry::Directory(dir) => re.is_match(dir.name()),
+            HttpDirectoryEntry::File(file) => re.is_match(file.name()),
         }
     }
 

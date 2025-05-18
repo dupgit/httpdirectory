@@ -3,6 +3,7 @@ use crate::httpdirectoryentry::HttpDirectoryEntry;
 use crate::requests::Request;
 use crate::scrape::scrape_body;
 use log::error;
+use regex::Regex;
 use std::fmt;
 
 #[derive(Debug)]
@@ -15,8 +16,6 @@ pub struct HttpDirectory {
 // @todo: implement sorting by size, date, name
 // @todo: implement cd() function to go to a specific
 //        directory if possible
-// @todo: implement a filter() function to keep only the
-//        entries that fulfil a condition ?
 impl HttpDirectory {
     /// Returns an `HttpDirectory` initialized with default
     /// values (empty vector, empty url and no HttpEngine)
@@ -68,6 +67,19 @@ impl HttpDirectory {
     pub fn parent_directory(mut self) -> Self {
         self.entries = self.entries.into_iter().filter(|e| e.is_parent_directory()).collect();
         self
+    }
+
+    /// Filters the `HttpDirectory` listing by filtering names of each
+    /// entry with the `regex` regular expression.
+    pub fn filter_by_name(mut self, regex: &str) -> Result<Self, HttpDirError> {
+        let re = match Regex::new(regex) {
+            Ok(re) => re,
+            Err(e) => return Err(HttpDirError::Regex(e)),
+        };
+
+        self.entries = self.entries.into_iter().filter(|e| e.is_match_by_name(&re)).collect();
+
+        Ok(self)
     }
 
     /// Tells whether the `HttpDirectory` listing is empty or not
@@ -123,13 +135,13 @@ mod tests {
         let mut httpdir = HttpDirectory::default();
 
         httpdir.entries.push(HttpDirectoryEntry::new("dir1", "2025-01-26 12:54", "-", "dir1/"));
-        httpdir.entries.push(HttpDirectoryEntry::new("dir2", "2025-02-16 13:37", "-", "dir2/"));
-        httpdir.entries.push(HttpDirectoryEntry::new("dir3", "2025-03-01 07:11", "-", "dir3/"));
-        httpdir.entries.push(HttpDirectoryEntry::new("dir4", "2025-01-02 12:32", "-", "dir4/"));
+        httpdir.entries.push(HttpDirectoryEntry::new("test2", "2025-02-16 13:37", "-", "test2/"));
+        httpdir.entries.push(HttpDirectoryEntry::new("debian3", "2025-03-01 07:11", "-", "debian3/"));
+        httpdir.entries.push(HttpDirectoryEntry::new("entry4", "2025-01-02 12:32", "-", "entry4/"));
         httpdir.entries.push(HttpDirectoryEntry::new("file1", "1987-10-09 04:37", "123", "file1/"));
-        httpdir.entries.push(HttpDirectoryEntry::new("file2", "2023-01-01 00:00", "2345", "file2/"));
-        httpdir.entries.push(HttpDirectoryEntry::new("file3", "2025-07-17 23:59", "67K", "file3/"));
-        httpdir.entries.push(HttpDirectoryEntry::new("file4", "2024-12-08 08:22", "123M", "file4/"));
+        httpdir.entries.push(HttpDirectoryEntry::new("files2", "2023-01-01 00:00", "2345", "files2/"));
+        httpdir.entries.push(HttpDirectoryEntry::new("entry3", "2025-07-17 23:59", "67K", "entry3/"));
+        httpdir.entries.push(HttpDirectoryEntry::new("debian4", "2024-12-08 08:22", "123M", "debian4/"));
         httpdir.entries.push(HttpDirectoryEntry::new("parent directory", "2025-01-26 12:54", "-", "../"));
 
         httpdir
@@ -143,9 +155,9 @@ mod tests {
         assert_eq!(entries.len(), 4);
 
         assert_entry(&entries[0], false, true, false, "dir1", 0, 2025, 01, 26, 12, 54);
-        assert_entry(&entries[1], false, true, false, "dir2", 0, 2025, 02, 16, 13, 37);
-        assert_entry(&entries[2], false, true, false, "dir3", 0, 2025, 03, 01, 07, 11);
-        assert_entry(&entries[3], false, true, false, "dir4", 0, 2025, 01, 02, 12, 32);
+        assert_entry(&entries[1], false, true, false, "test2", 0, 2025, 02, 16, 13, 37);
+        assert_entry(&entries[2], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
+        assert_entry(&entries[3], false, true, false, "entry4", 0, 2025, 01, 02, 12, 32);
     }
 
     #[test]
@@ -156,9 +168,49 @@ mod tests {
         assert_eq!(entries.len(), 4);
 
         assert_entry(&entries[0], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
-        assert_entry(&entries[1], false, false, true, "file2", 2345, 2023, 01, 01, 00, 00);
-        assert_entry(&entries[2], false, false, true, "file3", 68608, 2025, 07, 17, 23, 59);
-        assert_entry(&entries[3], false, false, true, "file4", 128974848, 2024, 12, 08, 08, 22);
+        assert_entry(&entries[1], false, false, true, "files2", 2345, 2023, 01, 01, 00, 00);
+        assert_entry(&entries[2], false, false, true, "entry3", 68608, 2025, 07, 17, 23, 59);
+        assert_entry(&entries[3], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
+    }
+
+    #[test]
+    fn test_httpdirectory_filter_by_name_simple_regex() {
+        // unwrap here is ok since we know this should not return anything else
+        // than Ok(httpdir) if it does it should panic as the test failed.
+        let httpdir = prepare_httpdir().filter_by_name("debian").unwrap();
+        let entries = httpdir.entries();
+
+        assert_eq!(entries.len(), 2);
+
+        assert_entry(&entries[0], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
+        assert_entry(&entries[1], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
+    }
+
+    #[test]
+    fn test_httpdirectory_filter_by_name_bad_regex() {
+        match prepare_httpdir().filter_by_name("deb-[n+-*") {
+            Ok(_) => panic!("This call must return an Err(), not Ok()"),
+            Err(e) => assert_eq!(
+                e.to_string(),
+                "Error: regex parse error:\n    deb-[n+-*\n          ^^^\nerror: invalid character class range, the start must be <= the end"
+            ),
+        }
+    }
+
+    #[test]
+    fn test_httpdirectory_filter_by_name_less_simple_regex() {
+        // unwrap here is ok since we know this should not return anything else
+        // than Ok(httpdir) if it does it should panic as the test failed.
+        let httpdir = prepare_httpdir().filter_by_name(r#"debian\d|entry|file\d"#).unwrap();
+        let entries = httpdir.entries();
+
+        assert_eq!(entries.len(), 5);
+
+        assert_entry(&entries[0], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
+        assert_entry(&entries[1], false, true, false, "entry4", 0, 2025, 01, 02, 12, 32);
+        assert_entry(&entries[2], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
+        assert_entry(&entries[3], false, false, true, "entry3", 68608, 2025, 07, 17, 23, 59);
+        assert_entry(&entries[4], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
     }
 
     #[test]

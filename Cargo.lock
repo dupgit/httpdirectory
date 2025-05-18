@@ -966,6 +966,7 @@ dependencies = [
  "env_logger",
  "httpmock",
  "log",
+ "regex",
  "reqwest",
  "scraper",
  "tokio",
