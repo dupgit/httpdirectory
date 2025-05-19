@@ -309,10 +309,10 @@ async fn test_bsd_example() {
 async fn test_old_bsd_example() {
     // Start a lightweight mock server.
     let server = MockServer::start();
-    let url = server.url("/old-bsd");
+    let url = &server.url("/old-bsd/");
 
     let mock = server.mock(|when, then| {
-        when.path("/old-bsd");
+        when.path("/old-bsd/");
         then.status(200).body(r##"
             <!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><style type="text/css">body,html {background:#fff;font-family:"Bitstream Vera Sans","Lucida Grande","Lucida Sans Unicode",Lucidux,Verdana,Lucida,sans-serif;}tr:nth-child(even) {background:#f4f4f4;}th,td {padding:0.1em 0.5em;}th {text-align:left;font-weight:bold;background:#eee;border-bottom:1px solid #aaa;}#list {border:1px solid #aaa;width:100%;}a {color:#a33;}a:hover {color:#e33;}</style>
 
@@ -403,7 +403,7 @@ async fn test_old_bsd_example() {
         "##);
     });
 
-    let httpdir = match HttpDirectory::new(&url).await {
+    let mut httpdir = match HttpDirectory::new(url).await {
         Ok(httpdir) => httpdir,
         Err(e) => panic!("{e}"),
     };
@@ -432,9 +432,42 @@ async fn test_old_bsd_example() {
     assert_entry(&entries[70], false, true, false, "stable/", 0, 2022, 01, 18, 16, 25);
     assert_entry(&entries[71], false, true, false, "syspatch/", 0, 2025, 03, 03, 16, 19);
     assert_entry(&entries[72], false, true, false, "tools/", 0, 2005, 01, 07, 19, 40);
-    assert_entry(&entries[73], false, false, true, "README", 1249, 2021, 05, 25, 20, 15);
-    assert_entry(&entries[74], false, false, true, "ftplist", 4836, 2025, 05, 16, 14, 13);
+    assert_entry(&entries[73], false, false, true, "README", 1_249, 2021, 05, 25, 20, 15);
+    assert_entry(&entries[74], false, false, true, "ftplist", 4_836, 2025, 05, 16, 14, 13);
     assert_entry(&entries[75], false, false, true, "timestamp", 11, 2025, 05, 16, 14, 13);
+
+    mock.assert();
+
+    let dir = "tools/";
+
+    let mock = server.mock(|when, then| {
+        when.path("/old-bsd/tools/");
+        then.status(200).body(r##"
+            <!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width"><style type="text/css">body,html {background:#fff;font-family:"Bitstream Vera Sans","Lucida Grande","Lucida Sans Unicode",Lucidux,Verdana,Lucida,sans-serif;}tr:nth-child(even) {background:#f4f4f4;}th,td {padding:0.1em 0.5em;}th {text-align:left;font-weight:bold;background:#eee;border-bottom:1px solid #aaa;}#list {border:1px solid #aaa;width:100%;}a {color:#a33;}a:hover {color:#e33;}</style>
+
+            <title>Index of /pub/OpenBSD/tools/</title>
+            </head><body><h1>Index of /pub/OpenBSD/tools/</h1>
+            <table id="list"><thead><tr><th style="width:55%"><a href="?C=N&amp;O=A">File Name</a>&nbsp;<a href="?C=N&amp;O=D">&nbsp;&darr;&nbsp;</a></th><th style="width:20%"><a href="?C=S&amp;O=A">File Size</a>&nbsp;<a href="?C=S&amp;O=D">&nbsp;&darr;&nbsp;</a></th><th style="width:25%"><a href="?C=M&amp;O=A">Date</a>&nbsp;<a href="?C=M&amp;O=D">&nbsp;&darr;&nbsp;</a></th></tr></thead>
+            <tbody><tr><td class="link"><a href="../">Parent directory/</a></td><td class="size">-</td><td class="date">-</td></tr>
+            <tr><td class="link"><a href="zenicb.el" title="zenicb.el">zenicb.el</a></td><td class="size">              26902</td><td class="date">1996-Nov-04 07:00</td></tr>
+            </tbody></table><div>This server can also be reached on the Tor network at</div>
+            <div><a href="http://lysator7eknrfl47rlyxvgeamrv7ucefgrrlhk7rouv3sna25asetwid.onion/">lysator7eknrfl47rlyxvgeamrv7ucefgrrlhk7rouv3sna25asetwid.onion</a></div>
+            <div>Information:</div>
+            <div><a href="/datahanteringspolicy.txt">Data handling policy</a></div>
+            <div>The mirror administration can be reached at ftp-master (at) lysator.liu.se</div>
+            "##);
+    });
+
+    let httpdir = match httpdir.cd(dir).await {
+        Ok(httpdir) => httpdir,
+        Err(_) => panic!("This test should return Ok()"),
+    };
+
+    assert_eq!(httpdir.len(), 2);
+    let entries = httpdir.entries();
+
+    assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
+    assert_entry(&entries[1], false, false, true, "zenicb.el", 26_902, 1996, 11, 04, 07, 00);
 
     mock.assert();
 }

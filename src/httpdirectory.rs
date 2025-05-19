@@ -145,6 +145,16 @@ mod tests {
         }
     }
 
+    #[tokio::test]
+    async fn test_httpdirectory_no_base_url() {
+        let mut httpdir = HttpDirectory::default();
+
+        match httpdir.cd("/dir").await {
+            Ok(_) => panic!("This test should return Err()"),
+            Err(e) => assert_eq!(e.to_string(), "Error: relative URL without a base"),
+        }
+    }
+
     // This is an helper function used to prepare some `HttpDirectory`
     // structure that will be used in tests
     fn prepare_httpdir() -> HttpDirectory {
