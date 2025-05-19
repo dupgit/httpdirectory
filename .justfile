@@ -1,3 +1,5 @@
+## This [justfile](https://just.systems/) needs cargo-release, cargo-sbom and cargo-tarpaulin
+
 [private]
 default:
   @just --list
@@ -38,3 +40,7 @@ rust-publish:
     cargo publish
 
 publish: git-publish rust-publish
+
+coverage:
+    cargo tarpaulin --frozen -o Html
+    open tarpaulin-report.html
