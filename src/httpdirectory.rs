@@ -136,9 +136,9 @@ mod tests {
     #[test]
     fn test_httpdirectory_default() {
         let httpdir = HttpDirectory::default();
-
-        assert!(httpdir.entries.is_empty());
+        assert!(httpdir.is_empty());
         assert_eq!(httpdir.url, "".to_string());
+
         match httpdir.request {
             Request::Reqwest(request) => panic!("{request:?} should be None"),
             Request::None => (),
@@ -176,10 +176,9 @@ mod tests {
     #[test]
     fn test_httpdirectory_dirs() {
         let httpdir = prepare_httpdir().dirs();
+        assert_eq!(httpdir.len(), 4);
+
         let entries = httpdir.entries();
-
-        assert_eq!(entries.len(), 4);
-
         assert_entry(&entries[0], false, true, false, "dir1", 0, 2025, 01, 26, 12, 54);
         assert_entry(&entries[1], false, true, false, "test2", 0, 2025, 02, 16, 13, 37);
         assert_entry(&entries[2], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
@@ -189,10 +188,9 @@ mod tests {
     #[test]
     fn test_httpdirectory_files() {
         let httpdir = prepare_httpdir().files();
+        assert_eq!(httpdir.len(), 4);
+
         let entries = httpdir.entries();
-
-        assert_eq!(entries.len(), 4);
-
         assert_entry(&entries[0], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
         assert_entry(&entries[1], false, false, true, "files2", 2345, 2023, 01, 01, 00, 00);
         assert_entry(&entries[2], false, false, true, "entry3", 68608, 2025, 07, 17, 23, 59);
@@ -204,10 +202,9 @@ mod tests {
         // unwrap here is ok since we know this should not return anything else
         // than Ok(httpdir) if it does it should panic as the test failed.
         let httpdir = prepare_httpdir().filter_by_name("debian").unwrap();
+        assert_eq!(httpdir.len(), 2);
+
         let entries = httpdir.entries();
-
-        assert_eq!(entries.len(), 2);
-
         assert_entry(&entries[0], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
         assert_entry(&entries[1], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
     }
@@ -228,10 +225,9 @@ mod tests {
         // unwrap here is ok since we know this should not return anything else
         // than Ok(httpdir) if it does it should panic as the test failed.
         let httpdir = prepare_httpdir().filter_by_name(r#"debian\d|entry|file\d"#).unwrap();
+        assert_eq!(httpdir.len(), 5);
+
         let entries = httpdir.entries();
-
-        assert_eq!(entries.len(), 5);
-
         assert_entry(&entries[0], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
         assert_entry(&entries[1], false, true, false, "entry4", 0, 2025, 01, 02, 12, 32);
         assert_entry(&entries[2], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
@@ -244,7 +240,7 @@ mod tests {
         let httpdir = prepare_httpdir().parent_directory();
         let entries = httpdir.entries();
 
-        assert_eq!(entries.len(), 1);
+        assert_eq!(httpdir.len(), 1);
 
         assert_entry(&entries[0], true, false, true, "../", 0, 0, 0, 0, 0, 0);
     }
@@ -252,8 +248,7 @@ mod tests {
     #[test]
     fn test_httpdirectory_nothing() {
         let httpdir = prepare_httpdir().dirs().files();
-        let entries = httpdir.entries();
 
-        assert_eq!(entries.len(), 0);
+        assert_eq!(httpdir.len(), 0);
     }
 }

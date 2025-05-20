@@ -33,8 +33,8 @@ async fn main() {
     if let Ok(httpdir) = HttpDirectory::new("https://cloud.debian.org/images/cloud/").await {
         match httpdir.dirs().filter_by_name("bookworm/") {
             Ok(mut httpdir) => {
-                let entries = httpdir.entries();
-                if entries.len() > 0 {
+                if httpdir.len() > 0 {
+                    let entries = httpdir.entries();
                     match &entries[0].dirname() {
                         Some(dir) => {
                             let dir = dir.to_string();
