@@ -105,7 +105,7 @@ impl HttpDirectoryEntry {
 impl fmt::Display for HttpDirectoryEntry {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            HttpDirectoryEntry::ParentDirectory(_) => write!(f, "DIR  {:>5}  {:>16}  {}", "-", "", "..")?,
+            HttpDirectoryEntry::ParentDirectory(_) => write!(f, "DIR  {:>5}  {:>16}  ..", "-", "")?,
             HttpDirectoryEntry::Directory(entry) => write!(f, "DIR  {entry}")?,
             HttpDirectoryEntry::File(entry) => write!(f, "FILE {entry}")?,
         };
@@ -155,5 +155,39 @@ pub fn assert_entry(
             assert!(parent);
             assert_eq!(link, name);
         }
+    }
+}
+
+mod tests {
+    use crate::httpdirectory;
+
+    use super::HttpDirectoryEntry;
+
+    #[test]
+    fn test_file_httpdirectoryentry_output() {
+        let httpdirectoryentry = HttpDirectoryEntry::new("name", "2025-05-20 20:19", "5.0K", "link/");
+
+        let output = format!("{httpdirectoryentry}");
+        assert_eq!(output, "FILE  5.0K  2025-05-20 20:19  name");
+        assert_eq!(httpdirectoryentry.filename(), Some("name"));
+        assert_eq!(httpdirectoryentry.dirname(), None);
+    }
+
+    #[test]
+    fn test_dir_httpdirectoryentry_output() {
+        let httpdirectoryentry = HttpDirectoryEntry::new("name", "2025-05-20 20:19", "-", "link/");
+
+        let output = format!("{httpdirectoryentry}");
+        assert_eq!(output, "DIR      -  2025-05-20 20:19  name");
+        assert_eq!(httpdirectoryentry.dirname(), Some("name"));
+        assert_eq!(httpdirectoryentry.filename(), None);
+    }
+
+    #[test]
+    fn test_parentdir_httpdirectoryentry_output() {
+        let httpdirectoryentry = HttpDirectoryEntry::new("Parent directory", "", "-", "../");
+
+        let output = format!("{httpdirectoryentry}");
+        assert_eq!(output, "DIR      -                    ..");
     }
 }
