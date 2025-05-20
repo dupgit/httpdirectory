@@ -115,9 +115,16 @@ impl Entry {
             new_size = self.size.to_string();
         }
 
-        match new_size.parse::<usize>() {
-            Ok(number) => real_size * number,
-            Err(_) => 0,
+        if self.size.contains('.') {
+            match new_size.parse::<f64>() {
+                Ok(number) => real_size * number as usize,
+                Err(_) => 0,
+            }
+        } else {
+            match new_size.parse::<usize>() {
+                Ok(number) => real_size * number,
+                Err(_) => 0,
+            }
         }
     }
 
@@ -149,5 +156,16 @@ impl fmt::Display for Entry {
             Some(date) => write!(f, "{:>5}  {}  {}", self.size, date.format("%Y-%m-%d %H:%M"), self.name),
             None => write!(f, "{:>5}  {:>16}  {}", self.size, "", self.name),
         }
+    }
+}
+
+mod tests {
+    use super::Entry;
+
+    #[test]
+    fn test_apparent_size() {
+        let entry = Entry::new("name", "link", "2025-05-20 20:19", "5.0K");
+
+        assert_eq!(entry.apparent_size(), 5120);
     }
 }
