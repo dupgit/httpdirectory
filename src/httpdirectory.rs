@@ -16,6 +16,7 @@ pub struct HttpDirectory {
 // @todo: implement sorting by size, date, name
 // @todo: implement cd() function to go to a specific
 //        directory if possible
+// @todo: ? implement an iterator ?
 impl HttpDirectory {
     /// Returns an `HttpDirectory` initialized with default
     /// values (empty vector, empty url and no HttpEngine)
@@ -128,7 +129,6 @@ async fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
     }
 }
 
-// @todo: ? implement an iterator ?
 mod tests {
     use super::*;
     use crate::httpdirectoryentry::assert_entry;
