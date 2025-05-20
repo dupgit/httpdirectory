@@ -183,6 +183,17 @@ mod tests {
         assert_entry(&entries[1], false, true, false, "test2", 0, 2025, 02, 16, 13, 37);
         assert_entry(&entries[2], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
         assert_entry(&entries[3], false, true, false, "entry4", 0, 2025, 01, 02, 12, 32);
+
+        let output = format!("{httpdir}");
+        assert_eq!(
+            output,
+            r##"
+DIR      -  2025-01-26 12:54  dir1
+DIR      -  2025-02-16 13:37  test2
+DIR      -  2025-03-01 07:11  debian3
+DIR      -  2025-01-02 12:32  entry4
+"##
+        );
     }
 
     #[test]
