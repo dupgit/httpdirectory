@@ -163,9 +163,86 @@ mod tests {
     use super::Entry;
 
     #[test]
-    fn test_apparent_size() {
+    fn test_apparent_size_float() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "5.0K");
 
         assert_eq!(entry.apparent_size(), 5120);
+    }
+
+    #[test]
+    fn test_entry_output() {
+        let entry = Entry::new("name", "link", "2025-05-20 20:19", "5.0K");
+        let output = format!("{entry}");
+        assert_eq!(output, " 5.0K  2025-05-20 20:19  name");
+    }
+
+    #[test]
+    fn test_apparent_size_usize() {
+        let entry = Entry::new("name", "link", "2025-05-20 20:19", "524");
+
+        assert_eq!(entry.apparent_size(), 524);
+    }
+
+    #[test]
+    fn test_apparent_size_modifier_t() {
+        let entry = Entry::new("name", "link", "2025-05-20 20:19", "1G");
+
+        assert_eq!(entry.apparent_size(), 1_073_741_824);
+    }
+
+    #[test]
+    fn test_apparent_size_modifier_p() {
+        let entry = Entry::new("name", "link", "2025-05-20 20:19", "1P");
+
+        assert_eq!(entry.apparent_size(), 1_125_899_906_842_624);
+    }
+
+    #[test]
+    fn test_apparent_size_zero() {
+        let entry = Entry::new("name", "link", "2025-05-20 20:19", "0");
+
+        assert_eq!(entry.apparent_size(), 0);
+    }
+
+    #[test]
+    fn test_apparent_size_directory() {
+        let entry = Entry::new("name", "link", "2025-05-20 20:19", " - ");
+
+        assert_eq!(entry.apparent_size(), 0);
+    }
+
+    #[test]
+    fn test_apparent_size_wrong_input() {
+        let entry = Entry::new("name", "link", "2025-05-20 20:19", "Not_A_Size");
+
+        assert_eq!(entry.apparent_size(), 0);
+    }
+
+    #[test]
+    fn test_apparent_size_wrong_input_with_modifier() {
+        let entry = Entry::new("name", "link", "2025-05-20 20:19", "Not_A_SizeT");
+
+        assert_eq!(entry.apparent_size(), 0);
+    }
+
+    #[test]
+    fn test_wrong_date_format_inverted_with_size() {
+        let entry = Entry::new("name", "link", "12.0K", "05-2025-20 20:19");
+
+        assert_eq!(entry.date, None);
+    }
+
+    #[test]
+    fn test_wrong_date_format() {
+        let entry = Entry::new("name", "link", "05-2025-20 20:19", "12.0K");
+
+        assert_eq!(entry.date, None);
+    }
+
+    #[test]
+    fn test_entry_output_wrong_date_format() {
+        let entry = Entry::new("name", "link", "05-2025-20 20:19", "12.0K");
+        let output = format!("{entry}");
+        assert_eq!(output, "12.0K                    name");
     }
 }
