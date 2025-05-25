@@ -6,18 +6,23 @@ use scraper::{Html, Selector};
 // what we have been scraping is real data or not
 // This should be done in for loops (table and pre)
 
-// @todo: manage Results and Options ie: remove unwrap()
+// Parses `body` variable to find a table that may
+// have icon, name & link, date, size and description.
+// We do not mind description field. Sometimes icon
+// column (first one) is not empty (it has text) so
+// it may be that this is in fact the name & link
+// column
 fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     let mut http_dir_entry = vec![];
 
     let html = Html::parse_document(body);
-    let table_selector = Selector::parse("table").unwrap();
+    let table_selector = Selector::parse("table")?;
     let table_iter = html.select(&table_selector);
 
     for table in table_iter {
-        let row_selector = Selector::parse("tr").unwrap();
-        let col_selector = Selector::parse("td").unwrap();
-        let link_selector = Selector::parse("a").unwrap();
+        let row_selector = Selector::parse("tr")?;
+        let col_selector = Selector::parse("td")?;
+        let link_selector = Selector::parse("a")?;
         for row in table.select(&row_selector) {
             let one_line: Vec<_> = row.select(&col_selector).map(|c| c).collect();
             let mut one_line_iter = one_line.iter();
@@ -38,7 +43,10 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
                     name = first_col_txt;
                     // Text exists so we have a name, now getting the link
                     for link_selected in first_col.select(&link_selector) {
-                        link = link_selected.value().attr("href").unwrap();
+                        link = match link_selected.value().attr("href") {
+                            Some(l) => l,
+                            None => "",
+                        }
                     }
                 } else {
                     // First column was empty, the name should be in the second one
@@ -46,7 +54,10 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
                         // Second column is the name of the file or directory with its link
                         name = name_col.text().collect::<Vec<_>>();
                         for link_selected in name_col.select(&link_selector) {
-                            link = link_selected.value().attr("href").unwrap();
+                            link = match link_selected.value().attr("href") {
+                                Some(l) => l,
+                                None => "",
+                            }
                         }
                     }
                 }
@@ -77,12 +88,15 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     Ok(http_dir_entry)
 }
 
+// Tries to search in a <pre> formatted table that
+// contains <img> tag that represents the icon of
+// the file
 fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     let mut should_be_considered_valid = false;
     let mut http_dir_entry = vec![];
 
     let html = Html::parse_document(body);
-    let pre_selector = Selector::parse("pre").unwrap();
+    let pre_selector = Selector::parse("pre")?;
     let pre_iter = html.select(&pre_selector);
 
     for pre in pre_iter {
@@ -204,19 +218,25 @@ fn is_this_a_real_header(href: Vec<&str>) -> bool {
         && description.to_lowercase() == "description"
 }
 
-// Removes prefix until '>' sign (that we know exists in the line &str)
+// Removes prefix until '>' sign that we know
+// exists in the line &str.
 fn strip_until_greater(line: &str) -> &str {
     match line.find('>') {
-        Some(num) => line.strip_prefix(&line[0..=num]).unwrap().trim(),
+        Some(num) => match line.strip_prefix(&line[0..=num]) {
+            Some(line_without_prefix) => line_without_prefix.trim(),
+            None => line.trim(),
+        },
         None => line.trim(),
     }
 }
 
+// Tries to search in a basic <pre> formatted table
+// without any <img> tag
 fn scrape_pre_simple(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     let mut http_dir_entry = vec![];
 
     let html = Html::parse_document(body);
-    let pre_selector = Selector::parse("pre").unwrap();
+    let pre_selector = Selector::parse("pre")?;
     let pre_iter = html.select(&pre_selector);
 
     for pre in pre_iter {
@@ -245,7 +265,10 @@ fn scrape_pre_simple(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError
     Ok(http_dir_entry)
 }
 
-// @todo: manage Results and Options ie: remove unwrap()
+// Parses `body` that should contain an HTML page / body
+// to recognize (if possible) entries of files, directories or
+// a parent directory and fill a vector of `HttpDirectoryEntry`
+// accordingly
 pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     if body.contains("<table") {
         debug!("body has <table> tag, trying this");

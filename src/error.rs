@@ -1,3 +1,4 @@
+use scraper::error::SelectorErrorKind;
 use std::error;
 use std::fmt;
 
@@ -22,6 +23,8 @@ pub enum HttpDirError {
     /// Parsing error when manipulating urls (`cd()` method
     /// does manipulates url for instance)
     ParseError(url::ParseError),
+
+    ScrapeError(String),
 }
 
 impl fmt::Display for HttpDirError {
@@ -32,6 +35,7 @@ impl fmt::Display for HttpDirError {
             HttpDirError::NoHttpEngine => write!(f, "Error no http engine has been selected"),
             HttpDirError::Regex(e) => write!(f, "Error: {e}"),
             HttpDirError::ParseError(e) => write!(f, "Error: {e}"),
+            HttpDirError::ScrapeError(e) => write!(f, "{e}"),
         }
     }
 }
@@ -44,6 +48,7 @@ impl error::Error for HttpDirError {
             HttpDirError::NoHttpEngine => Some(Err(()).unwrap()),
             HttpDirError::Regex(err) => Some(err),
             HttpDirError::ParseError(err) => Some(err),
+            HttpDirError::ScrapeError(err) => Some(Err(err).unwrap()),
         }
     }
 }
@@ -72,7 +77,8 @@ impl From<url::ParseError> for HttpDirError {
     }
 }
 
-#[cfg(test)]
-mod test_error {
-    use crate::error::HttpDirError;
+impl From<SelectorErrorKind<'_>> for HttpDirError {
+    fn from(sek: SelectorErrorKind<'_>) -> Self {
+        HttpDirError::ContentError(format!("scraper selector error: {sek}").to_string())
+    }
 }
