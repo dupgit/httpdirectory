@@ -40,19 +40,6 @@ impl fmt::Display for HttpDirError {
     }
 }
 
-impl error::Error for HttpDirError {
-    fn source(&self) -> Option<&(dyn error::Error + 'static)> {
-        match &self {
-            HttpDirError::HttpError(err) => Some(err),
-            HttpDirError::ContentError(err) => Some(Err(err).unwrap()),
-            HttpDirError::NoHttpEngine => Some(Err(()).unwrap()),
-            HttpDirError::Regex(err) => Some(err),
-            HttpDirError::ParseError(err) => Some(err),
-            HttpDirError::ScrapeError(err) => Some(Err(err).unwrap()),
-        }
-    }
-}
-
 impl From<reqwest::Error> for HttpDirError {
     fn from(error: reqwest::Error) -> Self {
         HttpDirError::HttpError(error)

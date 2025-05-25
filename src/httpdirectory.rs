@@ -24,7 +24,7 @@ impl HttpDirectory {
     pub fn default() -> Self {
         HttpDirectory {
             entries: vec![],
-            url: "".to_string(),
+            url: String::new(),
             request: Request::None,
         }
     }

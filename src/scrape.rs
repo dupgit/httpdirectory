@@ -43,10 +43,7 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
                     name = first_col_txt;
                     // Text exists so we have a name, now getting the link
                     for link_selected in first_col.select(&link_selector) {
-                        link = match link_selected.value().attr("href") {
-                            Some(l) => l,
-                            None => "",
-                        }
+                        link = link_selected.value().attr("href").unwrap_or_default();
                     }
                 } else {
                     // First column was empty, the name should be in the second one
@@ -54,10 +51,7 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
                         // Second column is the name of the file or directory with its link
                         name = name_col.text().collect::<Vec<_>>();
                         for link_selected in name_col.select(&link_selector) {
-                            link = match link_selected.value().attr("href") {
-                                Some(l) => l,
-                                None => "",
-                            }
+                            link = link_selected.value().attr("href").unwrap_or_default();
                         }
                     }
                 }
@@ -106,7 +100,7 @@ fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirErr
             for line in pre.inner_html().split("<img") {
                 // Removing the img tag (we know that > exists in line)
                 let new_line = strip_until_greater(line);
-                if new_line.len() > 0 {
+                if !new_line.is_empty() {
                     // Considering only non empty lines
                     trace!("{new_line}");
                     let href = new_line
@@ -164,30 +158,30 @@ fn get_date_and_size(line: &str) -> (&str, &str) {
     if line_split.len() >= 2 {
         size = line_split[0];
     } else {
-        size = &size_and_description;
+        size = size_and_description;
     }
     trace!(" -> date: {date}, size: {size}");
-    (&date, size)
+    (date, size)
 }
 
-// Form of the line:  '<a href="bionic/">bionic/'
+// Form of the column:  '<a href="bionic/">bionic/'
 // Returns a tuple with the text of the link and the
 // linked text as name. Here : ("bionic/", "bionic/")
-fn get_link_and_name(line: &str) -> (&str, &str) {
-    match line.find('>') {
+fn get_link_and_name(column: &str) -> (&str, &str) {
+    match column.find('>') {
         Some(num) => {
-            let name = &line[num + 1..];
-            let link = match &line[0..num].strip_prefix(r#"<a href=""#) {
+            let name = &column[num + 1..];
+            let link = match &column[0..num].strip_prefix(r#"<a href=""#) {
                 // Removing '<a href="' that prefixes the line
                 Some(link) => match link.strip_suffix(r#"""#) {
                     // Removing trailing " if any
                     Some(l) => l,
                     None => link,
                 },
-                None => match line[0..num].strip_suffix(r#"""#) {
+                None => match column[0..num].strip_suffix(r#"""#) {
                     // Removing trailing " if any
                     Some(l) => l,
-                    None => &line[0..num],
+                    None => &column[0..num],
                 },
             };
             let link = link.trim();
@@ -196,7 +190,7 @@ fn get_link_and_name(line: &str) -> (&str, &str) {
             (link.trim(), name.trim())
         }
         None => {
-            let name = line.trim();
+            let name = column.trim();
             trace!(" -> link: , name: {name}");
             ("", name)
         }
@@ -211,7 +205,7 @@ fn is_this_a_real_header(href: Vec<&str>) -> bool {
     let date = strip_until_greater(href[1]);
     let size = strip_until_greater(href[2]);
     let description = strip_until_greater(href[3]);
-    trace!("This is the header: {}, {}, {}, {}", name, date, size, description);
+    trace!("This is the header: {name}, {date}, {size}, {description}");
     name.to_lowercase() == "name"
         && date.to_lowercase() == "last modified"
         && size.to_lowercase() == "size"
@@ -241,7 +235,7 @@ fn scrape_pre_simple(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError
 
     for pre in pre_iter {
         for line in pre.inner_html().lines() {
-            if line.len() > 0 {
+            if !line.is_empty() {
                 // Considering only non empty lines
                 trace!("{line}");
                 let href =
@@ -259,7 +253,6 @@ fn scrape_pre_simple(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError
                 }
             }
         }
-        return Ok(http_dir_entry);
     }
 
     Ok(http_dir_entry)

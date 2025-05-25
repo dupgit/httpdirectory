@@ -32,7 +32,7 @@ impl HttpDirectoryEntry {
 
         // `size` may be flipped with `date` so using the one guessed in entry
         // that is likely to be more accurate
-        if entry.size().contains("-") {
+        if entry.size().contains('-') {
             HttpDirectoryEntry::Directory(entry)
         } else {
             HttpDirectoryEntry::File(entry)
@@ -84,6 +84,7 @@ impl HttpDirectoryEntry {
     /// Returns an `Option` with the name of the file corresponding to the
     /// `HttpDirectoryEntry` if this entry is effectively a file
     /// Returns None otherwise.
+    #[must_use]
     pub fn filename(&self) -> Option<&str> {
         match self {
             HttpDirectoryEntry::ParentDirectory(_) | HttpDirectoryEntry::Directory(_) => None,
@@ -94,6 +95,7 @@ impl HttpDirectoryEntry {
     /// Returns an `Option` with the name of the directory corresponding to the
     /// `HttpDirectoryEntry` if this entry is effectively a directory.
     /// Returns None otherwise
+    #[must_use]
     pub fn dirname(&self) -> Option<&str> {
         match self {
             HttpDirectoryEntry::ParentDirectory(_) | HttpDirectoryEntry::File(_) => None,
@@ -108,12 +110,12 @@ impl fmt::Display for HttpDirectoryEntry {
             HttpDirectoryEntry::ParentDirectory(_) => write!(f, "DIR  {:>5}  {:>16}  ..", "-", "")?,
             HttpDirectoryEntry::Directory(entry) => write!(f, "DIR  {entry}")?,
             HttpDirectoryEntry::File(entry) => write!(f, "FILE {entry}")?,
-        };
-
+        }
         Ok(())
     }
 }
 
+/// # Panics
 /// Helper function to assert a directory entry is what is expected
 /// This function is used for testing the library and not intended
 /// for any other usage. Compares the size with the apparent size.
