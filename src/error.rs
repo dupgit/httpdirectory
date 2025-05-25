@@ -15,11 +15,11 @@ pub enum HttpDirError {
     /// for instance when there is no content at all.
     ContentError(String),
 
-    /// Errors in regular expression (filter_by_name() may
+    /// Errors in regular expression (`filter_by_name()` may
     /// fail when used with a bad regular expression)
     Regex(regex::Error),
 
-    /// Parsing error when manipulating urls (cd() method
+    /// Parsing error when manipulating urls (`cd()` method
     /// does manipulates url for instance)
     ParseError(url::ParseError),
 }

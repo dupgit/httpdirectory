@@ -71,7 +71,7 @@ impl HttpDirectoryEntry {
 
     /// returns true if the regular expression matches
     /// the name of the entry (only for files and directory)
-    /// ParentDirectory is never matched.
+    /// `ParentDirectory` is never matched.
     #[must_use]
     pub fn is_match_by_name(&self, re: &Regex) -> bool {
         match self {

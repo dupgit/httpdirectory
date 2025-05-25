@@ -35,7 +35,7 @@ DIR      -  2023-07-25 07:43  trixie/
 First obtain a directory from an url using `HttpDirectory::new(url)`
 method, then you can use `dirs()`, `files()`, `parent_directory()` or
 `filter_by_name()` to get respectively all directories, all files, the
-parent_directory or filtering by the name (with a Regex) of this
+`ParentDirectory` or filtering by the name (with a Regex) of this
 `HttpDirectory` listing entries:
 
 ```rust

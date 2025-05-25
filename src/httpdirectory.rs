@@ -19,7 +19,7 @@ pub struct HttpDirectory {
 // @todo: ? implement an iterator ?
 impl HttpDirectory {
     /// Returns an `HttpDirectory` initialized with default
-    /// values (empty vector, empty url and no HttpEngine)
+    /// values (empty vector, empty url and no `HttpEngine`)
     #[must_use]
     pub fn default() -> Self {
         HttpDirectory {
@@ -30,7 +30,7 @@ impl HttpDirectory {
     }
 
     /// Crawls the `url` and returns (if no error occurred) the
-    /// HttpDirectory of that url
+    /// `HttpDirectory` of that url
     pub async fn new(url: &str) -> Result<Self, HttpDirError> {
         let client = Request::new().await?;
         let response = client.get(url).await?;
