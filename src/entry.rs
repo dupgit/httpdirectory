@@ -1,6 +1,6 @@
 use chrono::NaiveDateTime;
 use log::trace;
-use std::fmt;
+use std::{cmp::Ordering, fmt};
 
 /// Defines an Entry for a file or a directory
 #[derive(Debug)]
@@ -148,6 +148,11 @@ impl Entry {
     pub fn date(&self) -> Option<NaiveDateTime> {
         self.date
     }
+
+    #[must_use]
+    pub fn cmp_by_name(&self, other: &Self) -> Ordering {
+        self.name.cmp(&other.name)
+    }
 }
 
 impl fmt::Display for Entry {
@@ -161,6 +166,7 @@ impl fmt::Display for Entry {
 
 mod tests {
     use super::Entry;
+    use std::cmp::Ordering;
 
     #[test]
     fn test_apparent_size_float() {
@@ -244,5 +250,14 @@ mod tests {
         let entry = Entry::new("name", "link", "05-2025-20 20:19", "12.0K");
         let output = format!("{entry}");
         assert_eq!(output, "12.0K                    name");
+    }
+
+    #[test]
+    fn test_cmp_by_name() {
+        let entry1 = Entry::new("name", "link", "2025-05-20 20:19", "112");
+        let entry2 = Entry::new("othername", "link", "2025-05-20 20:19", "112");
+
+        assert_eq!(entry1.cmp_by_name(&entry2), Ordering::Less);
+        assert_eq!(entry2.cmp_by_name(&entry1), Ordering::Greater);
     }
 }

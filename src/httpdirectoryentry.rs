@@ -2,6 +2,7 @@ use crate::entry::Entry;
 use chrono::NaiveDate;
 use log::trace;
 use regex::Regex;
+use std::cmp::Ordering;
 use std::fmt;
 
 /// `HttpDirectoryEntry` represents either the `ParentDirectory`,
@@ -102,6 +103,25 @@ impl HttpDirectoryEntry {
             HttpDirectoryEntry::Directory(dir) => Some(dir.name()),
         }
     }
+
+    #[must_use]
+    pub fn cmp_by_name(&self, other: &Self) -> Ordering {
+        match (self, other) {
+            (
+                HttpDirectoryEntry::ParentDirectory(_),
+                HttpDirectoryEntry::File(_) | HttpDirectoryEntry::Directory(_),
+            ) => Ordering::Less,
+            (
+                HttpDirectoryEntry::File(_) | HttpDirectoryEntry::Directory(_),
+                HttpDirectoryEntry::ParentDirectory(_),
+            ) => Ordering::Greater,
+            (HttpDirectoryEntry::ParentDirectory(_), HttpDirectoryEntry::ParentDirectory(_)) => Ordering::Equal,
+            (
+                HttpDirectoryEntry::File(name) | HttpDirectoryEntry::Directory(name),
+                HttpDirectoryEntry::File(other_name) | HttpDirectoryEntry::Directory(other_name),
+            ) => name.cmp_by_name(other_name),
+        }
+    }
 }
 
 impl fmt::Display for HttpDirectoryEntry {
@@ -161,9 +181,9 @@ pub fn assert_entry(
 }
 
 mod tests {
-    use crate::httpdirectory;
-
     use super::HttpDirectoryEntry;
+    use crate::httpdirectory;
+    use std::cmp::Ordering;
 
     #[test]
     fn test_file_httpdirectoryentry_output() {
@@ -191,5 +211,31 @@ mod tests {
 
         let output = format!("{httpdirectoryentry}");
         assert_eq!(output, "DIR      -                    ..");
+    }
+
+    #[test]
+    fn test_httpdirectoryentry_parent_directory_cmp_by_name() {
+        let parent1 = HttpDirectoryEntry::new("Parent directory", "", "-", "../");
+        let parent2 = HttpDirectoryEntry::new("Parent directory", "", "-", "../");
+
+        assert_eq!(parent1.cmp_by_name(&parent2), Ordering::Equal);
+    }
+
+    #[test]
+    fn test_httpdirectoryentry_file_parent_directory_cmp_by_name() {
+        let parent1 = HttpDirectoryEntry::new("Parent directory", "", "-", "../");
+        let file2 = HttpDirectoryEntry::new("filename", "2025-05-20 20:19", "5.0K", "filelink/");
+
+        assert_eq!(parent1.cmp_by_name(&file2), Ordering::Less);
+        assert_eq!(file2.cmp_by_name(&parent1), Ordering::Greater);
+    }
+
+    #[test]
+    fn test_httpdirectoryentry_dir_parent_directory_cmp_by_name() {
+        let parent1 = HttpDirectoryEntry::new("Parent directory", "", "-", "../");
+        let dir2 = HttpDirectoryEntry::new("filename", "2025-05-20 20:19", "-", "filelink/");
+
+        assert_eq!(parent1.cmp_by_name(&dir2), Ordering::Less);
+        assert_eq!(dir2.cmp_by_name(&parent1), Ordering::Greater);
     }
 }
