@@ -1,6 +1,6 @@
 use chrono::NaiveDateTime;
-use log::trace;
-use std::{cmp::Ordering, fmt};
+use log::{error, trace};
+use std::{cmp::Ordering, fmt, usize};
 
 /// Defines an Entry for a file or a directory
 #[derive(Debug)]
@@ -85,7 +85,11 @@ impl Entry {
     /// It is not an accurate size as 42K results in
     /// 42 * 1024 = 43008 (the real size in bytes may
     /// be a bit greater or a bit lower to this)
+    /// In case the size is greater than `usize::MAX`
+    /// it may be truncated to that value
     #[must_use]
+    #[allow(clippy::cast_sign_loss)]
+    #[allow(clippy::cast_possible_truncation)]
     pub fn apparent_size(&self) -> usize {
         let real_size: usize;
         let new_size;
@@ -117,7 +121,17 @@ impl Entry {
 
         if self.size.contains('.') {
             match new_size.parse::<f64>() {
-                Ok(number) => real_size * number as usize,
+                Ok(number) => {
+                    if number.signum().is_finite() {
+                        // number is not Nan nor ∞
+                        // We know that .abs() will return a positive value
+                        // if number is greater than `usize::MAX` then number
+                        // is truncated to usize::MAX
+                        real_size * (number.abs() as usize)
+                    } else {
+                        0
+                    }
+                }
                 Err(_) => 0,
             }
         } else {
