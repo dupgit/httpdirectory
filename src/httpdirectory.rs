@@ -18,17 +18,6 @@ pub struct HttpDirectory {
 //        directory if possible
 // @todo: ? implement an iterator ?
 impl HttpDirectory {
-    /// Returns an `HttpDirectory` initialized with default
-    /// values (empty vector, empty url and no `HttpEngine`)
-    #[must_use]
-    pub fn default() -> Self {
-        HttpDirectory {
-            entries: vec![],
-            url: String::new(),
-            request: Request::None,
-        }
-    }
-
     /// Crawls the `url` and returns (if no error occurred) the
     /// `HttpDirectory` of that url
     pub async fn new(url: &str) -> Result<Self, HttpDirError> {
@@ -120,6 +109,18 @@ impl fmt::Display for HttpDirectory {
             writeln!(f, "{entry}")?;
         }
         Ok(())
+    }
+}
+
+impl Default for HttpDirectory {
+    /// Returns an `HttpDirectory` initialized with default
+    /// values (empty vector, empty url and no `HttpEngine`)
+    fn default() -> Self {
+        HttpDirectory {
+            entries: vec![],
+            url: String::new(),
+            request: Request::None,
+        }
     }
 }
 
