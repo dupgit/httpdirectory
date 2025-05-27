@@ -5,8 +5,9 @@ This project is in an early stage of development.
 ## Description
 
 This library provides a convenient way to scrape directory indexes
-and get a structure that abstracts it. For instance one may have
-the following website:
+(like the ones created by `mod_autoindex` with apache or `autoindex`
+with nginx) and get a structure that abstracts it. For instance one
+may have the following website:
 
 ![Directory of cloud.debian.org/images/cloud/ website](cloud_debian.png)
 

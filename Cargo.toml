@@ -3,10 +3,10 @@ name = "httpdirectory"
 version = "0.6.0"
 edition = "2024"
 authors = ["Olivier Delhomme <olivier.delhomme@free.fr>"]
-description = "Crawls directory webpage into a structure"
+description = "Crawls directory webpage (HTTP index) into a structure"
 repository = "https://github.com/dupgit/httpdirectory"
 license = "MIT OR Apache-2.0"
-keywords = ["http", "directory", "html", "file"]
+keywords = ["http", "directory", "file", "autoindex"]
 categories = ["web-programming", "parsing"]
 
 [dependencies]
