@@ -12,7 +12,7 @@ pub enum Request {
 impl Request {
     /// Returns a new client that will be used to make requests
     /// it now returns a Reqwest client by default
-    pub async fn new() -> Result<Self, HttpDirError> {
+    pub fn new() -> Result<Self, HttpDirError> {
         match Client::builder().user_agent(HTTPDIR_USER_AGENT).build() {
             Ok(client) => {
                 trace!("new reqwest client: {client:?}");

@@ -1,5 +1,4 @@
 use scraper::error::SelectorErrorKind;
-use std::error;
 use std::fmt;
 
 /// Errors handling

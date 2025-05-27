@@ -28,10 +28,10 @@ impl HttpDirectory {
     /// Crawls the `url` and returns (if no error occurred) the
     /// `HttpDirectory` of that url
     pub async fn new(url: &str) -> Result<Self, HttpDirError> {
-        let client = Request::new().await?;
+        let client = Request::new()?;
         let response = client.get(url).await?;
 
-        let entries = get_entries_from_body(&response.text().await?).await;
+        let entries = get_entries_from_body(&response.text().await?);
         Ok(HttpDirectory {
             entries,
             url: url.to_string(),
@@ -45,7 +45,7 @@ impl HttpDirectory {
         let url = join_url(&self.url, dir)?;
         debug!("cd is going to {url}");
         let response = self.request.get(&url).await?;
-        let entries = get_entries_from_body(&response.text().await?).await;
+        let entries = get_entries_from_body(&response.text().await?);
         self.entries = entries;
         self.url = url;
         Ok(self)
@@ -54,35 +54,36 @@ impl HttpDirectory {
     /// Sorts the Directory entries by their names
     #[must_use]
     pub fn sort_by_name(mut self, order: &Sorting) -> Self {
-        self.entries.sort_by(|a, b| a.cmp_by_field(b, CompareField::Name, order));
+        self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Name, order));
         self
     }
 
     /// Sorts the Directory entries by their dates
     #[must_use]
     pub fn sort_by_date(mut self, order: &Sorting) -> Self {
-        self.entries.sort_by(|a, b| a.cmp_by_field(b, CompareField::Date, order));
+        self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Date, order));
         self
     }
 
     /// Returns only directories of the `HttpDirectory` listing
     #[must_use]
     pub fn dirs(mut self) -> Self {
-        self.entries = self.entries.into_iter().filter(|e| e.is_directory()).collect();
+        self.entries = self.entries.into_iter().filter(HttpDirectoryEntry::is_directory).collect();
         self
     }
 
     /// Returns only files of the `HttpDirectory` listing
     #[must_use]
     pub fn files(mut self) -> Self {
-        self.entries = self.entries.into_iter().filter(|e| e.is_file()).collect();
+        self.entries = self.entries.into_iter().filter(HttpDirectoryEntry::is_file).collect();
         self
     }
 
     /// Returns only the parent directory the `HttpDirectory` listing
     #[must_use]
     pub fn parent_directory(mut self) -> Self {
-        self.entries = self.entries.into_iter().filter(|e| e.is_parent_directory()).collect();
+        //self.entries = self.entries.into_iter().filter(|e| e.is_parent_directory()).collect();
+        self.entries = self.entries.into_iter().filter(HttpDirectoryEntry::is_parent_directory).collect();
         self
     }
 
@@ -90,9 +91,7 @@ impl HttpDirectory {
     /// entry with the `regex` regular expression.
     pub fn filter_by_name(mut self, regex: &str) -> Result<Self, HttpDirError> {
         let re = Regex::new(regex)?;
-
-        self.entries = self.entries.into_iter().filter(|e| e.is_match_by_name(&re)).collect();
-
+        self.entries.retain(|e| e.is_match_by_name(&re));
         Ok(self)
     }
 
@@ -138,7 +137,7 @@ impl Default for HttpDirectory {
     }
 }
 
-async fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
+fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
     match scrape_body(body) {
         Ok(entries) => entries,
         Err(e) => {
@@ -166,7 +165,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_httpdirectory_no_base_url() {
-        let mut httpdir = HttpDirectory::default();
+        let httpdir = HttpDirectory::default();
 
         match httpdir.cd("/dir").await {
             Ok(_) => panic!("This test should return Err()"),

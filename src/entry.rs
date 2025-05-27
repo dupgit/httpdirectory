@@ -1,7 +1,7 @@
 use crate::httpdirectory::Sorting;
 use chrono::NaiveDateTime;
 use log::trace;
-use std::{cmp::Ordering, fmt, usize};
+use std::{cmp::Ordering, fmt};
 
 /// Defines an Entry for a file or a directory
 #[derive(Debug)]
