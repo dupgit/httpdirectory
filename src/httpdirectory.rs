@@ -6,6 +6,8 @@ use log::{debug, error};
 use regex::Regex;
 use std::fmt;
 
+/// Main structure that provides methods to access, parse a directory
+/// webpage and fill that structure.
 #[derive(Debug)]
 pub struct HttpDirectory {
     entries: Vec<HttpDirectoryEntry>,
