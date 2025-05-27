@@ -1,5 +1,5 @@
 extern crate httpdirectory;
-use httpdirectory::{httpdirectory::HttpDirectory, httpdirectoryentry::assert_entry};
+use httpdirectory::{httpdirectory::HttpDirectory, httpdirectory::Sorting, httpdirectoryentry::assert_entry};
 use httpmock::prelude::*;
 
 #[tokio::test]
@@ -403,7 +403,7 @@ async fn test_old_bsd_example() {
         "##);
     });
 
-    let mut httpdir = match HttpDirectory::new(url).await {
+    let httpdir = match HttpDirectory::new(url).await {
         Ok(httpdir) => httpdir,
         Err(e) => panic!("{e}"),
     };
@@ -435,6 +435,28 @@ async fn test_old_bsd_example() {
     assert_entry(&entries[73], false, false, true, "README", 1_249, 2021, 05, 25, 20, 15);
     assert_entry(&entries[74], false, false, true, "ftplist", 4_836, 2025, 05, 16, 14, 13);
     assert_entry(&entries[75], false, false, true, "timestamp", 11, 2025, 05, 16, 14, 13);
+
+    let httpdir = httpdir.sort_by_date(&Sorting::Ascending);
+    let entries = httpdir.entries();
+
+    assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
+    assert_entry(&entries[1], false, true, false, "2.5/", 0, 2000, 07, 08, 02, 57);
+    assert_entry(&entries[2], false, true, false, "2.0/", 0, 2001, 06, 04, 14, 06);
+    assert_entry(&entries[3], false, true, false, "2.1/", 0, 2001, 06, 04, 15, 20);
+    assert_entry(&entries[73], false, true, false, "patches/", 0, 2025, 05, 16, 14, 07);
+    assert_entry(&entries[74], false, false, true, "ftplist", 4_836, 2025, 05, 16, 14, 13);
+    assert_entry(&entries[75], false, false, true, "timestamp", 11, 2025, 05, 16, 14, 13);
+
+    let httpdir = httpdir.sort_by_date(&Sorting::Descending);
+    let entries = httpdir.entries();
+
+    assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
+    assert_entry(&entries[1], false, false, true, "ftplist", 4_836, 2025, 05, 16, 14, 13);
+    assert_entry(&entries[2], false, false, true, "timestamp", 11, 2025, 05, 16, 14, 13);
+    assert_entry(&entries[3], false, true, false, "patches/", 0, 2025, 05, 16, 14, 07);
+    assert_entry(&entries[73], false, true, false, "2.1/", 0, 2001, 06, 04, 15, 20);
+    assert_entry(&entries[74], false, true, false, "2.0/", 0, 2001, 06, 04, 14, 06);
+    assert_entry(&entries[75], false, true, false, "2.5/", 0, 2000, 07, 08, 02, 57);
 
     mock.assert();
 

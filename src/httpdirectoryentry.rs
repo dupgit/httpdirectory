@@ -1,4 +1,5 @@
 use crate::entry::Entry;
+use crate::httpdirectory::Sorting;
 use chrono::NaiveDate;
 use log::trace;
 use regex::Regex;
@@ -18,6 +19,11 @@ pub enum HttpDirectoryEntry {
 
     /// File with its `Entry` that collects its data (name, link, date and size)
     File(Entry),
+}
+
+pub enum CompareField {
+    Name,
+    Date,
 }
 
 impl HttpDirectoryEntry {
@@ -104,8 +110,10 @@ impl HttpDirectoryEntry {
         }
     }
 
+    /// Compares entries by the selected field from `CompareField` enum using
+    /// a sorting order as of `Sorting` enum
     #[must_use]
-    pub fn cmp_by_name(&self, other: &Self) -> Ordering {
+    pub fn cmp_by_field(&self, other: &Self, field: CompareField, order: &Sorting) -> Ordering {
         match (self, other) {
             (
                 HttpDirectoryEntry::ParentDirectory(_),
@@ -117,9 +125,12 @@ impl HttpDirectoryEntry {
             ) => Ordering::Greater,
             (HttpDirectoryEntry::ParentDirectory(_), HttpDirectoryEntry::ParentDirectory(_)) => Ordering::Equal,
             (
-                HttpDirectoryEntry::File(name) | HttpDirectoryEntry::Directory(name),
-                HttpDirectoryEntry::File(other_name) | HttpDirectoryEntry::Directory(other_name),
-            ) => name.cmp_by_name(other_name),
+                HttpDirectoryEntry::File(entry) | HttpDirectoryEntry::Directory(entry),
+                HttpDirectoryEntry::File(other_entry) | HttpDirectoryEntry::Directory(other_entry),
+            ) => match field {
+                CompareField::Name => entry.cmp_by_name(other_entry, order),
+                CompareField::Date => entry.cmp_by_date(other_entry, order),
+            },
         }
     }
 }
@@ -182,7 +193,10 @@ pub fn assert_entry(
 
 mod tests {
     use super::HttpDirectoryEntry;
-    use crate::httpdirectory;
+    use crate::{
+        httpdirectory::{self, Sorting},
+        httpdirectoryentry::CompareField,
+    };
     use std::cmp::Ordering;
 
     #[test]
@@ -218,7 +232,8 @@ mod tests {
         let parent1 = HttpDirectoryEntry::new("Parent directory", "", "-", "../");
         let parent2 = HttpDirectoryEntry::new("Parent directory", "", "-", "../");
 
-        assert_eq!(parent1.cmp_by_name(&parent2), Ordering::Equal);
+        assert_eq!(parent1.cmp_by_field(&parent2, CompareField::Name, &Sorting::Ascending), Ordering::Equal);
+        assert_eq!(parent1.cmp_by_field(&parent2, CompareField::Name, &Sorting::Descending), Ordering::Equal);
     }
 
     #[test]
@@ -226,16 +241,37 @@ mod tests {
         let parent1 = HttpDirectoryEntry::new("Parent directory", "", "-", "../");
         let file2 = HttpDirectoryEntry::new("filename", "2025-05-20 20:19", "5.0K", "filelink/");
 
-        assert_eq!(parent1.cmp_by_name(&file2), Ordering::Less);
-        assert_eq!(file2.cmp_by_name(&parent1), Ordering::Greater);
+        assert_eq!(parent1.cmp_by_field(&file2, CompareField::Name, &Sorting::Ascending), Ordering::Less);
+        assert_eq!(file2.cmp_by_field(&parent1, CompareField::Name, &Sorting::Ascending), Ordering::Greater);
+
+        // Ordering with a parent directory should not change: the parent directory is always at top
+        assert_eq!(parent1.cmp_by_field(&file2, CompareField::Name, &Sorting::Descending), Ordering::Less);
+        assert_eq!(file2.cmp_by_field(&parent1, CompareField::Name, &Sorting::Descending), Ordering::Greater);
     }
 
     #[test]
     fn test_httpdirectoryentry_dir_parent_directory_cmp_by_name() {
         let parent1 = HttpDirectoryEntry::new("Parent directory", "", "-", "../");
-        let dir2 = HttpDirectoryEntry::new("filename", "2025-05-20 20:19", "-", "filelink/");
+        let dir2 = HttpDirectoryEntry::new("dirname", "2025-05-20 20:19", "-", "dirlink/");
 
-        assert_eq!(parent1.cmp_by_name(&dir2), Ordering::Less);
-        assert_eq!(dir2.cmp_by_name(&parent1), Ordering::Greater);
+        assert_eq!(parent1.cmp_by_field(&dir2, CompareField::Name, &Sorting::Ascending), Ordering::Less);
+        assert_eq!(dir2.cmp_by_field(&parent1, CompareField::Name, &Sorting::Ascending), Ordering::Greater);
+
+        // Ordering with a parent directory should not change: the parent directory is always at top
+        assert_eq!(parent1.cmp_by_field(&dir2, CompareField::Name, &Sorting::Descending), Ordering::Less);
+        assert_eq!(dir2.cmp_by_field(&parent1, CompareField::Name, &Sorting::Descending), Ordering::Greater);
+    }
+
+    #[test]
+    fn test_httpdirectoryentry_file_cmp_by_date() {
+        let file1 = HttpDirectoryEntry::new("name", "2025-04-20 18:55", "5.0K", "link/");
+        let file2 = HttpDirectoryEntry::new("other name", "2025-05-20 20:19", "12G", "other_name/");
+
+        assert_eq!(file1.cmp_by_field(&file2, CompareField::Date, &Sorting::Ascending), Ordering::Less);
+        assert_eq!(file2.cmp_by_field(&file1, CompareField::Date, &Sorting::Ascending), Ordering::Greater);
+
+        // Here comparing two files the ordering must change
+        assert_eq!(file1.cmp_by_field(&file2, CompareField::Date, &Sorting::Descending), Ordering::Greater);
+        assert_eq!(file2.cmp_by_field(&file1, CompareField::Date, &Sorting::Descending), Ordering::Less);
     }
 }

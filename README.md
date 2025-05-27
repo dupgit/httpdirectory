@@ -34,9 +34,10 @@ DIR      -  2023-07-25 07:43  trixie/
 
 First obtain a directory from an url using `HttpDirectory::new(url)`
 method, then you can use `dirs()`, `files()`, `parent_directory()` or
-`filter_by_name()` to get respectively all directories, all files, the
-`ParentDirectory` or filtering by the name (with a Regex) of this
-`HttpDirectory` listing entries:
+`filter_by_name()`, `cd()`, `sort_by_name()`, `sort_by_date()` to get
+respectively all directories, all files, the `ParentDirectory`,
+filtering by the name (with a Regex), changing directory, sorting by
+name or by date of this `HttpDirectory` listing entries:
 
 ```rust
   use httpdirectory::httpdirectory::HttpDirectory;
@@ -46,3 +47,6 @@ method, then you can use `dirs()`, `files()`, `parent_directory()` or
     }
   }
 ```
+
+You can see [onedir example](examples/onedir.rs) for a small but
+more complete example.
