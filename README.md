@@ -35,10 +35,11 @@ DIR      -  2023-07-25 07:43  trixie/
 
 First obtain a directory from an url using `HttpDirectory::new(url)`
 method, then you can use `dirs()`, `files()`, `parent_directory()` or
-`filter_by_name()`, `cd()`, `sort_by_name()`, `sort_by_date()` to get
-respectively all directories, all files, the `ParentDirectory`,
-filtering by the name (with a Regex), changing directory, sorting by
-name or by date of this `HttpDirectory` listing entries:
+`filter_by_name()`, `cd()`, `sort_by_name()`, `sort_by_date()`,
+sort_by_size() to get respectively all directories, all files, the
+`ParentDirectory`, filtering by the name (with a Regex), changing
+directory, sorting by name, by date or by size of this `HttpDirectory`
+listing entries:
 
 ```rust
   use httpdirectory::httpdirectory::HttpDirectory;
