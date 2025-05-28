@@ -123,7 +123,10 @@ impl Entry {
         if self.size.contains('.') {
             match new_size.parse::<f64>() {
                 Ok(number) => {
-                    if number.signum().is_finite() {
+                    if number.signum().is_finite()
+                        && number < 18446744073709551615.0
+                        && number > -18446744073709551615.0
+                    {
                         // number is not Nan nor ∞
                         // We know that .abs() will return a positive value
                         // if number is greater than `usize::MAX` then number
@@ -201,6 +204,18 @@ mod tests {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "5.0K");
 
         assert_eq!(entry.apparent_size(), 5120);
+    }
+
+    #[test]
+    fn test_apparent_size_infinite() {
+        let entry = Entry::new(
+            "name",
+            "link",
+            "2025-05-20 20:19",
+            "999999999999999999999999999999999999999999999999999999999.0P",
+        );
+
+        assert_eq!(entry.apparent_size(), 0);
     }
 
     #[test]
