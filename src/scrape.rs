@@ -24,7 +24,7 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
         let col_selector = Selector::parse("td")?;
         let link_selector = Selector::parse("a")?;
         for row in table.select(&row_selector) {
-            let one_line: Vec<_> = row.select(&col_selector).map(|c| c).collect();
+            let one_line: Vec<_> = row.select(&col_selector).collect();
             let mut one_line_iter = one_line.iter();
 
             let mut name = vec![];
@@ -39,13 +39,7 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
             if let Some(first_col) = one_line_iter.next() {
                 let first_col_txt = first_col.text().collect::<Vec<_>>();
                 trace!("first_col: {first_col_txt:?}",);
-                if !first_col_txt.is_empty() {
-                    name = first_col_txt;
-                    // Text exists so we have a name, now getting the link
-                    for link_selected in first_col.select(&link_selector) {
-                        link = link_selected.value().attr("href").unwrap_or_default();
-                    }
-                } else {
+                if first_col_txt.is_empty() {
                     // First column was empty, the name should be in the second one
                     if let Some(name_col) = one_line_iter.next() {
                         // Second column is the name of the file or directory with its link
@@ -53,6 +47,12 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
                         for link_selected in name_col.select(&link_selector) {
                             link = link_selected.value().attr("href").unwrap_or_default();
                         }
+                    }
+                } else {
+                    name = first_col_txt;
+                    // Text exists so we have a name, now getting the link
+                    for link_selected in first_col.select(&link_selector) {
+                        link = link_selected.value().attr("href").unwrap_or_default();
                     }
                 }
                 trace!("name: {name:?}, link: {link}");
@@ -73,7 +73,7 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
             }
 
             trace!("date: {date:?}, size: {size:?}");
-            if name.len() > 0 && date.len() > 0 && size.len() > 0 {
+            if !name.is_empty() && !date.is_empty() && !size.is_empty() {
                 http_dir_entry.push(HttpDirectoryEntry::new(name[0], date[0], size[0], link));
             }
         }
@@ -103,16 +103,12 @@ fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirErr
                 if !new_line.is_empty() {
                     // Considering only non empty lines
                     trace!("{new_line}");
-                    let href = new_line
-                        .split("</a>")
-                        .collect::<Vec<&str>>()
-                        .into_iter()
-                        .map(|x| x.trim())
-                        .collect::<Vec<&str>>();
+                    let href =
+                        new_line.split("</a>").collect::<Vec<&str>>().into_iter().map(str::trim).collect::<Vec<&str>>();
                     trace!("{href:?}");
                     if href.len() >= 4 {
                         // Headers with Name, Last modified, Size, Description columns
-                        should_be_considered_valid = is_this_a_real_header(href);
+                        should_be_considered_valid = is_this_a_real_header(&href);
                     } else if href.len() >= 2 {
                         // Rows with a link and a name and the rest of the data (date, size and description)
                         let (link, name) = get_link_and_name(href[0]);
@@ -128,9 +124,8 @@ fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirErr
             if should_be_considered_valid {
                 // We have analyzed valid entries: no need to inspect other <pre> tags
                 return Ok(http_dir_entry);
-            } else {
-                debug!("Unable to get entry from this body (no headers ?):\n{body}");
-            }
+            };
+            debug!("Unable to get entry from this body (no headers ?):\n{body}");
         } else {
             debug!("Unable to get entry from this body (no <img> tag):\n{}", pre.inner_html());
         }
@@ -153,13 +148,12 @@ fn get_date_and_size(line: &str) -> (&str, &str) {
     let date = &line[0..index];
     let size_and_description = &line[index..];
 
-    let line_split: Vec<&str> = size_and_description.trim().split(" ").collect();
-    let size;
-    if line_split.len() >= 2 {
-        size = line_split[0];
+    let line_split: Vec<&str> = size_and_description.trim().split(' ').collect();
+    let size = if line_split.len() >= 2 {
+        line_split[0]
     } else {
-        size = size_and_description;
-    }
+        size_and_description
+    };
     trace!(" -> date: {date}, size: {size}");
     (date, size)
 }
@@ -200,7 +194,7 @@ fn get_link_and_name(column: &str) -> (&str, &str) {
 // Returns true if href vector contains
 // Name, Last modified, Size, Description
 // in this exact order
-fn is_this_a_real_header(href: Vec<&str>) -> bool {
+fn is_this_a_real_header(href: &[&str]) -> bool {
     let name = strip_until_greater(href[0]);
     let date = strip_until_greater(href[1]);
     let size = strip_until_greater(href[2]);
@@ -238,8 +232,7 @@ fn scrape_pre_simple(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError
             if !line.is_empty() {
                 // Considering only non empty lines
                 trace!("{line}");
-                let href =
-                    line.split("</a>").collect::<Vec<&str>>().into_iter().map(|x| x.trim()).collect::<Vec<&str>>();
+                let href = line.split("</a>").collect::<Vec<&str>>().into_iter().map(str::trim).collect::<Vec<&str>>();
                 trace!("{href:?}");
                 if href.len() >= 2 {
                     // Rows with a link and a name and may be the rest of the data (date, size and description)

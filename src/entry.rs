@@ -124,8 +124,8 @@ impl Entry {
             match new_size.parse::<f64>() {
                 Ok(number) => {
                     if number.signum().is_finite()
-                        && number < 18446744073709551615.0
-                        && number > -18446744073709551615.0
+                        && number < 18_446_744_073_709_551_615.0
+                        && number > -18_446_744_073_709_551_615.0
                     {
                         // number is not Nan nor ∞
                         // We know that .abs() will return a positive value
