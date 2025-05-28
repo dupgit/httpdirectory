@@ -311,9 +311,9 @@ mod tests {
         let entry1 = Entry::new("name", "link", "2025-05-21 03:45", "112");
         let entry2 = Entry::new("othername", "link", "2025-05-20 20:19", "112");
 
-        assert_eq!(entry1.cmp_by_name(&entry2, &Sorting::Ascending), Ordering::Less);
-        assert_eq!(entry2.cmp_by_name(&entry1, &Sorting::Ascending), Ordering::Greater);
-        assert_eq!(entry1.cmp_by_name(&entry2, &Sorting::Descending), Ordering::Greater);
-        assert_eq!(entry2.cmp_by_name(&entry1, &Sorting::Descending), Ordering::Less);
+        assert_eq!(entry1.cmp_by_date(&entry2, &Sorting::Ascending), Ordering::Greater);
+        assert_eq!(entry2.cmp_by_date(&entry1, &Sorting::Ascending), Ordering::Less);
+        assert_eq!(entry1.cmp_by_date(&entry2, &Sorting::Descending), Ordering::Less);
+        assert_eq!(entry2.cmp_by_date(&entry1, &Sorting::Descending), Ordering::Greater);
     }
 }
