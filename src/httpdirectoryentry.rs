@@ -24,6 +24,7 @@ pub enum HttpDirectoryEntry {
 pub enum CompareField {
     Name,
     Date,
+    Size,
 }
 
 impl HttpDirectoryEntry {
@@ -130,6 +131,7 @@ impl HttpDirectoryEntry {
             ) => match field {
                 CompareField::Name => entry.cmp_by_name(other_entry, order),
                 CompareField::Date => entry.cmp_by_date(other_entry, order),
+                CompareField::Size => entry.cmp_by_size(other_entry, order),
             },
         }
     }
@@ -273,5 +275,18 @@ mod tests {
         // Here comparing two files the ordering must change
         assert_eq!(file1.cmp_by_field(&file2, &CompareField::Date, &Sorting::Descending), Ordering::Greater);
         assert_eq!(file2.cmp_by_field(&file1, &CompareField::Date, &Sorting::Descending), Ordering::Less);
+    }
+
+    #[test]
+    fn test_httpdirectoryentry_file_cmp_by_size() {
+        let file1 = HttpDirectoryEntry::new("name", "2025-04-20 18:55", "5.0K", "link/");
+        let file2 = HttpDirectoryEntry::new("other name", "2025-05-20 20:19", "12G", "other_name/");
+
+        assert_eq!(file1.cmp_by_field(&file2, &CompareField::Size, &Sorting::Ascending), Ordering::Less);
+        assert_eq!(file2.cmp_by_field(&file1, &CompareField::Size, &Sorting::Ascending), Ordering::Greater);
+
+        // Here comparing two files the ordering must change
+        assert_eq!(file1.cmp_by_field(&file2, &CompareField::Size, &Sorting::Descending), Ordering::Greater);
+        assert_eq!(file2.cmp_by_field(&file1, &CompareField::Size, &Sorting::Descending), Ordering::Less);
     }
 }

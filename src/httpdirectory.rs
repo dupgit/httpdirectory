@@ -65,6 +65,13 @@ impl HttpDirectory {
         self
     }
 
+    /// Sorts the Directory entries by their sizes
+    #[must_use]
+    pub fn sort_by_size(mut self, order: &Sorting) -> Self {
+        self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Size, order));
+        self
+    }
+
     /// Returns only directories of the `HttpDirectory` listing
     #[must_use]
     pub fn dirs(mut self) -> Self {
@@ -395,6 +402,65 @@ DIR      -  2025-01-02 12:32  entry4
 FILE  123M  2024-12-08 08:22  debian4
 FILE  2345  2023-01-01 00:00  files2
 FILE   123  1987-10-09 04:37  file1
+"##
+        );
+    }
+
+    #[test]
+    fn test_httpdirectory_sort_by_size() {
+        let httpdir = prepare_httpdir().sort_by_size(&Sorting::Ascending);
+
+        let entries = httpdir.entries();
+        assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
+        assert_entry(&entries[1], false, true, false, "dir1", 0, 2025, 01, 26, 12, 54);
+        assert_entry(&entries[2], false, true, false, "test2", 0, 2025, 02, 16, 13, 37);
+        assert_entry(&entries[3], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
+        assert_entry(&entries[4], false, true, false, "entry4", 0, 2025, 01, 02, 12, 32);
+        assert_entry(&entries[5], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
+        assert_entry(&entries[6], false, false, true, "files2", 2345, 2023, 01, 01, 00, 00);
+        assert_entry(&entries[7], false, false, true, "entry3", 68608, 2025, 07, 17, 23, 59);
+        assert_entry(&entries[8], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
+
+        let output = format!("{httpdir}");
+        assert_eq!(
+            output,
+            r##"
+DIR      -                    ..
+DIR      -  2025-01-26 12:54  dir1
+DIR      -  2025-02-16 13:37  test2
+DIR      -  2025-03-01 07:11  debian3
+DIR      -  2025-01-02 12:32  entry4
+FILE   123  1987-10-09 04:37  file1
+FILE  2345  2023-01-01 00:00  files2
+FILE   67K  2025-07-17 23:59  entry3
+FILE  123M  2024-12-08 08:22  debian4
+"##
+        );
+        let httpdir = httpdir.sort_by_size(&Sorting::Descending);
+        let entries = httpdir.entries();
+        assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
+        assert_entry(&entries[1], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
+        assert_entry(&entries[2], false, false, true, "entry3", 68608, 2025, 07, 17, 23, 59);
+        assert_entry(&entries[3], false, false, true, "files2", 2345, 2023, 01, 01, 00, 00);
+        assert_entry(&entries[4], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
+        assert_entry(&entries[5], false, true, false, "dir1", 0, 2025, 01, 26, 12, 54);
+        assert_entry(&entries[6], false, true, false, "test2", 0, 2025, 02, 16, 13, 37);
+        assert_entry(&entries[7], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
+        assert_entry(&entries[8], false, true, false, "entry4", 0, 2025, 01, 02, 12, 32);
+
+        let output = format!("{httpdir}");
+        assert_eq!(
+            output,
+            r##"
+DIR      -                    ..
+FILE  123M  2024-12-08 08:22  debian4
+FILE   67K  2025-07-17 23:59  entry3
+FILE  2345  2023-01-01 00:00  files2
+FILE   123  1987-10-09 04:37  file1
+DIR      -  2025-01-26 12:54  dir1
+DIR      -  2025-02-16 13:37  test2
+DIR      -  2025-03-01 07:11  debian3
+DIR      -  2025-01-02 12:32  entry4
 "##
         );
     }

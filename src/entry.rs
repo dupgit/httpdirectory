@@ -182,6 +182,14 @@ impl Entry {
             Sorting::Descending => other.date.cmp(&self.date),
         }
     }
+
+    #[must_use]
+    pub fn cmp_by_size(&self, other: &Self, order: &Sorting) -> Ordering {
+        match order {
+            Sorting::Ascending => self.apparent_size().cmp(&other.apparent_size()),
+            Sorting::Descending => other.apparent_size().cmp(&self.apparent_size()),
+        }
+    }
 }
 
 impl fmt::Display for Entry {
@@ -315,5 +323,16 @@ mod tests {
         assert_eq!(entry2.cmp_by_date(&entry1, &Sorting::Ascending), Ordering::Less);
         assert_eq!(entry1.cmp_by_date(&entry2, &Sorting::Descending), Ordering::Less);
         assert_eq!(entry2.cmp_by_date(&entry1, &Sorting::Descending), Ordering::Greater);
+    }
+
+    #[test]
+    fn test_cmp_by_size() {
+        let entry1 = Entry::new("name", "link", "2025-05-21 03:45", "4.0k");
+        let entry2 = Entry::new("othername", "link", "2025-05-20 20:19", "112");
+
+        assert_eq!(entry1.cmp_by_size(&entry2, &Sorting::Ascending), Ordering::Less);
+        assert_eq!(entry2.cmp_by_size(&entry1, &Sorting::Ascending), Ordering::Greater);
+        assert_eq!(entry1.cmp_by_size(&entry2, &Sorting::Descending), Ordering::Greater);
+        assert_eq!(entry2.cmp_by_size(&entry1, &Sorting::Descending), Ordering::Less);
     }
 }
