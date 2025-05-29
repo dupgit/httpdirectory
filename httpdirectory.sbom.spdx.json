@@ -1,13 +1,13 @@
 {
   "SPDXID": "SPDXRef-DOCUMENT",
   "creationInfo": {
-    "created": "2025-05-27T20:08:58.205Z",
+    "created": "2025-05-29T09:18:04.625Z",
     "creators": [
       "Tool: cargo-sbom-v0.9.1"
     ]
   },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-089fde0f-8efb-4844-bbc2-183bcf4e6629",
+  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-7c8d51e0-d53e-4f67-b599-6b4275277fac",
   "files": [
     {
       "SPDXID": "SPDXRef-File-httpdirectory",
@@ -1003,13 +1003,13 @@
       "versionInfo": "1.10.1"
     },
     {
-      "SPDXID": "SPDXRef-Package-httpdirectory-0.7.0",
+      "SPDXID": "SPDXRef-Package-httpdirectory-0.8.0",
       "description": "Crawls directory webpage (HTTP index) into a structure",
       "downloadLocation": "NONE",
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "httpdirectory",
-      "versionInfo": "0.7.0"
+      "versionInfo": "0.8.0"
     },
     {
       "SPDXID": "SPDXRef-Package-hyper-1.6.0",
@@ -1687,20 +1687,20 @@
       "versionInfo": "1.70.1"
     },
     {
-      "SPDXID": "SPDXRef-Package-openssl-0.10.72",
+      "SPDXID": "SPDXRef-Package-openssl-0.10.73",
       "description": "OpenSSL bindings",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/openssl@0.10.72",
+          "referenceLocator": "pkg:cargo/openssl@0.10.73",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "Apache-2.0",
       "licenseDeclared": "Apache-2.0",
       "name": "openssl",
-      "versionInfo": "0.10.72"
+      "versionInfo": "0.10.73"
     },
     {
       "SPDXID": "SPDXRef-Package-openssl-macros-0.1.1",
@@ -1736,20 +1736,20 @@
       "versionInfo": "0.1.6"
     },
     {
-      "SPDXID": "SPDXRef-Package-openssl-sys-0.9.108",
+      "SPDXID": "SPDXRef-Package-openssl-sys-0.9.109",
       "description": "FFI bindings to OpenSSL",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/openssl-sys@0.9.108",
+          "referenceLocator": "pkg:cargo/openssl-sys@0.9.109",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT",
       "licenseDeclared": "MIT",
       "name": "openssl-sys",
-      "versionInfo": "0.9.108"
+      "versionInfo": "0.9.109"
     },
     {
       "SPDXID": "SPDXRef-Package-parking_lot-0.12.3",
@@ -2109,20 +2109,20 @@
       "versionInfo": "0.8.5"
     },
     {
-      "SPDXID": "SPDXRef-Package-reqwest-0.12.16",
+      "SPDXID": "SPDXRef-Package-reqwest-0.12.18",
       "description": "higher level HTTP client library",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/reqwest@0.12.16",
+          "referenceLocator": "pkg:cargo/reqwest@0.12.18",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "reqwest",
-      "versionInfo": "0.12.16"
+      "versionInfo": "0.12.18"
     },
     {
       "SPDXID": "SPDXRef-Package-ring-0.17.14",
@@ -3827,7 +3827,7 @@
   ],
   "relationships": [
     {
-      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.7.0",
+      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.8.0",
       "relationshipType": "GENERATED_FROM",
       "spdxElementId": "SPDXRef-File-httpdirectory"
     },
@@ -4364,47 +4364,47 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-chrono-0.4.41",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.7.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-const_format-0.2.34",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.7.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-env_logger-0.11.8",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.7.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-log-0.4.27",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.7.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-regex-1.11.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.7.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-reqwest-0.12.16",
+      "relatedSpdxElement": "SPDXRef-Package-reqwest-0.12.18",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.7.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-scraper-0.23.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.7.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tokio-1.45.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.7.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-url-2.5.4",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.7.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-bytes-1.10.1",
@@ -5012,7 +5012,7 @@
       "spdxElementId": "SPDXRef-Package-native-tls-0.2.14"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-openssl-0.10.72",
+      "relatedSpdxElement": "SPDXRef-Package-openssl-0.10.73",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-native-tls-0.2.14"
     },
@@ -5022,7 +5022,7 @@
       "spdxElementId": "SPDXRef-Package-native-tls-0.2.14"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-openssl-sys-0.9.108",
+      "relatedSpdxElement": "SPDXRef-Package-openssl-sys-0.9.109",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-native-tls-0.2.14"
     },
@@ -5054,37 +5054,37 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-openssl-0.10.72"
+      "spdxElementId": "SPDXRef-Package-openssl-0.10.73"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-cfg-if-1.0.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-openssl-0.10.72"
+      "spdxElementId": "SPDXRef-Package-openssl-0.10.73"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-foreign-types-0.3.2",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-openssl-0.10.72"
+      "spdxElementId": "SPDXRef-Package-openssl-0.10.73"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-libc-0.2.172",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-openssl-0.10.72"
+      "spdxElementId": "SPDXRef-Package-openssl-0.10.73"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-once_cell-1.21.3",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-openssl-0.10.72"
+      "spdxElementId": "SPDXRef-Package-openssl-0.10.73"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-openssl-macros-0.1.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-openssl-0.10.72"
+      "spdxElementId": "SPDXRef-Package-openssl-0.10.73"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-openssl-sys-0.9.108",
+      "relatedSpdxElement": "SPDXRef-Package-openssl-sys-0.9.109",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-openssl-0.10.72"
+      "spdxElementId": "SPDXRef-Package-openssl-0.10.73"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-proc-macro2-1.0.95",
@@ -5104,7 +5104,7 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-libc-0.2.172",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-openssl-sys-0.9.108"
+      "spdxElementId": "SPDXRef-Package-openssl-sys-0.9.109"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-lock_api-0.4.12",
@@ -5259,172 +5259,172 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-base64-0.22.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-bytes-1.10.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-encoding_rs-0.8.35",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-futures-core-0.3.31",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-h2-0.4.10",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-http-1.3.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-http-body-1.0.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-http-body-util-0.1.3",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-hyper-1.6.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-hyper-rustls-0.27.6",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-hyper-tls-0.6.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-hyper-util-0.1.13",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-ipnet-2.11.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-js-sys-0.3.77",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-log-0.4.27",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-mime-0.3.17",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-native-tls-0.2.14",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-once_cell-1.21.3",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-percent-encoding-2.3.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-pin-project-lite-0.2.16",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-rustls-pki-types-1.12.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-serde-1.0.219",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-serde_json-1.0.140",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-serde_urlencoded-0.7.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-sync_wrapper-1.0.2",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tokio-1.45.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tokio-native-tls-0.3.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tower-0.5.2",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tower-http-0.6.4",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tower-service-0.3.3",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-url-2.5.4",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-wasm-bindgen-0.2.100",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-wasm-bindgen-futures-0.4.50",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-web-sys-0.3.77",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-reqwest-0.12.16"
+      "spdxElementId": "SPDXRef-Package-reqwest-0.12.18"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-cfg-if-1.0.0",
