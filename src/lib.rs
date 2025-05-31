@@ -18,6 +18,8 @@ pub mod httpdirectoryentry;
 /// Module that helps storing all information about the entry (name, date, size and link)
 pub mod entry;
 
+pub mod stats;
+
 /// User Agent used by httpdirectory that should be formatted
 /// "httpdirectory/{}" where {} is the version of the library
 pub const HTTPDIR_USER_AGENT: &str = formatcp!("httpdirectory/{}", env!("CARGO_PKG_VERSION"));

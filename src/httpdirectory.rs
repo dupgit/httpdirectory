@@ -2,6 +2,7 @@ use crate::error::HttpDirError;
 use crate::httpdirectoryentry::{CompareField, HttpDirectoryEntry};
 use crate::requests::{Request, join_url};
 use crate::scrape::scrape_body;
+use crate::stats::Stats;
 use log::{debug, error};
 use regex::Regex;
 use std::fmt;
@@ -89,6 +90,17 @@ impl HttpDirectory {
         //self.entries = self.entries.into_iter().filter(|e| e.is_parent_directory()).collect();
         self.entries = self.entries.into_iter().filter(HttpDirectoryEntry::is_parent_directory).collect();
         self
+    }
+
+    /// Returns the `Stats` (ie the number of files (with total
+    /// apparent size), directories and parent directories) of
+    /// the `HttpDirectory` structure
+    pub fn stats(&self) -> Stats {
+        let mut stats = Stats::new();
+        for e in self.entries() {
+            stats.count(e);
+        }
+        stats
     }
 
     /// Filters the `HttpDirectory` listing by filtering names of each
@@ -460,5 +472,16 @@ DIR      -  2025-03-01 07:11  debian3
 DIR      -  2025-01-02 12:32  entry4
 "##
         );
+    }
+
+    #[test]
+    fn test_httpdirectory_stats() {
+        let httpdir = prepare_httpdir();
+        let stats = httpdir.stats();
+
+        assert_eq!(stats.parent_dir, 1);
+        assert_eq!(stats.dirs, 4);
+        assert_eq!(stats.files, 4);
+        assert_eq!(stats.total_size, 129_045_924);
     }
 }
