@@ -23,7 +23,14 @@ pub struct Entry {
 // with an array of known formats
 fn try_parse_date(date: &str) -> Option<NaiveDateTime> {
     // formats that respectively parses 2023-12-03 17:33, 05-Apr-2024 11:59, 2021-May-25 20:15
-    let parse_format = ["%Y-%m-%d %H:%M", "%d-%b-%Y %H:%M", "%Y-%b-%d %H:%M"];
+    let parse_format = [
+        "%Y-%m-%d %H:%M",
+        "%d-%b-%Y %H:%M",
+        "%Y-%b-%d %H:%M",
+        "%Y-%m-%d %H:%M:%S",
+        "%d-%b-%Y %H:%M:%S",
+        "%Y-%b-%d %H:%M:%S",
+    ];
 
     for pf in parse_format {
         match NaiveDateTime::parse_from_str(date, pf) {
