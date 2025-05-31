@@ -104,4 +104,44 @@ mod test {
         assert_eq!(stats.with_date, 2);
         assert_eq!(stats.without_date, 1);
     }
+
+    #[test]
+    fn test_stats_output() {
+        let mut stats = Stats::new();
+        let httpdirectoryentry = HttpDirectoryEntry::new("name", "2025-05-31 16:58", "3.1K", "name/");
+        stats.count(&httpdirectoryentry);
+        let output = r##"Parent directory: 0
+Directories: 0
+Files: 1
+Total apparent file sizes: 3174
+Entries with dates: 1
+Entries without any date: 0
+"##;
+
+        assert_eq!(stats.to_string(), output);
+    }
+
+    #[test]
+    fn test_stats_count_no_date() {
+        let mut stats = Stats::new();
+        let httpdirectoryentry = HttpDirectoryEntry::new("name", "", "-", "name/");
+        stats.count(&httpdirectoryentry);
+
+        assert_eq!(stats.parent_dir, 0);
+        assert_eq!(stats.dirs, 1);
+        assert_eq!(stats.files, 0);
+        assert_eq!(stats.total_size, 0);
+        assert_eq!(stats.with_date, 0);
+        assert_eq!(stats.without_date, 1);
+
+        let httpdirectoryentry = HttpDirectoryEntry::new("name", "", "3.1K", "name/");
+        stats.count(&httpdirectoryentry);
+
+        assert_eq!(stats.parent_dir, 0);
+        assert_eq!(stats.dirs, 1);
+        assert_eq!(stats.files, 1);
+        assert_eq!(stats.total_size, 3174);
+        assert_eq!(stats.with_date, 0);
+        assert_eq!(stats.without_date, 2);
+    }
 }
