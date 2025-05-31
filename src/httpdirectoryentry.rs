@@ -44,7 +44,7 @@ impl HttpDirectoryEntry {
 
         // `size` may be flipped with `date` so using the one guessed in entry
         // that is likely to be more accurate
-        if entry.size().contains('-') {
+        if entry.size().contains('-') || entry.size().contains('—') {
             HttpDirectoryEntry::Directory(entry)
         } else {
             HttpDirectoryEntry::File(entry)
