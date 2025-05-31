@@ -1,13 +1,13 @@
 {
   "SPDXID": "SPDXRef-DOCUMENT",
   "creationInfo": {
-    "created": "2025-05-29T09:18:04.625Z",
+    "created": "2025-05-31T21:23:00.639Z",
     "creators": [
       "Tool: cargo-sbom-v0.9.1"
     ]
   },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-7c8d51e0-d53e-4f67-b599-6b4275277fac",
+  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-0ac2505f-5d10-4360-a5ff-3a9c1962aa9b",
   "files": [
     {
       "SPDXID": "SPDXRef-File-httpdirectory",
@@ -350,6 +350,23 @@
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "colorchoice",
       "versionInfo": "1.0.3"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-colored-3.0.0",
+      "description": "The most simple way to add colors in your terminal",
+      "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:cargo/colored@3.0.0",
+          "referenceType": "purl"
+        }
+      ],
+      "homepage": "https://github.com/mackwic/colored",
+      "licenseConcluded": "MPL-2.0",
+      "licenseDeclared": "MPL-2.0",
+      "name": "colored",
+      "versionInfo": "3.0.0"
     },
     {
       "SPDXID": "SPDXRef-Package-const_format-0.2.34",
@@ -1003,13 +1020,13 @@
       "versionInfo": "1.10.1"
     },
     {
-      "SPDXID": "SPDXRef-Package-httpdirectory-0.8.0",
+      "SPDXID": "SPDXRef-Package-httpdirectory-0.9.0",
       "description": "Crawls directory webpage (HTTP index) into a structure",
       "downloadLocation": "NONE",
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "httpdirectory",
-      "versionInfo": "0.8.0"
+      "versionInfo": "0.9.0"
     },
     {
       "SPDXID": "SPDXRef-Package-hyper-1.6.0",
@@ -1443,20 +1460,20 @@
       "versionInfo": "0.8.0"
     },
     {
-      "SPDXID": "SPDXRef-Package-lock_api-0.4.12",
+      "SPDXID": "SPDXRef-Package-lock_api-0.4.13",
       "description": "Wrappers to create fully-featured Mutex and RwLock types. Compatible with no_std.",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/lock_api@0.4.12",
+          "referenceLocator": "pkg:cargo/lock_api@0.4.13",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "lock_api",
-      "versionInfo": "0.4.12"
+      "versionInfo": "0.4.13"
     },
     {
       "SPDXID": "SPDXRef-Package-log-0.4.27",
@@ -1752,36 +1769,36 @@
       "versionInfo": "0.9.109"
     },
     {
-      "SPDXID": "SPDXRef-Package-parking_lot-0.12.3",
+      "SPDXID": "SPDXRef-Package-parking_lot-0.12.4",
       "description": "More compact and efficient implementations of the standard synchronization primitives.",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/parking_lot@0.12.3",
+          "referenceLocator": "pkg:cargo/parking_lot@0.12.4",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "parking_lot",
-      "versionInfo": "0.12.3"
+      "versionInfo": "0.12.4"
     },
     {
-      "SPDXID": "SPDXRef-Package-parking_lot_core-0.9.10",
+      "SPDXID": "SPDXRef-Package-parking_lot_core-0.9.11",
       "description": "An advanced API for creating custom synchronization primitives.",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/parking_lot_core@0.9.10",
+          "referenceLocator": "pkg:cargo/parking_lot_core@0.9.11",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "parking_lot_core",
-      "versionInfo": "0.9.10"
+      "versionInfo": "0.9.11"
     },
     {
       "SPDXID": "SPDXRef-Package-percent-encoding-2.3.1",
@@ -3827,7 +3844,7 @@
   ],
   "relationships": [
     {
-      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.8.0",
+      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.9.0",
       "relationshipType": "GENERATED_FROM",
       "spdxElementId": "SPDXRef-File-httpdirectory"
     },
@@ -3970,6 +3987,11 @@
       "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.1",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-chrono-0.4.41"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-windows-sys-0.59.0",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-colored-3.0.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-const_format_proc_macros-0.2.34",
@@ -4364,47 +4386,52 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-chrono-0.4.41",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-colored-3.0.0",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-const_format-0.2.34",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-env_logger-0.11.8",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-log-0.4.27",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-regex-1.11.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-reqwest-0.12.18",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-scraper-0.23.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tokio-1.45.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-url-2.5.4",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.8.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-bytes-1.10.1",
@@ -4939,7 +4966,7 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-scopeguard-1.2.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-lock_api-0.4.12"
+      "spdxElementId": "SPDXRef-Package-lock_api-0.4.13"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-value-bag-1.11.1",
@@ -5107,39 +5134,39 @@
       "spdxElementId": "SPDXRef-Package-openssl-sys-0.9.109"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-lock_api-0.4.12",
+      "relatedSpdxElement": "SPDXRef-Package-lock_api-0.4.13",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-parking_lot-0.12.3"
+      "spdxElementId": "SPDXRef-Package-parking_lot-0.12.4"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-parking_lot_core-0.9.10",
+      "relatedSpdxElement": "SPDXRef-Package-parking_lot_core-0.9.11",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-parking_lot-0.12.3"
+      "spdxElementId": "SPDXRef-Package-parking_lot-0.12.4"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-cfg-if-1.0.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-parking_lot_core-0.9.10"
+      "spdxElementId": "SPDXRef-Package-parking_lot_core-0.9.11"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-libc-0.2.172",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-parking_lot_core-0.9.10"
+      "spdxElementId": "SPDXRef-Package-parking_lot_core-0.9.11"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-redox_syscall-0.5.12",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-parking_lot_core-0.9.10"
+      "spdxElementId": "SPDXRef-Package-parking_lot_core-0.9.11"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-smallvec-1.15.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-parking_lot_core-0.9.10"
+      "spdxElementId": "SPDXRef-Package-parking_lot_core-0.9.11"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-windows-targets-0.52.6",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-parking_lot_core-0.9.10"
+      "spdxElementId": "SPDXRef-Package-parking_lot_core-0.9.11"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-phf_macros-0.11.3",
@@ -5732,7 +5759,7 @@
       "spdxElementId": "SPDXRef-Package-string_cache-0.8.9"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-parking_lot-0.12.3",
+      "relatedSpdxElement": "SPDXRef-Package-parking_lot-0.12.4",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-string_cache-0.8.9"
     },
