@@ -1,4 +1,5 @@
 use crate::httpdirectoryentry::HttpDirectoryEntry;
+use std::fmt;
 
 #[derive(Default, Debug)]
 pub struct Stats {
@@ -38,6 +39,18 @@ impl Stats {
             }
         }
         self
+    }
+}
+
+impl fmt::Display for Stats {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        writeln!(f, "Parent directory: {}", self.parent_dir)?;
+        writeln!(f, "Directories: {}", self.dirs)?;
+        writeln!(f, "Files: {}", self.files)?;
+        writeln!(f, "Total apparent file sizes: {}", self.total_size)?;
+        writeln!(f, "Entries with dates: {}", self.with_date)?;
+        writeln!(f, "Entries without any date: {}", self.without_date)?;
+        Ok(())
     }
 }
 
