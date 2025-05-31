@@ -205,8 +205,8 @@ impl Entry {
 impl fmt::Display for Entry {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self.date {
-            Some(date) => write!(f, "{:>5}  {}  {}", self.size, date.format("%Y-%m-%d %H:%M"), self.name),
-            None => write!(f, "{:>5}  {:>16}  {}", self.size, "", self.name),
+            Some(date) => write!(f, "{:>8}  {}  {}", self.size, date.format("%Y-%m-%d %H:%M"), self.name),
+            None => write!(f, "{:>8}  {:>16}  {}", self.size, "", self.name),
         }
     }
 }
@@ -242,7 +242,7 @@ mod tests {
     fn test_entry_output() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "5.0K");
         let output = format!("{entry}");
-        assert_eq!(output, " 5.0K  2025-05-20 20:19  name");
+        assert_eq!(output, "    5.0K  2025-05-20 20:19  name");
     }
 
     #[test]
@@ -312,7 +312,7 @@ mod tests {
     fn test_entry_output_wrong_date_format() {
         let entry = Entry::new("name", "link", "05-2025-20 20:19", "12.0K");
         let output = format!("{entry}");
-        assert_eq!(output, "12.0K                    name");
+        assert_eq!(output, "   12.0K                    name");
     }
 
     #[test]
