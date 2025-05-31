@@ -32,7 +32,11 @@ impl HttpDirectoryEntry {
     /// string slices
     pub(crate) fn new(name: &str, date: &str, size: &str, link: &str) -> Self {
         trace!("name: {name}, date: {date}, size: {size}, link: {link}");
-        if name.to_lowercase() == "parent directory" || name.to_lowercase() == "parent directory/" {
+        if name.to_lowercase() == "parent directory"
+            || name.to_lowercase() == "parent directory/"
+            || link.to_lowercase() == ".."
+            || link.to_lowercase() == "../"
+        {
             return HttpDirectoryEntry::ParentDirectory(link.to_string());
         }
 

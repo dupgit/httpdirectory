@@ -37,13 +37,15 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
             // has no icon column but a text one it is likely to be the name of
             // the file or directory along with it's link
             if let Some(first_col) = one_line_iter.next() {
-                let first_col_txt = first_col.text().collect::<Vec<_>>();
+                let mut first_col_txt = first_col.text().collect::<Vec<_>>();
+                first_col_txt = remove_empty_cell(first_col_txt);
                 trace!("first_col: {first_col_txt:?}",);
                 if first_col_txt.is_empty() {
                     // First column was empty, the name should be in the second one
                     if let Some(name_col) = one_line_iter.next() {
                         // Second column is the name of the file or directory with its link
                         name = name_col.text().collect::<Vec<_>>();
+                        name = remove_empty_cell(name);
                         for link_selected in name_col.select(&link_selector) {
                             link = link_selected.value().attr("href").unwrap_or_default();
                         }
@@ -63,6 +65,7 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
             // handles this
             if let Some(date_col) = one_line_iter.next() {
                 date = date_col.text().collect::<Vec<_>>();
+                date = remove_empty_cell(date);
             }
 
             // Fourth column contains the size of the file (' - ' for a
@@ -70,11 +73,18 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
             // (Entry::new() handles this
             if let Some(size_col) = one_line_iter.next() {
                 size = size_col.text().collect::<Vec<_>>();
+                size = remove_empty_cell(size);
             }
 
             trace!("date: {date:?}, size: {size:?}");
             if !name.is_empty() && !date.is_empty() && !size.is_empty() {
                 http_dir_entry.push(HttpDirectoryEntry::new(name[0], date[0], size[0], link));
+            } else if date.is_empty() && !size.is_empty() && !name.is_empty() {
+                // date may be empty for a parent directory for instance
+                http_dir_entry.push(HttpDirectoryEntry::new(name[0], "", size[0], link));
+            } else if date.is_empty() && size.is_empty() && !name.is_empty() {
+                // date and size may be empty for a parent directory for instance
+                http_dir_entry.push(HttpDirectoryEntry::new(name[0], "", " - ", link));
             }
         }
     }
@@ -131,6 +141,11 @@ fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirErr
         }
     }
     Ok(http_dir_entry)
+}
+
+fn remove_empty_cell(mut vector: Vec<&str>) -> Vec<&str> {
+    vector.retain(|v| !v.trim().is_empty());
+    vector
 }
 
 // Forms of the line:
