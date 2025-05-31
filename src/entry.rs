@@ -101,33 +101,34 @@ impl Entry {
     pub fn apparent_size(&self) -> usize {
         let real_size: usize;
         let new_size;
-        if self.size.contains('-') {
+        let my_size = self.size().to_lowercase();
+        if my_size.contains('-') {
             // Directory
             real_size = 0;
-            new_size = self.size.to_string();
-        } else if self.size.contains('K') {
+            new_size = my_size.to_string();
+        } else if my_size.contains('k') {
             real_size = 1024;
-            new_size = self.size.replace('K', "");
-        } else if self.size.contains('M') {
+            new_size = my_size.replace('k', "");
+        } else if my_size.contains('m') {
             real_size = 1_048_576;
-            new_size = self.size.replace('M', "");
-        } else if self.size.contains('G') {
+            new_size = my_size.replace('m', "");
+        } else if my_size.contains('g') {
             real_size = 1_073_741_824;
-            new_size = self.size.replace('G', "");
-        } else if self.size.contains('T') {
+            new_size = my_size.replace('g', "");
+        } else if my_size.contains('t') {
             real_size = 1_099_511_627_776;
-            new_size = self.size.replace('T', "");
-        } else if self.size.contains('P') {
+            new_size = my_size.replace('t', "");
+        } else if my_size.contains('p') {
             real_size = 1_125_899_906_842_624;
-            new_size = self.size.replace('P', "");
+            new_size = my_size.replace('p', "");
         } else {
             // size may not have any modifier and be expressed
             // directly in bytes
             real_size = 1;
-            new_size = self.size.to_string();
+            new_size = my_size.to_string();
         }
 
-        if self.size.contains('.') {
+        if my_size.contains('.') {
             match new_size.parse::<f64>() {
                 Ok(number) => {
                     if number.signum().is_finite()
@@ -138,7 +139,7 @@ impl Entry {
                         // We know that .abs() will return a positive value
                         // if number is greater than `usize::MAX` then number
                         // is truncated to usize::MAX
-                        real_size * (number.abs() as usize)
+                        real_size * ((number.abs() * 10.0) as usize) / 10
                     } else {
                         0
                     }
@@ -217,8 +218,10 @@ mod tests {
     #[test]
     fn test_apparent_size_float() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "5.0K");
-
         assert_eq!(entry.apparent_size(), 5120);
+
+        let entry = Entry::new("name", "link", "2025-05-20 20:19", "5.3k");
+        assert_eq!(entry.apparent_size(), 5427);
     }
 
     #[test]
@@ -337,9 +340,9 @@ mod tests {
         let entry1 = Entry::new("name", "link", "2025-05-21 03:45", "4.0k");
         let entry2 = Entry::new("othername", "link", "2025-05-20 20:19", "112");
 
-        assert_eq!(entry1.cmp_by_size(&entry2, &Sorting::Ascending), Ordering::Less);
-        assert_eq!(entry2.cmp_by_size(&entry1, &Sorting::Ascending), Ordering::Greater);
-        assert_eq!(entry1.cmp_by_size(&entry2, &Sorting::Descending), Ordering::Greater);
-        assert_eq!(entry2.cmp_by_size(&entry1, &Sorting::Descending), Ordering::Less);
+        assert_eq!(entry1.cmp_by_size(&entry2, &Sorting::Ascending), Ordering::Greater);
+        assert_eq!(entry2.cmp_by_size(&entry1, &Sorting::Ascending), Ordering::Less);
+        assert_eq!(entry1.cmp_by_size(&entry2, &Sorting::Descending), Ordering::Less);
+        assert_eq!(entry2.cmp_by_size(&entry1, &Sorting::Descending), Ordering::Greater);
     }
 }
