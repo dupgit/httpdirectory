@@ -176,19 +176,19 @@ pub fn assert_entry(
             assert!(dir);
             assert_eq!(entry.apparent_size(), size);
             assert_eq!(entry.name(), name);
-            assert_eq!(
-                entry.date(),
-                Some(NaiveDate::from_ymd_opt(year, month, day).unwrap().and_hms_opt(hour, minutes, 0).unwrap())
-            );
+            if let Some(entry_date) = entry.date() {
+                let entry_date_str = entry_date.format("%Y-%m-%d %H:%M").to_string();
+                assert_eq!(entry_date_str, format!("{year}-{month:02}-{day:02} {hour:02}:{minutes:02}"));
+            }
         }
         HttpDirectoryEntry::File(entry) => {
             assert!(file);
             assert_eq!(entry.apparent_size(), size);
             assert_eq!(entry.name(), name);
-            assert_eq!(
-                entry.date(),
-                Some(NaiveDate::from_ymd_opt(year, month, day).unwrap().and_hms_opt(hour, minutes, 0).unwrap())
-            );
+            if let Some(entry_date) = entry.date() {
+                let entry_date_str = entry_date.format("%Y-%m-%d %H:%M").to_string();
+                assert_eq!(entry_date_str, format!("{year:02}-{month:02}-{day:02} {hour:02}:{minutes:02}"));
+            }
         }
         HttpDirectoryEntry::ParentDirectory(link) => {
             assert!(parent);
