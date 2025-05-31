@@ -81,6 +81,7 @@ impl Entry {
             guessed_size = size; // size here is assumed to be "correct" somehow
         }
         let date = ndt_date;
+        trace!("name: {name}, date: {date:?}, size: {guessed_size}, link: {link}");
 
         Entry {
             name,
