@@ -20,9 +20,6 @@ pub enum Sorting {
     Descending,
 }
 
-// @todo: implement sorting by size, date, name
-// @todo: implement cd() function to go to a specific
-//        directory if possible
 // @todo: ? implement an iterator ?
 impl HttpDirectory {
     /// Crawls the `url` and returns (if no error occurred) the
