@@ -225,9 +225,9 @@ DIR      -  2025-01-02 12:32  entry4
 
         let entries = httpdir.entries();
         assert_entry(&entries[0], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
-        assert_entry(&entries[1], false, false, true, "files2", 2345, 2023, 01, 01, 00, 00);
-        assert_entry(&entries[2], false, false, true, "entry3", 68608, 2025, 07, 17, 23, 59);
-        assert_entry(&entries[3], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
+        assert_entry(&entries[1], false, false, true, "files2", 2_345, 2023, 01, 01, 00, 00);
+        assert_entry(&entries[2], false, false, true, "entry3", 68_608, 2025, 07, 17, 23, 59);
+        assert_entry(&entries[3], false, false, true, "debian4", 128_974_848, 2024, 12, 08, 08, 22);
     }
 
     #[test]
@@ -239,7 +239,7 @@ DIR      -  2025-01-02 12:32  entry4
 
         let entries = httpdir.entries();
         assert_entry(&entries[0], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
-        assert_entry(&entries[1], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
+        assert_entry(&entries[1], false, false, true, "debian4", 128_974_848, 2024, 12, 08, 08, 22);
     }
 
     #[test]
@@ -264,8 +264,8 @@ DIR      -  2025-01-02 12:32  entry4
         assert_entry(&entries[0], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
         assert_entry(&entries[1], false, true, false, "entry4", 0, 2025, 01, 02, 12, 32);
         assert_entry(&entries[2], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
-        assert_entry(&entries[3], false, false, true, "entry3", 68608, 2025, 07, 17, 23, 59);
-        assert_entry(&entries[4], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
+        assert_entry(&entries[3], false, false, true, "entry3", 68_608, 2025, 07, 17, 23, 59);
+        assert_entry(&entries[4], false, false, true, "debian4", 128_974_848, 2024, 12, 08, 08, 22);
     }
 
     #[test]
@@ -292,12 +292,12 @@ DIR      -  2025-01-02 12:32  entry4
         let entries = httpdir.entries();
         assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
         assert_entry(&entries[1], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
-        assert_entry(&entries[2], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
+        assert_entry(&entries[2], false, false, true, "debian4", 128_974_848, 2024, 12, 08, 08, 22);
         assert_entry(&entries[3], false, true, false, "dir1", 0, 2025, 01, 26, 12, 54);
-        assert_entry(&entries[4], false, false, true, "entry3", 68608, 2025, 07, 17, 23, 59);
+        assert_entry(&entries[4], false, false, true, "entry3", 6_8608, 2025, 07, 17, 23, 59);
         assert_entry(&entries[5], false, true, false, "entry4", 0, 2025, 01, 02, 12, 32);
         assert_entry(&entries[6], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
-        assert_entry(&entries[7], false, false, true, "files2", 2345, 2023, 01, 01, 00, 00);
+        assert_entry(&entries[7], false, false, true, "files2", 2_345, 2023, 01, 01, 00, 00);
         assert_entry(&entries[8], false, true, false, "test2", 0, 2025, 02, 16, 13, 37);
 
         let output = format!("{httpdir}");
@@ -319,12 +319,12 @@ DIR      -  2025-02-16 13:37  test2
         let entries = httpdir.entries();
         assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
         assert_entry(&entries[1], false, true, false, "test2", 0, 2025, 02, 16, 13, 37);
-        assert_entry(&entries[2], false, false, true, "files2", 2345, 2023, 01, 01, 00, 00);
+        assert_entry(&entries[2], false, false, true, "files2", 2_345, 2023, 01, 01, 00, 00);
         assert_entry(&entries[3], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
         assert_entry(&entries[4], false, true, false, "entry4", 0, 2025, 01, 02, 12, 32);
-        assert_entry(&entries[5], false, false, true, "entry3", 68608, 2025, 07, 17, 23, 59);
+        assert_entry(&entries[5], false, false, true, "entry3", 68_608, 2025, 07, 17, 23, 59);
         assert_entry(&entries[6], false, true, false, "dir1", 0, 2025, 01, 26, 12, 54);
-        assert_entry(&entries[7], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
+        assert_entry(&entries[7], false, false, true, "debian4", 128_974_848, 2024, 12, 08, 08, 22);
         assert_entry(&entries[8], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
 
         let output = format!("{httpdir}");
@@ -351,13 +351,13 @@ DIR      -  2025-03-01 07:11  debian3
         let entries = httpdir.entries();
         assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
         assert_entry(&entries[1], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
-        assert_entry(&entries[2], false, false, true, "files2", 2345, 2023, 01, 01, 00, 00);
-        assert_entry(&entries[3], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
+        assert_entry(&entries[2], false, false, true, "files2", 2_345, 2023, 01, 01, 00, 00);
+        assert_entry(&entries[3], false, false, true, "debian4", 128_974_848, 2024, 12, 08, 08, 22);
         assert_entry(&entries[4], false, true, false, "entry4", 0, 2025, 01, 02, 12, 32);
         assert_entry(&entries[5], false, true, false, "dir1", 0, 2025, 01, 26, 12, 54);
         assert_entry(&entries[6], false, true, false, "test2", 0, 2025, 02, 16, 13, 37);
         assert_entry(&entries[7], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
-        assert_entry(&entries[8], false, false, true, "entry3", 68608, 2025, 07, 17, 23, 59);
+        assert_entry(&entries[8], false, false, true, "entry3", 68_608, 2025, 07, 17, 23, 59);
 
         let output = format!("{httpdir}");
         assert_eq!(
@@ -377,13 +377,13 @@ FILE   67K  2025-07-17 23:59  entry3
         let httpdir = httpdir.sort_by_date(&Sorting::Descending);
         let entries = httpdir.entries();
         assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
-        assert_entry(&entries[1], false, false, true, "entry3", 68608, 2025, 07, 17, 23, 59);
+        assert_entry(&entries[1], false, false, true, "entry3", 68_608, 2025, 07, 17, 23, 59);
         assert_entry(&entries[2], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
         assert_entry(&entries[3], false, true, false, "test2", 0, 2025, 02, 16, 13, 37);
         assert_entry(&entries[4], false, true, false, "dir1", 0, 2025, 01, 26, 12, 54);
         assert_entry(&entries[5], false, true, false, "entry4", 0, 2025, 01, 02, 12, 32);
-        assert_entry(&entries[6], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
-        assert_entry(&entries[7], false, false, true, "files2", 2345, 2023, 01, 01, 00, 00);
+        assert_entry(&entries[6], false, false, true, "debian4", 128_974_848, 2024, 12, 08, 08, 22);
+        assert_entry(&entries[7], false, false, true, "files2", 2_345, 2023, 01, 01, 00, 00);
         assert_entry(&entries[8], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
 
         let output = format!("{httpdir}");
@@ -414,9 +414,9 @@ FILE   123  1987-10-09 04:37  file1
         assert_entry(&entries[3], false, true, false, "debian3", 0, 2025, 03, 01, 07, 11);
         assert_entry(&entries[4], false, true, false, "entry4", 0, 2025, 01, 02, 12, 32);
         assert_entry(&entries[5], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
-        assert_entry(&entries[6], false, false, true, "files2", 2345, 2023, 01, 01, 00, 00);
-        assert_entry(&entries[7], false, false, true, "entry3", 68608, 2025, 07, 17, 23, 59);
-        assert_entry(&entries[8], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
+        assert_entry(&entries[6], false, false, true, "files2", 2_345, 2023, 01, 01, 00, 00);
+        assert_entry(&entries[7], false, false, true, "entry3", 68_608, 2025, 07, 17, 23, 59);
+        assert_entry(&entries[8], false, false, true, "debian4", 128_974_848, 2024, 12, 08, 08, 22);
 
         let output = format!("{httpdir}");
         assert_eq!(
@@ -436,9 +436,9 @@ FILE  123M  2024-12-08 08:22  debian4
         let httpdir = httpdir.sort_by_size(&Sorting::Descending);
         let entries = httpdir.entries();
         assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
-        assert_entry(&entries[1], false, false, true, "debian4", 128974848, 2024, 12, 08, 08, 22);
-        assert_entry(&entries[2], false, false, true, "entry3", 68608, 2025, 07, 17, 23, 59);
-        assert_entry(&entries[3], false, false, true, "files2", 2345, 2023, 01, 01, 00, 00);
+        assert_entry(&entries[1], false, false, true, "debian4", 128_974_848, 2024, 12, 08, 08, 22);
+        assert_entry(&entries[2], false, false, true, "entry3", 68_608, 2025, 07, 17, 23, 59);
+        assert_entry(&entries[3], false, false, true, "files2", 2_345, 2023, 01, 01, 00, 00);
         assert_entry(&entries[4], false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
         assert_entry(&entries[5], false, true, false, "dir1", 0, 2025, 01, 26, 12, 54);
         assert_entry(&entries[6], false, true, false, "test2", 0, 2025, 02, 16, 13, 37);
