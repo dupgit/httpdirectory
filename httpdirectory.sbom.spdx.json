@@ -1,13 +1,13 @@
 {
   "SPDXID": "SPDXRef-DOCUMENT",
   "creationInfo": {
-    "created": "2025-05-31T21:23:00.639Z",
+    "created": "2025-06-01T20:21:47.074Z",
     "creators": [
       "Tool: cargo-sbom-v0.9.1"
     ]
   },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-0ac2505f-5d10-4360-a5ff-3a9c1962aa9b",
+  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-d6077224-e289-422e-8237-81b6608b1cbe",
   "files": [
     {
       "SPDXID": "SPDXRef-File-httpdirectory",
@@ -1020,13 +1020,13 @@
       "versionInfo": "1.10.1"
     },
     {
-      "SPDXID": "SPDXRef-Package-httpdirectory-0.9.0",
+      "SPDXID": "SPDXRef-Package-httpdirectory-0.9.1",
       "description": "Crawls directory webpage (HTTP index) into a structure",
       "downloadLocation": "NONE",
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "httpdirectory",
-      "versionInfo": "0.9.0"
+      "versionInfo": "0.9.1"
     },
     {
       "SPDXID": "SPDXRef-Package-hyper-1.6.0",
@@ -3844,7 +3844,7 @@
   ],
   "relationships": [
     {
-      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.9.0",
+      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.9.1",
       "relationshipType": "GENERATED_FROM",
       "spdxElementId": "SPDXRef-File-httpdirectory"
     },
@@ -4386,52 +4386,52 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-chrono-0.4.41",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-colored-3.0.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-const_format-0.2.34",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-env_logger-0.11.8",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-log-0.4.27",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-regex-1.11.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-reqwest-0.12.18",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-scraper-0.23.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tokio-1.45.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-url-2.5.4",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.9.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-bytes-1.10.1",
