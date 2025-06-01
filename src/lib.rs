@@ -18,6 +18,8 @@ pub mod httpdirectoryentry;
 /// Module that helps storing all information about the entry (name, date, size and link)
 pub mod entry;
 
+/// Module that will give access to a structure that will contain some statistics
+/// about an `HttpDirectory` by calling its `stats()` method
 pub mod stats;
 
 /// User Agent used by httpdirectory that should be formatted
