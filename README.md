@@ -51,7 +51,7 @@ listing entries:
 ```
 
 In addition you can get some `Stats` about an `HttpDirectory` listing
-using `stats` method. It will return a [Stats] structure containing
+using `stats` method. It will return a [`Stats`][crate::stats::Stats] structure containing
 the number of directories, number of files, total apparent size, the
 number of files or directories with a valid date, the number of files
 or directories that has no valid dates, the number of parents (that
@@ -60,11 +60,11 @@ should always be equal or less than 1)
 ## Examples
 
 You can see some examples in the example directory:
-- [onedir example](examples/onedir.rs) for a small example with a
-  call to the `cd()`
-- [mirrors example](examples/mirrors.rs) that will try to crawl a
+- [onedir example](https://github.com/dupgit/httpdirectory/tree/master/examples/onedir.rs) for a small example with a
+  call to the `cd()` method
+- [mirrors example](https://github.com/dupgit/httpdirectory/tree/master/examples/mirrors.rs) that will try to crawl a
   list of 422 debian mirrors and print in red those that were
   possibly not correctly interpreted
-- [debug me](examples/debug_me.rs) that is used in debugging
+- [debug me](https://github.com/dupgit/httpdirectory/tree/master/examples/debug_me.rs) that is used in debugging
   sessions to try to improve the program by being able to interpret
   more websites
