@@ -12,11 +12,11 @@ pub struct Stats {
 }
 
 impl Stats {
-    pub fn new() -> Self {
+    pub(crate) fn new() -> Self {
         Stats::default()
     }
 
-    pub fn count(&mut self, entry: &HttpDirectoryEntry) -> &Self {
+    pub(crate) fn count(&mut self, entry: &HttpDirectoryEntry) -> &Self {
         match entry {
             HttpDirectoryEntry::ParentDirectory(_) => {
                 self.parent_dir += 1;
