@@ -210,6 +210,7 @@ mod tests {
     #[test]
     fn test_httpdirectory_dirs() {
         let httpdir = prepare_httpdir().dirs();
+        assert!(!httpdir.is_empty());
         assert_eq!(httpdir.len(), 4);
 
         let entries = httpdir.entries();
