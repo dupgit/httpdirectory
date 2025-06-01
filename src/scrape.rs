@@ -287,3 +287,21 @@ pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> 
         Ok(vec![])
     }
 }
+
+mod test {
+    use super::is_this_a_real_header;
+
+    #[test]
+    fn test_is_this_a_real_header() {
+        let href = vec!["Name", "Last modified", "Size", "Description"];
+        let header = is_this_a_real_header(&href);
+        assert!(header);
+    }
+
+    #[test]
+    fn test_this_is_not_a_real_header() {
+        let href = vec!["Size", "Last modified", "Description", "Name"];
+        let header = is_this_a_real_header(&href);
+        assert!(!header);
+    }
+}
