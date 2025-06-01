@@ -36,7 +36,7 @@ DIR      -  2023-07-25 07:43  trixie/
 First obtain a directory from an url using `HttpDirectory::new(url)`
 method, then you can use `dirs()`, `files()`, `parent_directory()` or
 `filter_by_name()`, `cd()`, `sort_by_name()`, `sort_by_date()`,
-sort_by_size() to get respectively all directories, all files, the
+`sort_by_size()` to get respectively all directories, all files, the
 `ParentDirectory`, filtering by the name (with a Regex), changing
 directory, sorting by name, by date or by size of this `HttpDirectory`
 listing entries:
@@ -50,5 +50,21 @@ listing entries:
   }
 ```
 
-You can see [onedir example](examples/onedir.rs) for a small but
-more complete example.
+In addition you can get some `Stats` about an `HttpDirectory` listing
+using `stats` method. It will return a [Stats] structure containing
+the number of directories, number of files, total apparent size, the
+number of files or directories with a valid date, the number of files
+or directories that has no valid dates, the number of parents (that
+should always be equal or less than 1)
+
+## Examples
+
+You can see some examples in the example directory:
+- [onedir example](examples/onedir.rs) for a small example with a
+  call to the `cd()`
+- [mirrors example](examples/mirrors.rs) that will try to crawl a
+  list of 422 debian mirrors and print in red those that were
+  possibly not correctly interpreted
+- [debug me](examples/debug_me.rs) that is used in debugging
+  sessions to try to improve the program by being able to interpret
+  more websites
