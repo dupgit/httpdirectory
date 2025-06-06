@@ -1,12 +1,18 @@
-## This [justfile](https://just.systems/) needs cargo-release, cargo-sbom and cargo-tarpaulin
-
 [private]
 default:
   @just --list
 
 name := "httpdirectory"
 
+# Installs all cargo tools to build a release or test coverage
+install-dev-tools:
+    cargo install cargo-release cargo-sbom cargo-tarpaulin
+
+# Bumps {patch} (major, minor or patch) version number and does a release
 bump patch:
+    # Ensures that the source code is correctly formatted -> it should not modify anything
+    cargo fmt
+
     # Checking that we do not have any untracked or uncommitted file
     git status -s | wc -l | grep '0'
 
@@ -29,18 +35,23 @@ bump patch:
     cargo release commit --no-confirm --execute
     cargo release tag --no-confirm --execute
 
+# Creates the documentation and open it in a browser
 document:
     cargo doc --no-deps --open
 
+# Publishing in the git repository (with tags)
 git-publish:
     git push
     git push --tags
 
+# Publishing to crates.io
 rust-publish:
     cargo publish
 
+# Publishing to git and then to crates.io
 publish: git-publish rust-publish
 
+# Runs a coverage test and open it's result in a web browser
 coverage:
     cargo tarpaulin --frozen -o Html
     open tarpaulin-report.html
