@@ -227,7 +227,7 @@ fn strip_until_greater(line: &str) -> &str {
     match line.find('>') {
         Some(num) => match line.strip_prefix(&line[0..=num]) {
             Some(line_without_prefix) => line_without_prefix.trim(),
-            None => line.trim(),
+            None => unreachable!(), // because we now that line has the prefix we want to remove
         },
         None => line.trim(),
     }
