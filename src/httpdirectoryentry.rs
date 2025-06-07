@@ -1,6 +1,5 @@
 use crate::entry::Entry;
 use crate::httpdirectory::Sorting;
-use chrono::NaiveDate;
 use log::trace;
 use regex::Regex;
 use std::cmp::Ordering;
