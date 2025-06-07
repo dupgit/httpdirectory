@@ -20,6 +20,7 @@ pub enum HttpDirectoryEntry {
     File(Entry),
 }
 
+/// enum to choose what field to use for comparison in `cmp_by_field()`
 pub enum CompareField {
     Name,
     Date,
