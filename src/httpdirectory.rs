@@ -92,6 +92,18 @@ impl HttpDirectory {
         self
     }
 
+    /// Returns the last entry Some(`HttpDirectoryEntry`) of that `HttpDirectory`
+    /// if it exists or None
+    pub fn last(&self) -> Option<&HttpDirectoryEntry> {
+        self.entries.last()
+    }
+
+    /// Returns the first entry Some(`HttpDirectoryEntry`) of that `HttpDirectory`
+    /// if it exists or None
+    pub fn first(&self) -> Option<&HttpDirectoryEntry> {
+        self.entries.first()
+    }
+
     /// Returns the `Stats` (ie the number of files (with total
     /// apparent size), directories and parent directories) of
     /// the `HttpDirectory` structure
@@ -205,6 +217,36 @@ mod tests {
         httpdir.entries.push(HttpDirectoryEntry::new("parent directory", "2025-01-26 12:54", "-", "../"));
 
         httpdir
+    }
+
+    #[test]
+    fn test_httpdirectory_first_and_last() {
+        let httpdir = prepare_httpdir();
+
+        if let Some(entry) = httpdir.first() {
+            assert_entry(entry, false, true, false, "dir1", 0, 2025, 01, 26, 12, 54);
+        } else {
+            panic!("This test should return an entry");
+        }
+
+        if let Some(entry) = httpdir.last() {
+            assert_entry(entry, true, false, false, "../", 0, 2025, 01, 26, 12, 54);
+        } else {
+            panic!("This test should return an entry");
+        }
+
+        let httpdir = httpdir.files();
+        if let Some(entry) = httpdir.first() {
+            assert_entry(entry, false, false, true, "file1", 123, 1987, 10, 09, 04, 37);
+        } else {
+            panic!("This test should return an entry");
+        }
+
+        if let Some(entry) = httpdir.last() {
+            assert_entry(entry, false, false, true, "debian4", 128_974_848, 2024, 12, 08, 08, 22);
+        } else {
+            panic!("This test should return an entry");
+        }
     }
 
     #[test]
