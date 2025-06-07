@@ -152,46 +152,43 @@ impl fmt::Display for HttpDirectoryEntry {
     }
 }
 
+/// Helper Enum for tests. This is not intended to be used for
+/// any other usage than tests.
+#[derive(Debug)]
+pub enum EntryType {
+    ParentDirectory,
+    Directory,
+    File,
+}
+
 /// # Panics
 /// Helper function to assert a directory entry is what is expected
 /// This function is used for testing the library and not intended
 /// for any other usage. Compares the size with the apparent size.
-pub fn assert_entry(
-    dir_entry: &HttpDirectoryEntry,
-    parent: bool,
-    dir: bool,
-    file: bool,
-    name: &str,
-    size: usize,
-    year: i32,
-    month: u32,
-    day: u32,
-    hour: u32,
-    minutes: u32,
-) {
+pub fn assert_entry(dir_entry: &HttpDirectoryEntry, entry_type: &EntryType, name: &str, size: usize, date_str: &str) {
     // Use cargo t -- --show-output to show outputs while testing
-    println!("{dir_entry:?}, {parent}, {dir}, {file}, {name}, {size}, {year}, {month}, {day}, {hour}, {minutes}");
+    println!("{dir_entry:?}, {entry_type:?}, {name}, {size}, {date_str}");
     match dir_entry {
         HttpDirectoryEntry::Directory(entry) => {
-            assert!(dir);
+            assert!(matches!(entry_type, EntryType::Directory));
             assert_eq!(entry.apparent_size(), size);
             assert_eq!(entry.name(), name);
             if let Some(entry_date) = entry.date() {
                 let entry_date_str = entry_date.format("%Y-%m-%d %H:%M").to_string();
-                assert_eq!(entry_date_str, format!("{year}-{month:02}-{day:02} {hour:02}:{minutes:02}"));
+                assert_eq!(entry_date_str, date_str);
             }
         }
         HttpDirectoryEntry::File(entry) => {
-            assert!(file);
+            assert!(matches!(entry_type, EntryType::File));
             assert_eq!(entry.apparent_size(), size);
             assert_eq!(entry.name(), name);
             if let Some(entry_date) = entry.date() {
                 let entry_date_str = entry_date.format("%Y-%m-%d %H:%M").to_string();
-                assert_eq!(entry_date_str, format!("{year:02}-{month:02}-{day:02} {hour:02}:{minutes:02}"));
+                assert_eq!(entry_date_str, date_str);
             }
         }
         HttpDirectoryEntry::ParentDirectory(link) => {
-            assert!(parent);
+            assert!(matches!(entry_type, EntryType::ParentDirectory));
             assert_eq!(link, name);
         }
     }

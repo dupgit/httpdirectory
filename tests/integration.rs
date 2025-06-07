@@ -1,5 +1,8 @@
 extern crate httpdirectory;
-use httpdirectory::{httpdirectory::HttpDirectory, httpdirectory::Sorting, httpdirectoryentry::assert_entry};
+use httpdirectory::{
+    httpdirectory::HttpDirectory, httpdirectory::Sorting, httpdirectoryentry::EntryType,
+    httpdirectoryentry::assert_entry,
+};
 use httpmock::prelude::*;
 
 #[tokio::test]
@@ -196,18 +199,18 @@ async fn test_debian_example() {
     assert_eq!(httpdir.len(), 12);
     let entries = httpdir.entries();
 
-    assert_entry(&entries[0], true, false, false, "/images/", 0, 0, 0, 0, 0, 0);
-    assert_entry(&entries[1], false, true, false, "OpenStack/", 0, 2024, 7, 1, 23, 19);
-    assert_entry(&entries[2], false, true, false, "bookworm-backports/", 0, 2025, 4, 28, 21, 33);
-    assert_entry(&entries[3], false, true, false, "bookworm/", 0, 2025, 4, 28, 20, 53);
-    assert_entry(&entries[4], false, true, false, "bullseye-backports/", 0, 2025, 5, 5, 17, 45);
-    assert_entry(&entries[5], false, true, false, "bullseye/", 0, 2025, 5, 5, 16, 52);
-    assert_entry(&entries[6], false, true, false, "buster-backports/", 0, 2024, 7, 3, 21, 46);
-    assert_entry(&entries[7], false, true, false, "buster/", 0, 2024, 7, 3, 21, 46);
-    assert_entry(&entries[8], false, true, false, "sid/", 0, 2024, 4, 1, 14, 20);
-    assert_entry(&entries[9], false, true, false, "stretch-backports/", 0, 2019, 7, 18, 10, 40);
-    assert_entry(&entries[10], false, true, false, "stretch/", 0, 2019, 7, 18, 10, 40);
-    assert_entry(&entries[11], false, true, false, "trixie/", 0, 2023, 7, 25, 7, 43);
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "/images/", 0, "0000-00-00, 00:00");
+    assert_entry(&entries[1], &EntryType::Directory, "OpenStack/", 0, "2024-07-01 23:19");
+    assert_entry(&entries[2], &EntryType::Directory, "bookworm-backports/", 0, "2025-04-28 21:33");
+    assert_entry(&entries[3], &EntryType::Directory, "bookworm/", 0, "2025-04-28 20:53");
+    assert_entry(&entries[4], &EntryType::Directory, "bullseye-backports/", 0, "2025-05-05 17:45");
+    assert_entry(&entries[5], &EntryType::Directory, "bullseye/", 0, "2025-05-05 16:52");
+    assert_entry(&entries[6], &EntryType::Directory, "buster-backports/", 0, "2024-07-03 21:46");
+    assert_entry(&entries[7], &EntryType::Directory, "buster/", 0, "2024-07-03 21:46");
+    assert_entry(&entries[8], &EntryType::Directory, "sid/", 0, "2024-04-01 14:20");
+    assert_entry(&entries[9], &EntryType::Directory, "stretch-backports/", 0, "2019-07-18 10:40");
+    assert_entry(&entries[10], &EntryType::Directory, "stretch/", 0, "2019-07-18 10:40");
+    assert_entry(&entries[11], &EntryType::Directory, "trixie/", 0, "2023-07-25 07:43");
 
     let dirs = httpdir.dirs();
     assert_eq!(dirs.len(), 11);
@@ -219,13 +222,13 @@ async fn test_debian_example() {
 
     assert_eq!(filtered.len(), 7);
 
-    assert_entry(&entries[0], false, true, false, "bookworm-backports/", 0, 2025, 4, 28, 21, 33);
-    assert_entry(&entries[1], false, true, false, "bookworm/", 0, 2025, 4, 28, 20, 53);
-    assert_entry(&entries[2], false, true, false, "bullseye-backports/", 0, 2025, 5, 5, 17, 45);
-    assert_entry(&entries[3], false, true, false, "bullseye/", 0, 2025, 5, 5, 16, 52);
-    assert_entry(&entries[4], false, true, false, "buster-backports/", 0, 2024, 7, 3, 21, 46);
-    assert_entry(&entries[5], false, true, false, "buster/", 0, 2024, 7, 3, 21, 46);
-    assert_entry(&entries[6], false, true, false, "stretch-backports/", 0, 2019, 7, 18, 10, 40);
+    assert_entry(&entries[0], &EntryType::Directory, "bookworm-backports/", 0, "2025-04-28 21:33");
+    assert_entry(&entries[1], &EntryType::Directory, "bookworm/", 0, "2025-04-28 20:53");
+    assert_entry(&entries[2], &EntryType::Directory, "bullseye-backports/", 0, "2025-05-05 17:45");
+    assert_entry(&entries[3], &EntryType::Directory, "bullseye/", 0, "2025-05-05 16:52");
+    assert_entry(&entries[4], &EntryType::Directory, "buster-backports/", 0, "2024-07-03 21:46");
+    assert_entry(&entries[5], &EntryType::Directory, "buster/", 0, "2024-07-03 21:46");
+    assert_entry(&entries[6], &EntryType::Directory, "stretch-backports/", 0, "2019-07-18 10:40");
 
     mock.assert();
 }
@@ -275,28 +278,28 @@ async fn test_bsd_example() {
     assert_eq!(httpdir.len(), 22);
     let entries = httpdir.entries();
 
-    assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
-    assert_entry(&entries[1], false, true, false, "7.5/", 0, 2024, 4, 05, 11, 59);
-    assert_entry(&entries[2], false, true, false, "7.6/", 0, 2024, 10, 08, 17, 17);
-    assert_entry(&entries[3], false, true, false, "7.7/", 0, 2025, 4, 27, 17, 58);
-    assert_entry(&entries[4], false, true, false, "Changelogs/", 0, 2025, 5, 12, 17, 21);
-    assert_entry(&entries[5], false, true, false, "LibreSSL/", 0, 2025, 04, 30, 06, 55);
-    assert_entry(&entries[6], false, true, false, "OpenBGPD/", 0, 2025, 02, 06, 15, 30);
-    assert_entry(&entries[7], false, true, false, "OpenIKED/", 0, 2025, 04, 10, 17, 10);
-    assert_entry(&entries[8], false, true, false, "OpenNTPD/", 0, 2020, 12, 09, 14, 56);
-    assert_entry(&entries[9], false, true, false, "OpenSSH/", 0, 2025, 04, 09, 07, 08);
-    assert_entry(&entries[10], false, true, false, "doc/", 0, 2013, 04, 28, 15, 57);
-    assert_entry(&entries[11], false, true, false, "patches/", 0, 2025, 05, 04, 21, 25);
-    assert_entry(&entries[12], false, true, false, "rpki-client/", 0, 2025, 04, 11, 22, 09);
-    assert_entry(&entries[13], false, true, false, "signify/", 0, 2025, 05, 06, 15, 03);
-    assert_entry(&entries[14], false, true, false, "snapshots/", 0, 2025, 05, 13, 04, 06);
-    assert_entry(&entries[15], false, true, false, "songs/", 0, 2023, 04, 06, 22, 15);
-    assert_entry(&entries[16], false, true, false, "stable/", 0, 2022, 01, 18, 16, 25);
-    assert_entry(&entries[17], false, true, false, "syspatch/", 0, 2025, 03, 03, 15, 17);
-    assert_entry(&entries[18], false, true, false, "tools/", 0, 2005, 01, 07, 19, 40);
-    assert_entry(&entries[19], false, false, true, "README", 1329, 2017, 10, 06, 11, 51);
-    assert_entry(&entries[20], false, false, true, "ftplist", 4836, 2025, 05, 13, 03, 57);
-    assert_entry(&entries[21], false, false, true, "timestamp", 11, 2025, 05, 13, 04, 00);
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::Directory, "7.5/", 0, "2024-04-05 11:59");
+    assert_entry(&entries[2], &EntryType::Directory, "7.6/", 0, "2024-10-08 17:17");
+    assert_entry(&entries[3], &EntryType::Directory, "7.7/", 0, "2025-04-27 17:58");
+    assert_entry(&entries[4], &EntryType::Directory, "Changelogs/", 0, "2025-05-12 17:21");
+    assert_entry(&entries[5], &EntryType::Directory, "LibreSSL/", 0, "2025-04-30 06:55");
+    assert_entry(&entries[6], &EntryType::Directory, "OpenBGPD/", 0, "2025-02-06 15:30");
+    assert_entry(&entries[7], &EntryType::Directory, "OpenIKED/", 0, "2025-04-10 17:10");
+    assert_entry(&entries[8], &EntryType::Directory, "OpenNTPD/", 0, "2020-12-09 14:56");
+    assert_entry(&entries[9], &EntryType::Directory, "OpenSSH/", 0, "2025-04-09 07:08");
+    assert_entry(&entries[10], &EntryType::Directory, "doc/", 0, "2013-04-28 15:57");
+    assert_entry(&entries[11], &EntryType::Directory, "patches/", 0, "2025-05-04 21:25");
+    assert_entry(&entries[12], &EntryType::Directory, "rpki-client/", 0, "2025-04-11 22:09");
+    assert_entry(&entries[13], &EntryType::Directory, "signify/", 0, "2025-05-06 15:03");
+    assert_entry(&entries[14], &EntryType::Directory, "snapshots/", 0, "2025-05-13 04:06");
+    assert_entry(&entries[15], &EntryType::Directory, "songs/", 0, "2023-04-06 22:15");
+    assert_entry(&entries[16], &EntryType::Directory, "stable/", 0, "2022-01-18 16:25");
+    assert_entry(&entries[17], &EntryType::Directory, "syspatch/", 0, "2025-03-03 15:17");
+    assert_entry(&entries[18], &EntryType::Directory, "tools/", 0, "2005-01-07 19:40");
+    assert_entry(&entries[19], &EntryType::File, "README", 1329, "2017-10-06 11:51");
+    assert_entry(&entries[20], &EntryType::File, "ftplist", 4836, "2025-05-13 03:57");
+    assert_entry(&entries[21], &EntryType::File, "timestamp", 11, "2025-05-13 04:00");
 
     let files = httpdir.files();
     assert_eq!(files.len(), 3);
@@ -412,51 +415,51 @@ async fn test_old_bsd_example() {
     assert_eq!(httpdir.len(), 76);
     let entries = httpdir.entries();
 
-    assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
-    assert_entry(&entries[1], false, true, false, "2.0/", 0, 2001, 06, 04, 14, 06);
-    assert_entry(&entries[2], false, true, false, "2.1/", 0, 2001, 06, 04, 15, 20);
-    assert_entry(&entries[56], false, true, false, "7.5/", 0, 2024, 4, 05, 11, 59);
-    assert_entry(&entries[57], false, true, false, "7.6/", 0, 2024, 10, 08, 17, 17);
-    assert_entry(&entries[58], false, true, false, "7.7/", 0, 2025, 4, 27, 17, 58);
-    assert_entry(&entries[59], false, true, false, "Changelogs/", 0, 2025, 5, 16, 07, 33);
-    assert_entry(&entries[60], false, true, false, "LibreSSL/", 0, 2025, 04, 30, 07, 35);
-    assert_entry(&entries[61], false, true, false, "OpenBGPD/", 0, 2025, 02, 06, 16, 49);
-    assert_entry(&entries[62], false, true, false, "OpenIKED/", 0, 2025, 04, 10, 18, 11);
-    assert_entry(&entries[63], false, true, false, "OpenNTPD/", 0, 2020, 12, 09, 14, 56);
-    assert_entry(&entries[64], false, true, false, "OpenSSH/", 0, 2025, 04, 09, 07, 54);
-    assert_entry(&entries[65], false, true, false, "doc/", 0, 2013, 04, 28, 15, 57);
-    assert_entry(&entries[66], false, true, false, "patches/", 0, 2025, 05, 16, 14, 07);
-    assert_entry(&entries[67], false, true, false, "rpki-client/", 0, 2025, 04, 11, 22, 25);
-    assert_entry(&entries[68], false, true, false, "snapshots/", 0, 2023, 03, 26, 14, 18);
-    assert_entry(&entries[69], false, true, false, "songs/", 0, 2023, 04, 06, 22, 15);
-    assert_entry(&entries[70], false, true, false, "stable/", 0, 2022, 01, 18, 16, 25);
-    assert_entry(&entries[71], false, true, false, "syspatch/", 0, 2025, 03, 03, 16, 19);
-    assert_entry(&entries[72], false, true, false, "tools/", 0, 2005, 01, 07, 19, 40);
-    assert_entry(&entries[73], false, false, true, "README", 1_249, 2021, 05, 25, 20, 15);
-    assert_entry(&entries[74], false, false, true, "ftplist", 4_836, 2025, 05, 16, 14, 13);
-    assert_entry(&entries[75], false, false, true, "timestamp", 11, 2025, 05, 16, 14, 13);
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::Directory, "2.0/", 0, "2001-06-04 14:06");
+    assert_entry(&entries[2], &EntryType::Directory, "2.1/", 0, "2001-06-04 15:20");
+    assert_entry(&entries[56], &EntryType::Directory, "7.5/", 0, "2024-04-05 11:59");
+    assert_entry(&entries[57], &EntryType::Directory, "7.6/", 0, "2024-10-08 17:17");
+    assert_entry(&entries[58], &EntryType::Directory, "7.7/", 0, "2025-04-27 17:58");
+    assert_entry(&entries[59], &EntryType::Directory, "Changelogs/", 0, "2025-05-16 07:33");
+    assert_entry(&entries[60], &EntryType::Directory, "LibreSSL/", 0, "2025-04-30 07:35");
+    assert_entry(&entries[61], &EntryType::Directory, "OpenBGPD/", 0, "2025-02-06 16:49");
+    assert_entry(&entries[62], &EntryType::Directory, "OpenIKED/", 0, "2025-04-10 18:11");
+    assert_entry(&entries[63], &EntryType::Directory, "OpenNTPD/", 0, "2020-12-09 14:56");
+    assert_entry(&entries[64], &EntryType::Directory, "OpenSSH/", 0, "2025-04-09 07:54");
+    assert_entry(&entries[65], &EntryType::Directory, "doc/", 0, "2013-04-28 15:57");
+    assert_entry(&entries[66], &EntryType::Directory, "patches/", 0, "2025-05-16 14:07");
+    assert_entry(&entries[67], &EntryType::Directory, "rpki-client/", 0, "2025-04-11 22:25");
+    assert_entry(&entries[68], &EntryType::Directory, "snapshots/", 0, "2023-03-26 14:18");
+    assert_entry(&entries[69], &EntryType::Directory, "songs/", 0, "2023-04-06 22:15");
+    assert_entry(&entries[70], &EntryType::Directory, "stable/", 0, "2022-01-18 16:25");
+    assert_entry(&entries[71], &EntryType::Directory, "syspatch/", 0, "2025-03-03 16:19");
+    assert_entry(&entries[72], &EntryType::Directory, "tools/", 0, "2005-01-07 19:40");
+    assert_entry(&entries[73], &EntryType::File, "README", 1_249, "2021-05-25 20:15");
+    assert_entry(&entries[74], &EntryType::File, "ftplist", 4_836, "2025-05-16 14:13");
+    assert_entry(&entries[75], &EntryType::File, "timestamp", 11, "2025-05-16 14:13");
 
     let httpdir = httpdir.sort_by_date(&Sorting::Ascending);
     let entries = httpdir.entries();
 
-    assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
-    assert_entry(&entries[1], false, true, false, "2.5/", 0, 2000, 07, 08, 02, 57);
-    assert_entry(&entries[2], false, true, false, "2.0/", 0, 2001, 06, 04, 14, 06);
-    assert_entry(&entries[3], false, true, false, "2.1/", 0, 2001, 06, 04, 15, 20);
-    assert_entry(&entries[73], false, true, false, "patches/", 0, 2025, 05, 16, 14, 07);
-    assert_entry(&entries[74], false, false, true, "ftplist", 4_836, 2025, 05, 16, 14, 13);
-    assert_entry(&entries[75], false, false, true, "timestamp", 11, 2025, 05, 16, 14, 13);
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::Directory, "2.5/", 0, "2000-07-08 02:57");
+    assert_entry(&entries[2], &EntryType::Directory, "2.0/", 0, "2001-06-04 14:06");
+    assert_entry(&entries[3], &EntryType::Directory, "2.1/", 0, "2001-06-04 15:20");
+    assert_entry(&entries[73], &EntryType::Directory, "patches/", 0, "2025-05-16 14:07");
+    assert_entry(&entries[74], &EntryType::File, "ftplist", 4_836, "2025-05-16 14:13");
+    assert_entry(&entries[75], &EntryType::File, "timestamp", 11, "2025-05-16 14:13");
 
     let httpdir = httpdir.sort_by_date(&Sorting::Descending);
     let entries = httpdir.entries();
 
-    assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
-    assert_entry(&entries[1], false, false, true, "ftplist", 4_836, 2025, 05, 16, 14, 13);
-    assert_entry(&entries[2], false, false, true, "timestamp", 11, 2025, 05, 16, 14, 13);
-    assert_entry(&entries[3], false, true, false, "patches/", 0, 2025, 05, 16, 14, 07);
-    assert_entry(&entries[73], false, true, false, "2.1/", 0, 2001, 06, 04, 15, 20);
-    assert_entry(&entries[74], false, true, false, "2.0/", 0, 2001, 06, 04, 14, 06);
-    assert_entry(&entries[75], false, true, false, "2.5/", 0, 2000, 07, 08, 02, 57);
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::File, "ftplist", 4_836, "2025-05-16 14:13");
+    assert_entry(&entries[2], &EntryType::File, "timestamp", 11, "2025-05-16 14:13");
+    assert_entry(&entries[3], &EntryType::Directory, "patches/", 0, "2025-05-16 14:07");
+    assert_entry(&entries[73], &EntryType::Directory, "2.1/", 0, "2001-06-04 15:20");
+    assert_entry(&entries[74], &EntryType::Directory, "2.0/", 0, "2001-06-04 14:06");
+    assert_entry(&entries[75], &EntryType::Directory, "2.5/", 0, "2000-07-08 02:57");
 
     mock.assert();
 
@@ -488,8 +491,8 @@ async fn test_old_bsd_example() {
     assert_eq!(httpdir.len(), 2);
     let entries = httpdir.entries();
 
-    assert_entry(&entries[0], true, false, false, "../", 0, 0, 0, 0, 0, 0);
-    assert_entry(&entries[1], false, false, true, "zenicb.el", 26_902, 1996, 11, 04, 07, 00);
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::File, "zenicb.el", 26_902, "1996-11-04 07:00");
 
     mock.assert();
 }
@@ -653,13 +656,13 @@ async fn test_pre_img_example() {
     assert_eq!(httpdir.len(), 70);
     let entries = httpdir.entries();
 
-    assert_entry(&entries[0], true, false, false, "/noble/", 0, 0, 0, 0, 0, 0);
-    assert_entry(&entries[1], false, false, true, "MD5SUMS", 5_120, 2025, 05, 01, 16, 23);
-    assert_entry(&entries[2], false, false, true, "MD5SUMS.gpg", 833, 2025, 05, 01, 16, 23);
-    assert_entry(&entries[3], false, false, true, "SHA256SUMS", 7_168, 2025, 05, 01, 16, 23);
-    assert_entry(&entries[4], false, false, true, "SHA256SUMS.gpg", 833, 2025, 05, 01, 16, 23);
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "/noble/", 0, "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::File, "MD5SUMS", 5_120, "2025-05-01 16:23");
+    assert_entry(&entries[2], &EntryType::File, "MD5SUMS.gpg", 833, "2025-05-01 16:23");
+    assert_entry(&entries[3], &EntryType::File, "SHA256SUMS", 7_168, "2025-05-01 16:23");
+    assert_entry(&entries[4], &EntryType::File, "SHA256SUMS.gpg", 833, "2025-05-01 16:23");
 
-    assert_entry(&entries[69], false, true, false, "unpacked/", 0, 2025, 05, 01, 16, 23);
+    assert_entry(&entries[69], &EntryType::Directory, "unpacked/", 0, "2025-05-01 16:23");
 
     let files = httpdir.files();
     assert_eq!(files.len(), 68);
@@ -671,7 +674,7 @@ async fn test_pre_img_example() {
 
     assert_eq!(filtered.len(), 1);
 
-    assert_entry(&entries[0], false, false, true, "noble-server-cloudimg-amd64.img", 612_368_384, 2025, 04, 30, 13, 11);
+    assert_entry(&entries[0], &EntryType::File, "noble-server-cloudimg-amd64.img", 612_368_384, "2025-04-30 13:11");
 
     mock.assert();
 }
@@ -1776,21 +1779,21 @@ async fn test_debian_archive_trafficmanager_net() {
     assert_eq!(httpdir.len(), 15);
     let entries = httpdir.entries();
 
-    assert_entry(&entries[0], true, false, false, "..", 0, 0, 0, 0, 0, 0);
-    assert_entry(&entries[1], false, true, false, "dists/", 0, 2025, 05, 17, 08, 29);
-    assert_entry(&entries[2], false, true, false, "doc/", 0, 2025, 05, 31, 13, 54);
-    assert_entry(&entries[3], false, true, false, "indices/", 0, 2025, 05, 31, 14, 25);
-    assert_entry(&entries[4], false, true, false, "pool/", 0, 2022, 10, 05, 17, 09);
-    assert_entry(&entries[5], false, true, false, "project/", 0, 2008, 11, 17, 23, 05);
-    assert_entry(&entries[6], false, true, false, "tools/", 0, 2012, 10, 10, 16, 29);
-    assert_entry(&entries[7], false, true, false, "zzz-dists/", 0, 2023, 10, 07, 11, 07);
-    assert_entry(&entries[8], false, false, true, "extrafiles", 0, 2025, 05, 31, 14, 26);
-    assert_entry(&entries[9], false, false, true, "ls-lR.gz", 0, 2025, 05, 31, 14, 18);
-    assert_entry(&entries[10], false, false, true, "README", 0, 2025, 05, 17, 08, 29);
-    assert_entry(&entries[11], false, false, true, "README.CD-manufacture", 0, 2010, 06, 26, 09, 52);
-    assert_entry(&entries[12], false, false, true, "README.html", 0, 2025, 05, 17, 08, 29);
-    assert_entry(&entries[13], false, false, true, "README.mirrors.html", 0, 2017, 03, 04, 20, 08);
-    assert_entry(&entries[14], false, false, true, "README.mirrors.txt", 0, 2017, 03, 04, 20, 08);
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "..", 0, "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::Directory, "dists/", 0, "2025-05-17 08:29");
+    assert_entry(&entries[2], &EntryType::Directory, "doc/", 0, "2025-05-31 13:54");
+    assert_entry(&entries[3], &EntryType::Directory, "indices/", 0, "2025-05-31 14:25");
+    assert_entry(&entries[4], &EntryType::Directory, "pool/", 0, "2022-10-05 17:09");
+    assert_entry(&entries[5], &EntryType::Directory, "project/", 0, "2008-11-17 23:05");
+    assert_entry(&entries[6], &EntryType::Directory, "tools/", 0, "2012-10-10 16:29");
+    assert_entry(&entries[7], &EntryType::Directory, "zzz-dists/", 0, "2023-10-07 11:07");
+    assert_entry(&entries[8], &EntryType::File, "extrafiles", 0, "2025-05-31 14:26");
+    assert_entry(&entries[9], &EntryType::File, "ls-lR.gz", 0, "2025-05-31 14:18");
+    assert_entry(&entries[10], &EntryType::File, "README", 0, "2025-05-17 08:29");
+    assert_entry(&entries[11], &EntryType::File, "README.CD-manufacture", 0, "2010-06-26 09:52");
+    assert_entry(&entries[12], &EntryType::File, "README.html", 0, "2025-05-17 08:29");
+    assert_entry(&entries[13], &EntryType::File, "README.mirrors.html", 0, "2017-03-04 20:08");
+    assert_entry(&entries[14], &EntryType::File, "README.mirrors.txt", 0, "2017-03-04 20:08");
 
     mock.assert();
 }
