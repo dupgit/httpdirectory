@@ -1,13 +1,13 @@
 {
   "SPDXID": "SPDXRef-DOCUMENT",
   "creationInfo": {
-    "created": "2025-06-10T20:26:39.962Z",
+    "created": "2025-06-12T20:34:19.954Z",
     "creators": [
       "Tool: cargo-sbom-v0.9.1"
     ]
   },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-26481a72-09f8-4e6c-aab0-7152995b4eff",
+  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-4b9fec62-3d74-4532-85e8-d88d63f71905",
   "files": [
     {
       "SPDXID": "SPDXRef-File-httpdirectory",
@@ -1014,13 +1014,13 @@
       "versionInfo": "1.10.1"
     },
     {
-      "SPDXID": "SPDXRef-Package-httpdirectory-0.11.1",
+      "SPDXID": "SPDXRef-Package-httpdirectory-0.12.0",
       "description": "Crawls directory webpage (HTTP index) into a structure",
       "downloadLocation": "NONE",
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "httpdirectory",
-      "versionInfo": "0.11.1"
+      "versionInfo": "0.12.0"
     },
     {
       "SPDXID": "SPDXRef-Package-hyper-1.6.0",
@@ -1534,13 +1534,13 @@
       "versionInfo": "0.1.0"
     },
     {
-      "SPDXID": "SPDXRef-Package-memchr-2.7.4",
+      "SPDXID": "SPDXRef-Package-memchr-2.7.5",
       "description": "Provides extremely fast (uses SIMD on x86_64, aarch64 and wasm32) routines for\n1, 2 or 3 byte search and single substring search.\n",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/memchr@2.7.4",
+          "referenceLocator": "pkg:cargo/memchr@2.7.5",
           "referenceType": "purl"
         }
       ],
@@ -1548,7 +1548,7 @@
       "licenseConcluded": "Unlicense OR MIT",
       "licenseDeclared": "Unlicense OR MIT",
       "name": "memchr",
-      "versionInfo": "2.7.4"
+      "versionInfo": "2.7.5"
     },
     {
       "SPDXID": "SPDXRef-Package-mime-0.3.17",
@@ -2055,20 +2055,20 @@
       "versionInfo": "0.6.4"
     },
     {
-      "SPDXID": "SPDXRef-Package-redox_syscall-0.5.12",
+      "SPDXID": "SPDXRef-Package-redox_syscall-0.5.13",
       "description": "A Rust library to access raw Redox system calls",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/redox_syscall@0.5.12",
+          "referenceLocator": "pkg:cargo/redox_syscall@0.5.13",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT",
       "licenseDeclared": "MIT",
       "name": "redox_syscall",
-      "versionInfo": "0.5.12"
+      "versionInfo": "0.5.13"
     },
     {
       "SPDXID": "SPDXRef-Package-regex-1.11.1",
@@ -3274,20 +3274,20 @@
       "versionInfo": "0.59.1"
     },
     {
-      "SPDXID": "SPDXRef-Package-windows-link-0.1.1",
+      "SPDXID": "SPDXRef-Package-windows-link-0.1.3",
       "description": "Linking for Windows",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/windows-link@0.1.1",
+          "referenceLocator": "pkg:cargo/windows-link@0.1.3",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "windows-link",
-      "versionInfo": "0.1.1"
+      "versionInfo": "0.1.3"
     },
     {
       "SPDXID": "SPDXRef-Package-windows-registry-0.5.2",
@@ -3678,7 +3678,7 @@
   ],
   "relationships": [
     {
-      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.11.1",
+      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.12.0",
       "relationshipType": "GENERATED_FROM",
       "spdxElementId": "SPDXRef-File-httpdirectory"
     },
@@ -3688,7 +3688,7 @@
       "spdxElementId": "SPDXRef-Package-addr2line-0.24.2"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-memchr-2.7.4",
+      "relatedSpdxElement": "SPDXRef-Package-memchr-2.7.5",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-aho-corasick-1.1.3"
     },
@@ -3818,7 +3818,7 @@
       "spdxElementId": "SPDXRef-Package-chrono-0.4.41"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.1",
+      "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.3",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-chrono-0.4.41"
     },
@@ -4220,52 +4220,52 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-chrono-0.4.41",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.11.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.12.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-colored-3.0.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.11.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.12.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-const_format-0.2.34",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.11.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.12.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-env_logger-0.11.8",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.11.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.12.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-log-0.4.27",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.11.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.12.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-regex-1.11.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.11.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.12.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-reqwest-0.12.20",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.11.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.12.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-scraper-0.23.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.11.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.12.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tokio-1.45.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.11.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.12.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-url-2.5.4",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.11.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.12.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-bytes-1.10.1",
@@ -4738,7 +4738,7 @@
       "spdxElementId": "SPDXRef-Package-indexmap-2.9.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-memchr-2.7.4",
+      "relatedSpdxElement": "SPDXRef-Package-memchr-2.7.5",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-iri-string-0.7.8"
     },
@@ -4908,7 +4908,7 @@
       "spdxElementId": "SPDXRef-Package-native-tls-0.2.14"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-memchr-2.7.4",
+      "relatedSpdxElement": "SPDXRef-Package-memchr-2.7.5",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-object-0.36.7"
     },
@@ -4988,7 +4988,7 @@
       "spdxElementId": "SPDXRef-Package-parking_lot_core-0.9.11"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-redox_syscall-0.5.12",
+      "relatedSpdxElement": "SPDXRef-Package-redox_syscall-0.5.13",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-parking_lot_core-0.9.11"
     },
@@ -5080,7 +5080,7 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-bitflags-2.9.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-redox_syscall-0.5.12"
+      "spdxElementId": "SPDXRef-Package-redox_syscall-0.5.13"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-aho-corasick-1.1.3",
@@ -5088,7 +5088,7 @@
       "spdxElementId": "SPDXRef-Package-regex-1.11.1"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-memchr-2.7.4",
+      "relatedSpdxElement": "SPDXRef-Package-memchr-2.7.5",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-regex-1.11.1"
     },
@@ -5108,7 +5108,7 @@
       "spdxElementId": "SPDXRef-Package-regex-automata-0.4.9"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-memchr-2.7.4",
+      "relatedSpdxElement": "SPDXRef-Package-memchr-2.7.5",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-regex-automata-0.4.9"
     },
@@ -5523,7 +5523,7 @@
       "spdxElementId": "SPDXRef-Package-serde_json-1.0.140"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-memchr-2.7.4",
+      "relatedSpdxElement": "SPDXRef-Package-memchr-2.7.5",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-serde_json-1.0.140"
     },
@@ -6078,7 +6078,7 @@
       "spdxElementId": "SPDXRef-Package-windows-core-0.61.2"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.1",
+      "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.3",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-windows-core-0.61.2"
     },
@@ -6123,7 +6123,7 @@
       "spdxElementId": "SPDXRef-Package-windows-interface-0.59.1"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.1",
+      "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.3",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-windows-registry-0.5.2"
     },
@@ -6138,12 +6138,12 @@
       "spdxElementId": "SPDXRef-Package-windows-registry-0.5.2"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.1",
+      "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.3",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-windows-result-0.3.4"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.1",
+      "relatedSpdxElement": "SPDXRef-Package-windows-link-0.1.3",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-windows-strings-0.4.2"
     },
