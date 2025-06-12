@@ -1,5 +1,5 @@
 use env_logger::{Env, WriteStyle};
-use httpdirectory::httpdirectory::HttpDirectory;
+use httpdirectory::httpdirectory::{HttpDirectory, Sorting};
 use std::env::var;
 
 #[tokio::main]
@@ -22,7 +22,13 @@ async fn main() {
                         Some(dir) => {
                             let dir = dir.to_string();
                             match httpdir.cd(&dir).await {
-                                Ok(bookworm) => println!("{bookworm}"),
+                                Ok(bookworm) => {
+                                    println!("{bookworm}");
+                                    println!("Directories (if any)");
+                                    println!("{}", bookworm.dirs().sort_by_date(&Sorting::Ascending));
+                                    println!("Files (if any)");
+                                    println!("{}", bookworm.files());
+                                }
                                 Err(e) => println!("{e}"),
                             }
                         }

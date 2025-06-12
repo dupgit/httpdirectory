@@ -8,7 +8,7 @@ use std::fmt;
 /// `HttpDirectoryEntry` represents either the `ParentDirectory`,
 /// a `Directory` or a `File` that have a name, link, date and size
 /// `Entry`.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum HttpDirectoryEntry {
     /// Parent directory with its link (as a `String`) to the effective parent directory
     ParentDirectory(String),

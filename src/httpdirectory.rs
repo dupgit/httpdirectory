@@ -6,14 +6,15 @@ use crate::stats::Stats;
 use log::{debug, error};
 use regex::Regex;
 use std::fmt;
+use std::sync::Arc;
 
 /// Main structure that provides methods to access, parse a directory
 /// webpage and fill that structure.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct HttpDirectory {
     entries: Vec<HttpDirectoryEntry>,
-    url: String,
-    request: Request,
+    url: Arc<String>,
+    request: Arc<Request>,
 }
 
 pub enum Sorting {
@@ -32,8 +33,8 @@ impl HttpDirectory {
         let entries = get_entries_from_body(&response.text().await?);
         Ok(HttpDirectory {
             entries,
-            url: url.to_string(),
-            request: client,
+            url: Arc::new(url.to_string()),
+            request: Arc::new(client),
         })
     }
 
@@ -45,14 +46,14 @@ impl HttpDirectory {
         let response = self.request.get(&url).await?;
         let entries = get_entries_from_body(&response.text().await?);
         self.entries = entries;
-        self.url = url;
+        self.url = Arc::new(url);
         Ok(self)
     }
 
     /// Sorts the Directory entries by their names
     #[must_use]
     pub fn sort_by_name(mut self, order: &Sorting) -> Self {
-        self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Name, order));
+        self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Name, &order));
         self
     }
 
@@ -70,26 +71,40 @@ impl HttpDirectory {
         self
     }
 
+    /// Returns only elements of the `HttpDirectory` listing that
+    /// matches the predicate f. An element of this predicate is
+    /// of type `HttpDirectoryEntry`
+    #[must_use]
+    pub fn filtering<F>(&self, mut f: F) -> Self
+    where
+        F: FnMut(&HttpDirectoryEntry) -> bool,
+    {
+        let mut entries = self.entries.clone();
+        entries.retain(|elem| f(elem));
+
+        HttpDirectory {
+            entries,
+            url: self.url.clone(),
+            request: self.request.clone(),
+        }
+    }
+
     /// Returns only directories of the `HttpDirectory` listing
     #[must_use]
-    pub fn dirs(mut self) -> Self {
-        self.entries = self.entries.into_iter().filter(HttpDirectoryEntry::is_directory).collect();
-        self
+    pub fn dirs(&self) -> Self {
+        self.filtering(|e| e.is_directory())
     }
 
     /// Returns only files of the `HttpDirectory` listing
     #[must_use]
-    pub fn files(mut self) -> Self {
-        self.entries = self.entries.into_iter().filter(HttpDirectoryEntry::is_file).collect();
-        self
+    pub fn files(&self) -> Self {
+        self.filtering(|e| e.is_file())
     }
 
     /// Returns only the parent directory the `HttpDirectory` listing
     #[must_use]
-    pub fn parent_directory(mut self) -> Self {
-        //self.entries = self.entries.into_iter().filter(|e| e.is_parent_directory()).collect();
-        self.entries = self.entries.into_iter().filter(HttpDirectoryEntry::is_parent_directory).collect();
-        self
+    pub fn parent_directory(&self) -> Self {
+        self.filtering(|e| e.is_parent_directory())
     }
 
     /// Returns the last entry Some(`HttpDirectoryEntry`) of that `HttpDirectory`
@@ -117,10 +132,9 @@ impl HttpDirectory {
 
     /// Filters the `HttpDirectory` listing by filtering names of each
     /// entry with the `regex` regular expression.
-    pub fn filter_by_name(mut self, regex: &str) -> Result<Self, HttpDirError> {
+    pub fn filter_by_name(&self, regex: &str) -> Result<Self, HttpDirError> {
         let re = Regex::new(regex)?;
-        self.entries.retain(|e| e.is_match_by_name(&re));
-        Ok(self)
+        Ok(self.filtering(|e| e.is_match_by_name(&re)))
     }
 
     /// Tells whether the `HttpDirectory` listing is empty or not
@@ -159,8 +173,8 @@ impl Default for HttpDirectory {
     fn default() -> Self {
         HttpDirectory {
             entries: vec![],
-            url: String::new(),
-            request: Request::None,
+            url: Arc::new(String::new()),
+            request: Arc::new(Request::None),
         }
     }
 }
@@ -178,16 +192,18 @@ fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
 mod tests {
     use super::{HttpDirectory, HttpDirectoryEntry, Request};
     use crate::{httpdirectory::Sorting, httpdirectoryentry::EntryType, httpdirectoryentry::assert_entry};
+    use std::sync::Arc;
 
     #[test]
     fn test_httpdirectory_default() {
         let httpdir = HttpDirectory::default();
         assert!(httpdir.is_empty());
-        assert_eq!(httpdir.url, "".to_string());
+        assert_eq!(httpdir.url, Arc::new("".to_string()));
 
-        match httpdir.request {
-            Request::Reqwest(request) => panic!("{request:?} should be None"),
-            Request::None => (),
+        match Arc::into_inner(httpdir.request) {
+            Some(Request::Reqwest(request)) => panic!("{request:?} should be None"),
+            Some(Request::None) => (),
+            None => panic!("Arc should return Some(Request::None) and not None"),
         }
     }
 
