@@ -25,7 +25,7 @@ async fn main() {
                                 Ok(bookworm) => {
                                     println!("{bookworm}");
                                     println!("Directories (if any)");
-                                    println!("{}", bookworm.dirs().sort_by_date(&Sorting::Ascending));
+                                    println!("{}", bookworm.dirs().sort_by_date(Sorting::Ascending));
                                     println!("Files (if any)");
                                     println!("{}", bookworm.files());
                                 }

@@ -133,9 +133,9 @@ impl HttpDirectoryEntry {
                 HttpDirectoryEntry::File(entry) | HttpDirectoryEntry::Directory(entry),
                 HttpDirectoryEntry::File(other_entry) | HttpDirectoryEntry::Directory(other_entry),
             ) => match field {
-                CompareField::Name => entry.cmp_by_name(other_entry, order),
-                CompareField::Date => entry.cmp_by_date(other_entry, order),
-                CompareField::Size => entry.cmp_by_size(other_entry, order),
+                CompareField::Name => entry.cmp_by_name(other_entry, &order),
+                CompareField::Date => entry.cmp_by_date(other_entry, &order),
+                CompareField::Size => entry.cmp_by_size(other_entry, &order),
             },
         }
     }

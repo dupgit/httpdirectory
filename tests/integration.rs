@@ -439,7 +439,7 @@ async fn test_old_bsd_example() {
     assert_entry(&entries[74], &EntryType::File, "ftplist", 4_836, "2025-05-16 14:13");
     assert_entry(&entries[75], &EntryType::File, "timestamp", 11, "2025-05-16 14:13");
 
-    let httpdir = httpdir.sort_by_date(&Sorting::Ascending);
+    let httpdir = httpdir.sort_by_date(Sorting::Ascending);
     let entries = httpdir.entries();
 
     assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
@@ -450,7 +450,7 @@ async fn test_old_bsd_example() {
     assert_entry(&entries[74], &EntryType::File, "ftplist", 4_836, "2025-05-16 14:13");
     assert_entry(&entries[75], &EntryType::File, "timestamp", 11, "2025-05-16 14:13");
 
-    let httpdir = httpdir.sort_by_date(&Sorting::Descending);
+    let httpdir = httpdir.sort_by_date(Sorting::Descending);
     let entries = httpdir.entries();
 
     assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
