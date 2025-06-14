@@ -134,7 +134,7 @@ fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirErr
             if should_be_considered_valid {
                 // We have analyzed valid entries: no need to inspect other <pre> tags
                 return Ok(http_dir_entry);
-            };
+            }
             debug!("Unable to get entry from this body (no headers ?):\n{body}");
         } else {
             debug!("Unable to get entry from this body (no <img> tag):\n{}", pre.inner_html());

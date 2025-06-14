@@ -26,6 +26,12 @@ pub enum Sorting {
 impl HttpDirectory {
     /// Crawls the `url` and returns (if no error occurred) the
     /// `HttpDirectory` of that url
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if a request client could not be made
+    /// or that the request to the url did not return correctly
+    /// with a 200 HTTP status code
     pub async fn new(url: &str) -> Result<Self, HttpDirError> {
         let client = Request::new()?;
         let response = client.get(url).await?;
@@ -40,6 +46,15 @@ impl HttpDirectory {
 
     /// Change directory if possible to dir (from url) and gets the new
     /// `HttpDirectory` listing if any and returns it.
+    ///
+    /// # Errors
+    ///
+    /// Will retirn an error if:
+    /// - the request engine has not been selected (a default one should
+    ///   have been selected for you)
+    /// - an error occurred while trying to retrieve data from the new
+    ///   directory
+    /// - the web server did not respond with 200 HTTP status code
     pub async fn cd(mut self, dir: &str) -> Result<Self, HttpDirError> {
         let url = join_url(&self.url, dir)?;
         debug!("cd is going to {url}");
@@ -52,6 +67,7 @@ impl HttpDirectory {
 
     /// Sorts the Directory entries by their names
     #[must_use]
+    #[allow(clippy::needless_pass_by_value)]
     pub fn sort_by_name(mut self, order: Sorting) -> Self {
         self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Name, &order));
         self
@@ -59,6 +75,7 @@ impl HttpDirectory {
 
     /// Sorts the Directory entries by their dates
     #[must_use]
+    #[allow(clippy::needless_pass_by_value)]
     pub fn sort_by_date(mut self, order: Sorting) -> Self {
         self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Date, &order));
         self
@@ -66,6 +83,7 @@ impl HttpDirectory {
 
     /// Sorts the Directory entries by their sizes
     #[must_use]
+    #[allow(clippy::needless_pass_by_value)]
     pub fn sort_by_size(mut self, order: Sorting) -> Self {
         self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Size, &order));
         self
@@ -92,29 +110,31 @@ impl HttpDirectory {
     /// Returns only directories of the `HttpDirectory` listing
     #[must_use]
     pub fn dirs(&self) -> Self {
-        self.filtering(|e| e.is_directory())
+        self.filtering(HttpDirectoryEntry::is_directory)
     }
 
     /// Returns only files of the `HttpDirectory` listing
     #[must_use]
     pub fn files(&self) -> Self {
-        self.filtering(|e| e.is_file())
+        self.filtering(HttpDirectoryEntry::is_file)
     }
 
     /// Returns only the parent directory the `HttpDirectory` listing
     #[must_use]
     pub fn parent_directory(&self) -> Self {
-        self.filtering(|e| e.is_parent_directory())
+        self.filtering(HttpDirectoryEntry::is_parent_directory)
     }
 
     /// Returns the last entry Some(`HttpDirectoryEntry`) of that `HttpDirectory`
     /// if it exists or None
+    #[must_use]
     pub fn last(&self) -> Option<&HttpDirectoryEntry> {
         self.entries.last()
     }
 
     /// Returns the first entry Some(`HttpDirectoryEntry`) of that `HttpDirectory`
     /// if it exists or None
+    #[must_use]
     pub fn first(&self) -> Option<&HttpDirectoryEntry> {
         self.entries.first()
     }
@@ -122,6 +142,7 @@ impl HttpDirectory {
     /// Returns the `Stats` (ie the number of files (with total
     /// apparent size), directories and parent directories) of
     /// the `HttpDirectory` structure
+    #[must_use]
     pub fn stats(&self) -> Stats {
         let mut stats = Stats::new();
         for e in self.entries() {
@@ -132,6 +153,12 @@ impl HttpDirectory {
 
     /// Filters the `HttpDirectory` listing by filtering names of each
     /// entry with the `regex` regular expression.
+    ///
+    /// # Errors
+    ///
+    /// Will return an error if the regular expression can not be
+    /// compiled (invalid pattern, or size limit exceeded). For more
+    /// information see  [`Regex`][regex::Regex::new()]
     pub fn filter_by_name(&self, regex: &str) -> Result<Self, HttpDirError> {
         let re = Regex::new(regex)?;
         Ok(self.filtering(|e| e.is_match_by_name(&re)))
