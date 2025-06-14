@@ -1,13 +1,25 @@
 use crate::httpdirectoryentry::HttpDirectoryEntry;
 use std::fmt;
 
+/// Gives statistics about an `HttpDirectoryEntry`
 #[derive(Default, Debug)]
 pub struct Stats {
+    /// number of parent directory (there should only be one)
     pub parent_dir: u8,
+
+    /// number of directories
     pub dirs: u32,
+
+    /// number of files
     pub files: u32,
+
+    /// sum of the size of each file in the directory
     pub total_size: u64,
+
+    /// number of files and directories with guessed date
     pub with_date: u32,
+
+    /// number of files and directories without guessed date
     pub without_date: u32,
 }
 
