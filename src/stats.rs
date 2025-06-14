@@ -1,4 +1,4 @@
-use crate::httpdirectoryentry::HttpDirectoryEntry;
+use crate::{entry::Entry, httpdirectoryentry::HttpDirectoryEntry};
 use std::fmt;
 
 /// Gives statistics about an `HttpDirectoryEntry`
@@ -28,29 +28,37 @@ impl Stats {
         Stats::default()
     }
 
-    pub(crate) fn count(&mut self, entry: &HttpDirectoryEntry) -> &Self {
-        match entry {
-            HttpDirectoryEntry::ParentDirectory(_) => {
-                self.parent_dir += 1;
-                self.without_date += 1;
-            }
-            HttpDirectoryEntry::Directory(dir) => {
-                self.dirs += 1;
-                match dir.date() {
-                    Some(_) => self.with_date += 1,
-                    None => self.without_date += 1,
-                }
-            }
-            HttpDirectoryEntry::File(file) => {
-                self.files += 1;
-                self.total_size += file.apparent_size() as u64;
-                match file.date() {
-                    Some(_) => self.with_date += 1,
-                    None => self.without_date += 1,
-                }
-            }
+    pub(crate) fn add_parent_directory(&mut self) -> &Self {
+        self.parent_dir += 1;
+        self.without_date += 1;
+        self
+    }
+
+    pub(crate) fn add_directory(&mut self, dir: &Entry) -> &Self {
+        self.dirs += 1;
+        match dir.date() {
+            Some(_) => self.with_date += 1,
+            None => self.without_date += 1,
         }
         self
+    }
+
+    pub(crate) fn add_file(&mut self, file: &Entry) -> &Self {
+        self.files += 1;
+        self.total_size += file.apparent_size() as u64;
+        match file.date() {
+            Some(_) => self.with_date += 1,
+            None => self.without_date += 1,
+        }
+        self
+    }
+
+    pub(crate) fn count(&mut self, entry: &HttpDirectoryEntry) -> &Self {
+        match entry {
+            HttpDirectoryEntry::ParentDirectory(_) => self.add_parent_directory(),
+            HttpDirectoryEntry::Directory(dir) => self.add_directory(dir),
+            HttpDirectoryEntry::File(file) => self.add_file(file),
+        }
     }
 }
 
