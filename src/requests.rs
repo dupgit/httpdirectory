@@ -16,7 +16,7 @@ impl Request {
     /// # Errors
     ///
     /// Returns an error if the request client can not be built
-    pub fn new() -> Result<Self, HttpDirError> {
+    pub(crate) fn new() -> Result<Self, HttpDirError> {
         match Client::builder().user_agent(HTTPDIR_USER_AGENT).build() {
             Ok(client) => {
                 trace!("new reqwest client: {client:?}");
@@ -37,7 +37,7 @@ impl Request {
     /// Returns an error when no request engine has been selected or
     /// that the reqwest could not be made or that the server did not
     /// respond with a 200 HTTP status code.
-    pub async fn get(&self, url: &str) -> Result<Response, HttpDirError> {
+    pub(crate) async fn get(&self, url: &str) -> Result<Response, HttpDirError> {
         match self {
             Request::Reqwest(client) => match client.get(url).send().await {
                 Ok(response) => match response.status() {
