@@ -44,11 +44,16 @@ async fn main() {
     for task in tasks {
         option_httpdir_vec.push(task.await.unwrap());
     }
+
     // verify that we've got the results
     for option_httpdir in &option_httpdir_vec {
         match option_httpdir {
             Ok(httpdir) => {
                 let stats = httpdir.stats();
+
+                // we know that the directory should contain at least
+                // 7 files and directories (none should be 0) and that
+                // every file and directory must have a date
                 if httpdir.len() < 7
                     || stats.files == 0
                     || stats.dirs == 0
