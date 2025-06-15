@@ -18,7 +18,7 @@ async fn main() {
             Ok(httpdir) => {
                 if httpdir.len() > 0 {
                     let entries = httpdir.entries();
-                    match &entries[0].dirname() {
+                    match &entries[0].name() {
                         Some(dir) => {
                             let dir = dir.to_string();
                             match httpdir.cd(&dir).await {

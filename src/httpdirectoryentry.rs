@@ -115,6 +115,19 @@ impl HttpDirectoryEntry {
         }
     }
 
+    /// Returns an `Option` with the name of the directory or the file corresponding
+    /// to the `HttpDirectoryEntry` if this entry is effectively a directory or a
+    /// file.
+    /// Returns None otherwise
+    #[must_use]
+    pub fn name(&self) -> Option<&str> {
+        match self {
+            HttpDirectoryEntry::ParentDirectory(_) => None,
+            HttpDirectoryEntry::File(file) => Some(file.name()),
+            HttpDirectoryEntry::Directory(dir) => Some(dir.name()),
+        }
+    }
+
     /// Compares entries by the selected field from `CompareField` enum using
     /// a sorting order as of `Sorting` enum
     #[must_use]
@@ -210,6 +223,7 @@ mod tests {
         assert_eq!(output, "FILE     5.0K  2025-05-20 20:19  name");
         assert_eq!(httpdirectoryentry.filename(), Some("name"));
         assert_eq!(httpdirectoryentry.dirname(), None);
+        assert_eq!(httpdirectoryentry.name(), Some("name"));
     }
 
     #[test]
@@ -220,6 +234,7 @@ mod tests {
         assert_eq!(output, "DIR         -  2025-05-20 20:19  name");
         assert_eq!(httpdirectoryentry.dirname(), Some("name"));
         assert_eq!(httpdirectoryentry.filename(), None);
+        assert_eq!(httpdirectoryentry.name(), Some("name"));
     }
 
     #[test]
@@ -228,6 +243,9 @@ mod tests {
 
         let output = format!("{httpdirectoryentry}");
         assert_eq!(output, "DIR         -                    ..");
+        assert_eq!(httpdirectoryentry.dirname(), None);
+        assert_eq!(httpdirectoryentry.filename(), None);
+        assert_eq!(httpdirectoryentry.name(), None);
     }
 
     #[test]
