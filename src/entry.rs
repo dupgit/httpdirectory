@@ -211,12 +211,9 @@ impl fmt::Display for Entry {
     }
 }
 
+#[cfg(test)]
 mod tests {
-    use crate::httpdirectory::Sorting;
-
-    use super::Entry;
-    use std::cmp::Ordering;
-
+    use {super::Entry, crate::httpdirectory::Sorting, std::cmp::Ordering};
     #[test]
     fn test_apparent_size_float() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "5.0K");

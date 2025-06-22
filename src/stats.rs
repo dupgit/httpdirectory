@@ -74,10 +74,9 @@ impl fmt::Display for Stats {
     }
 }
 
+#[cfg(test)]
 mod test {
-    use crate::httpdirectoryentry::HttpDirectoryEntry;
-
-    use super::Stats;
+    use {super::Stats, crate::httpdirectoryentry::HttpDirectoryEntry};
 
     #[test]
     fn test_stats_new() {

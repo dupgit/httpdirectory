@@ -288,6 +288,7 @@ pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> 
     }
 }
 
+#[cfg(test)]
 mod test {
     use super::is_this_a_real_header;
 

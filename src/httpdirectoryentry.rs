@@ -207,13 +207,13 @@ pub fn assert_entry(dir_entry: &HttpDirectoryEntry, entry_type: &EntryType, name
     }
 }
 
+#[cfg(test)]
 mod tests {
-    use super::HttpDirectoryEntry;
-    use crate::{
-        httpdirectory::{self, Sorting},
-        httpdirectoryentry::CompareField,
+    use {
+        super::HttpDirectoryEntry,
+        crate::{httpdirectory::Sorting, httpdirectoryentry::CompareField},
+        std::cmp::Ordering,
     };
-    use std::cmp::Ordering;
 
     #[test]
     fn test_file_httpdirectoryentry_output() {

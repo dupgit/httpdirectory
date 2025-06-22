@@ -216,10 +216,13 @@ fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
     }
 }
 
+#[cfg(test)]
 mod tests {
-    use super::{HttpDirectory, HttpDirectoryEntry, Request};
-    use crate::{httpdirectory::Sorting, httpdirectoryentry::EntryType, httpdirectoryentry::assert_entry};
-    use std::sync::Arc;
+    use {
+        super::{HttpDirectory, HttpDirectoryEntry, Request},
+        crate::{httpdirectory::Sorting, httpdirectoryentry::EntryType, httpdirectoryentry::assert_entry},
+        std::sync::Arc,
+    };
 
     #[test]
     fn test_httpdirectory_default() {
