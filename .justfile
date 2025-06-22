@@ -6,7 +6,7 @@ name := "httpdirectory"
 
 # Installs all cargo tools to build a release or test coverage
 install-dev-tools:
-    cargo install cargo-release cargo-sbom cargo-tarpaulin
+    cargo install cargo-release cargo-sbom cargo-tarpaulin cargo-nextest
 
 # Bumps {patch} (major, minor or patch) version number and does a release
 bump patch:
@@ -34,6 +34,11 @@ bump patch:
     git add Cargo.toml Cargo.lock {{name}}.sbom.spdx.json
     cargo release commit --no-confirm --execute
     cargo release tag --no-confirm --execute
+
+# Runs tests for the project
+test:
+    cargo nextest run
+    cargo t --doc
 
 # Creates the documentation and open it in a browser
 document:
