@@ -49,7 +49,7 @@ impl HttpDirectory {
     ///
     /// # Errors
     ///
-    /// Will retirn an error if:
+    /// Will return an error if:
     /// - the request engine has not been selected (a default one should
     ///   have been selected for you)
     /// - an error occurred while trying to retrieve data from the new
