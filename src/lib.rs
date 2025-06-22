@@ -1,6 +1,7 @@
 #![doc = include_str!("../README.md")]
 use const_format::formatcp;
 
+pub(crate) mod detect;
 pub(crate) mod requests;
 pub(crate) mod scrape;
 
