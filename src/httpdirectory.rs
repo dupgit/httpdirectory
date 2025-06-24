@@ -97,13 +97,12 @@ impl HttpDirectory {
     where
         F: FnMut(&HttpDirectoryEntry) -> bool,
     {
-        let mut entries = self.entries.clone();
-        entries.retain(|elem| f(elem));
+        let entries = self.entries.iter().filter(|entry| f(entry)).cloned().collect();
 
         HttpDirectory {
             entries,
-            url: self.url.clone(),
-            request: self.request.clone(),
+            url: Arc::clone(&self.url),
+            request: Arc::clone(&self.request),
         }
     }
 
