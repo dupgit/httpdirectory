@@ -64,5 +64,5 @@ publish: git-publish rust-publish
 
 # Runs a coverage test and open it's result in a web browser
 coverage:
-    cargo tarpaulin --frozen -o Html
+    cargo tarpaulin --frozen --exclude-files benches/*.rs -o Htma
     open tarpaulin-report.html
