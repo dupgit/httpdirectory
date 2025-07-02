@@ -181,6 +181,13 @@ impl HttpDirectory {
     pub fn entries(&self) -> &Vec<HttpDirectoryEntry> {
         &self.entries
     }
+
+    /// Returns the String that represents the url of
+    /// that `HttpDirectory`
+    #[must_use]
+    pub fn get_url(&self) -> Arc<String> {
+        self.url.clone()
+    }
 }
 
 impl fmt::Display for HttpDirectory {
