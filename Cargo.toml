@@ -23,7 +23,7 @@ url = "2.5.4"
 
 [dev-dependencies]
 httpmock = "0.7.0-rc.1"
-criterion = { version = "0.5", features = ["html_reports"] }
+criterion = { version = "0.6", features = ["html_reports"] }
 
 [[bench]]
 name = "filtering_bench"
