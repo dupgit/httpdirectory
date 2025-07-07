@@ -66,3 +66,7 @@ publish: git-publish rust-publish
 coverage:
     cargo tarpaulin --frozen --exclude-files benches/*.rs -o Htma
     open tarpaulin-report.html
+
+# Runs benches
+bench:
+    cargo bench
