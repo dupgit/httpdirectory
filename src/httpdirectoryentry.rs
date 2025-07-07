@@ -88,8 +88,7 @@ impl HttpDirectoryEntry {
     pub fn is_match_by_name(&self, re: &Regex) -> bool {
         match self {
             HttpDirectoryEntry::ParentDirectory(_) => false,
-            HttpDirectoryEntry::Directory(dir) => re.is_match(dir.name()),
-            HttpDirectoryEntry::File(file) => re.is_match(file.name()),
+            HttpDirectoryEntry::Directory(entry) | HttpDirectoryEntry::File(entry) => re.is_match(entry.name()),
         }
     }
 
@@ -123,8 +122,7 @@ impl HttpDirectoryEntry {
     pub fn name(&self) -> Option<&str> {
         match self {
             HttpDirectoryEntry::ParentDirectory(_) => None,
-            HttpDirectoryEntry::File(file) => Some(file.name()),
-            HttpDirectoryEntry::Directory(dir) => Some(dir.name()),
+            HttpDirectoryEntry::File(entry) | HttpDirectoryEntry::Directory(entry) => Some(entry.name()),
         }
     }
 
