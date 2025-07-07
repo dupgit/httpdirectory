@@ -199,6 +199,7 @@ async fn test_debian_example() {
     assert_eq!(httpdir.len(), 12);
     let entries = httpdir.entries();
 
+    assert_eq!(httpdir.get_url().to_string(), url.to_string());
     assert_entry(&entries[0], &EntryType::ParentDirectory, "/images/", 0, "0000-00-00, 00:00");
     assert_entry(&entries[1], &EntryType::Directory, "OpenStack/", 0, "2024-07-01 23:19");
     assert_entry(&entries[2], &EntryType::Directory, "bookworm-backports/", 0, "2025-04-28 21:33");
