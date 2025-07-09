@@ -12,10 +12,10 @@ alias p := publish
 
 # Installs all cargo tools to build a release or test coverage
 install-dev-tools:
-    cargo install cargo-release cargo-sbom cargo-tarpaulin cargo-nextest
+    cargo install cargo-release cargo-sbom cargo-tarpaulin cargo-nextest typos-cli
 
 # Bumps {patch} (major, minor or patch) version number and does a release
-bump patch:
+bump patch: check-typos
     # Ensures that the source code is correctly formatted -> it should not modify anything
     cargo fmt
 
@@ -70,3 +70,7 @@ coverage:
 # Runs benches
 bench:
     cargo bench
+
+# Check for typos
+check-typos:
+    typos src/ README.md tests examples .justfile benches
