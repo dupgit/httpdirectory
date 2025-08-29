@@ -89,7 +89,10 @@ impl HttpDirectoryEntry {
     pub fn is_match_by_name(&self, re: &Regex) -> bool {
         match self {
             HttpDirectoryEntry::ParentDirectory(_) => false,
-            HttpDirectoryEntry::Directory(entry) | HttpDirectoryEntry::File(entry) => re.is_match(entry.name()),
+            HttpDirectoryEntry::Directory(entry) | HttpDirectoryEntry::File(entry) => {
+                trace!("filtering {} with {}", entry.name(), re);
+                re.is_match(entry.name())
+            }
         }
     }
 
