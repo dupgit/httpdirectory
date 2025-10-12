@@ -23,7 +23,7 @@ async fn main() {
         // "https://ftp.lysator.liu.se/pub/OpenBSD/",
         // "http://mirror.nju.edu.cn/debian/",
         // "http://debian-archive.trafficmanager.net/debian/",
-        "http://mirrors.coreix.net/debian/",
+        // "http://mirrors.coreix.net/debian/",
         "http://mirror.cov.ukservers.com/debian/",
     ];
 

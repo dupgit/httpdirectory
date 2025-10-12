@@ -1,3 +1,5 @@
+use regex::Regex;
+
 /// Site type enumeration.
 #[derive(Debug, PartialEq, Eq)]
 pub enum SiteType {
@@ -11,6 +13,22 @@ pub enum PureHtml {
     Pre,
 }
 
+// <table> detection is considered valid if
+// we can match a column name "Modified",
+// "Last Modified" or "Date" within the table
+fn detect_table(body: &str) -> bool {
+    // Some websites prints "Modified" instead of "Last modified"
+    let re = Regex::new(r"(?msi)<table(.+?<th.+?(Last )?modified.+?</th.+?)</table").unwrap();
+
+    if re.is_match(body) {
+        true
+    } else {
+        // Some websites prints "Date" instead of "Last modified"
+        let re = Regex::new(r"(?msi)<table(.+?<th.+?Date.+?</th.+?)</table").unwrap();
+        re.is_match(body)
+    }
+}
+
 impl SiteType {
     /// Detects the possible type of the site we are
     /// scraping information from by "analyzing" it's
@@ -19,7 +37,7 @@ impl SiteType {
         // `<table>` tag may contain attributes such as
         // `id="indexlist"` for instance so we need to
         // search without the closing `>` tag sign
-        if body.contains("<table") {
+        if detect_table(body) {
             SiteType::NotNamed(PureHtml::Table)
         } else if body.contains("<pre>") {
             SiteType::NotNamed(PureHtml::Pre)
