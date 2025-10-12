@@ -1,6 +1,6 @@
 [package]
 name = "httpdirectory"
-version = "0.15.1"
+version = "0.15.2"
 edition = "2024"
 authors = ["Olivier Delhomme <olivier.delhomme@free.fr>"]
 description = "Crawls directory webpage (HTTP index) into a structure"
