@@ -1,4 +1,8 @@
-use crate::{detect::SiteType, error::HttpDirError, httpdirectoryentry::HttpDirectoryEntry};
+use crate::{
+    detect::{PureHtml, SiteType},
+    error::HttpDirError,
+    httpdirectoryentry::HttpDirectoryEntry,
+};
 use log::{debug, trace};
 use scraper::{Html, Selector};
 
@@ -272,20 +276,22 @@ fn scrape_pre_simple(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError
 // accordingly
 pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     match SiteType::detect(body) {
-        SiteType::Table => {
-            debug!("body has <table> tag, trying this");
-            scrape_table(body)
-        }
-        SiteType::Pre => {
-            debug!("body has <pre> tag, trying this");
-            let http_dir_entry = scrape_pre_with_img(body)?;
-            if http_dir_entry.is_empty() {
-                let http_dir_entry = scrape_pre_simple(body)?;
-                Ok(http_dir_entry)
-            } else {
-                Ok(http_dir_entry)
+        SiteType::NotNamed(html) => match html {
+            PureHtml::Table => {
+                debug!("body has <table> tag, trying this");
+                scrape_table(body)
             }
-        }
+            PureHtml::Pre => {
+                debug!("body has <pre> tag, trying this");
+                let http_dir_entry = scrape_pre_with_img(body)?;
+                if http_dir_entry.is_empty() {
+                    let http_dir_entry = scrape_pre_simple(body)?;
+                    Ok(http_dir_entry)
+                } else {
+                    Ok(http_dir_entry)
+                }
+            }
+        },
         SiteType::None => Ok(vec![]),
     }
 }
