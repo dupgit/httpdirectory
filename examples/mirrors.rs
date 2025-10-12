@@ -45,6 +45,8 @@ async fn main() {
         option_httpdir_vec.push(task.await.unwrap());
     }
 
+    let mut correct = 0;
+    let mut errored = 0;
     // verify that we've got the results
     for option_httpdir in &option_httpdir_vec {
         match option_httpdir {
@@ -63,11 +65,17 @@ async fn main() {
                     println!("{}", stats.to_string().red());
 
                     println!("{}", httpdir.to_string().red());
+                    errored += 1;
                 } else {
                     println!("{}", httpdir.to_string().green());
+                    correct += 1;
                 }
             }
             Err(myerr) => println!("{myerr}"),
         }
     }
+
+    println!();
+    println!("May be correct: {}", correct.to_string().green());
+    println!("Probably wrong: {}", errored.to_string().red());
 }
