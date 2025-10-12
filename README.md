@@ -1,6 +1,7 @@
 # *httpdirectory*'s readme
 
-This project is in an early stage of development.
+This project is in an early stage of development but is already
+correct on many websites.
 
 ## Description
 
