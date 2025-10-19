@@ -4,6 +4,7 @@ use regex::Regex;
 #[derive(Debug, PartialEq, Eq)]
 pub enum SiteType {
     NotNamed(PureHtml),
+    H5ai(String),
     None,
 }
 
@@ -29,20 +30,30 @@ fn detect_table(body: &str) -> bool {
     }
 }
 
+fn detect_h5ai(body: &str) -> Option<String> {
+    let re = Regex::new(r"powered by h5ai ([v]?\d+.\d+.\d+[\+\-\.\w]*)").unwrap();
+
+    match re.captures(body) {
+        Some(value) => Some(value[1].to_string()),
+        None => None,
+    }
+}
+
 impl SiteType {
     /// Detects the possible type of the site we are
     /// scraping information from by "analyzing" it's
     /// body.
     pub fn detect(body: &str) -> Self {
-        // `<table>` tag may contain attributes such as
-        // `id="indexlist"` for instance so we need to
-        // search without the closing `>` tag sign
-        if detect_table(body) {
-            SiteType::NotNamed(PureHtml::Table)
-        } else if body.contains("<pre>") {
-            SiteType::NotNamed(PureHtml::Pre)
+        if let Some(version) = detect_h5ai(body) {
+            SiteType::H5ai(version)
         } else {
-            SiteType::None
+            if detect_table(body) {
+                SiteType::NotNamed(PureHtml::Table)
+            } else if body.contains("<pre>") {
+                SiteType::NotNamed(PureHtml::Pre)
+            } else {
+                SiteType::None
+            }
         }
     }
 }

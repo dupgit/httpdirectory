@@ -2,6 +2,7 @@
 use const_format::formatcp;
 
 pub(crate) mod detect;
+pub(crate) mod h5ai;
 pub(crate) mod requests;
 pub(crate) mod scrape;
 

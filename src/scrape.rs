@@ -1,9 +1,10 @@
 use crate::{
     detect::{PureHtml, SiteType},
     error::HttpDirError,
+    h5ai::scrape_h5ai,
     httpdirectoryentry::HttpDirectoryEntry,
 };
-use log::{debug, trace};
+use log::{debug, info, trace};
 use regex::Regex;
 use scraper::{ElementRef, Html, Selector};
 
@@ -36,7 +37,7 @@ fn are_table_headers_present(table: ElementRef) -> bool {
 // column (first one) is not empty (it has text) so
 // it may be that this is in fact the name & link
 // column
-fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
+pub(crate) fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     let mut http_dir_entry = vec![];
 
     let html = Html::parse_document(body);
@@ -104,10 +105,13 @@ fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
                 trace!("date: {date:?}, size: {size:?}");
                 if !name.is_empty() && !date.is_empty() && !size.is_empty() {
                     http_dir_entry.push(HttpDirectoryEntry::new(name[0], date[0], size[0], link));
-                } else if date.is_empty() && !size.is_empty() && !name.is_empty() {
+                } else if !name.is_empty() && !date.is_empty() && size.is_empty() {
+                    // size is empty this may be is a directory
+                    http_dir_entry.push(HttpDirectoryEntry::new(name[0], date[0], " - ", link));
+                } else if !name.is_empty() && date.is_empty() && !size.is_empty() {
                     // date may be empty for a parent directory for instance
                     http_dir_entry.push(HttpDirectoryEntry::new(name[0], "", size[0], link));
-                } else if date.is_empty() && size.is_empty() && !name.is_empty() {
+                } else if !name.is_empty() && date.is_empty() && size.is_empty() {
                     // date and size may be empty for a parent directory for instance
                     http_dir_entry.push(HttpDirectoryEntry::new(name[0], "", " - ", link));
                 }
@@ -298,6 +302,10 @@ fn scrape_pre_simple(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError
 // accordingly
 pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     match SiteType::detect(body) {
+        SiteType::H5ai(version) => {
+            info!("H5ai powered version {version} website detected");
+            scrape_h5ai(body, &version)
+        }
         SiteType::NotNamed(html) => match html {
             PureHtml::Table => {
                 debug!("body has <table> tag, trying this");

@@ -6,7 +6,7 @@ authors = ["Olivier Delhomme <olivier.delhomme@free.fr>"]
 description = "Crawls directory webpage (HTTP index) into a structure"
 repository = "https://github.com/dupgit/httpdirectory"
 license = "MIT OR Apache-2.0"
-keywords = ["http", "directory", "file", "autoindex"]
+keywords = ["http", "directory", "file", "autoindex", "httpdir"]
 categories = ["web-programming", "parsing"]
 
 [dependencies]

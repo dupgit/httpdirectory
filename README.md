@@ -32,6 +32,13 @@ DIR      -  2019-07-18 10:40  stretch/
 DIR      -  2023-07-25 07:43  trixie/
 ```
 
+## Known formats
+
+- simple html `<table>` tables
+- `<pre>` formatted tables
+- h5ai fallback website
+
+
 ## Usage
 
 First obtain a directory from an url using `HttpDirectory::new(url)`
