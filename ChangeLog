@@ -1,0 +1,6 @@
+0.15.3
+  * decodes h5ai formatted websites
+  * new ChangeLog file
+
+0.15.2
+ * detects the right <table> in multi <table> websites

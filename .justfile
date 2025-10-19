@@ -73,4 +73,4 @@ bench:
 
 # Check for typos
 check-typos:
-    typos src/ README.md tests examples .justfile benches
+    typos src/ README.md tests examples .justfile benches ChangeLog
