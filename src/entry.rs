@@ -1,6 +1,6 @@
 use crate::httpdirectory::Sorting;
 use chrono::NaiveDateTime;
-use log::trace;
+use log::{error, trace};
 use std::{cmp::Ordering, fmt};
 
 /// Defines an Entry for a file or a directory
@@ -108,21 +108,26 @@ impl Entry {
             // Directory
             real_size = 0;
             new_size = my_size.to_string();
-        } else if my_size.contains('k') {
+        } else if my_size.contains('k') || my_size.contains("kb") {
             real_size = 1024;
-            new_size = my_size.replace('k', "");
-        } else if my_size.contains('m') {
+            let no_kb = my_size.replace("kb", "");
+            new_size = no_kb.replace('k', "");
+        } else if my_size.contains('m') || my_size.contains("mb") {
             real_size = 1_048_576;
-            new_size = my_size.replace('m', "");
-        } else if my_size.contains('g') {
+            let no_mb = my_size.replace("mb", "");
+            new_size = no_mb.replace('m', "");
+        } else if my_size.contains('g') || my_size.contains("gb") {
             real_size = 1_073_741_824;
-            new_size = my_size.replace('g', "");
-        } else if my_size.contains('t') {
+            let no_gb = my_size.replace("gb", "");
+            new_size = no_gb.replace('g', "");
+        } else if my_size.contains('t') || my_size.contains("tb") {
             real_size = 1_099_511_627_776;
-            new_size = my_size.replace('t', "");
-        } else if my_size.contains('p') {
+            let no_tb = my_size.replace("tb", "");
+            new_size = no_tb.replace('t', "");
+        } else if my_size.contains('p') || my_size.contains("pb") {
             real_size = 1_125_899_906_842_624;
-            new_size = my_size.replace('p', "");
+            let no_pb = my_size.replace("pb", "");
+            new_size = no_pb.replace('p', "");
         } else {
             // size may not have any modifier and be expressed
             // directly in bytes
@@ -130,6 +135,7 @@ impl Entry {
             new_size = my_size.to_string();
         }
 
+        let new_size = new_size.trim();
         if my_size.contains('.') {
             match new_size.parse::<f64>() {
                 Ok(number) => {
@@ -146,12 +152,18 @@ impl Entry {
                         0
                     }
                 }
-                Err(_) => 0,
+                Err(e) => {
+                    error!("error parsing {new_size} into usize: {e}");
+                    0
+                }
             }
         } else {
             match new_size.parse::<usize>() {
                 Ok(number) => real_size * number,
-                Err(_) => 0,
+                Err(e) => {
+                    error!("error parsing {new_size} into usize: {e}");
+                    0
+                }
             }
         }
     }
