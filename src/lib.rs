@@ -5,6 +5,7 @@ pub(crate) mod detect;
 pub(crate) mod h5ai;
 pub(crate) mod requests;
 pub(crate) mod scrape;
+pub(crate) mod ul;
 
 /// All errors that you might get from httpdirectory library
 pub mod error;

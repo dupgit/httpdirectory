@@ -3,6 +3,7 @@ use crate::{
     error::HttpDirError,
     h5ai::scrape_h5ai,
     httpdirectoryentry::HttpDirectoryEntry,
+    ul::scrape_ul,
 };
 use log::{debug, info, trace};
 use regex::Regex;
@@ -206,7 +207,7 @@ fn get_date_and_size(line: &str) -> (&str, &str) {
 // Form of the column:  '<a href="bionic/">bionic/'
 // Returns a tuple with the text of the link and the
 // linked text as name. Here : ("bionic/", "bionic/")
-fn get_link_and_name(column: &str) -> (&str, &str) {
+pub fn get_link_and_name(column: &str) -> (&str, &str) {
     match column.find('>') {
         Some(num) => {
             let name = &column[num + 1..];
@@ -308,11 +309,11 @@ pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> 
         }
         SiteType::NotNamed(html) => match html {
             PureHtml::Table => {
-                debug!("body has <table> tag, trying this");
+                info!("Body has <table> tag");
                 scrape_table(body)
             }
             PureHtml::Pre => {
-                debug!("body has <pre> tag, trying this");
+                info!("Body has <pre> tag");
                 let http_dir_entry = scrape_pre_with_img(body)?;
                 if http_dir_entry.is_empty() {
                     let http_dir_entry = scrape_pre_simple(body)?;
@@ -320,6 +321,10 @@ pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> 
                 } else {
                     Ok(http_dir_entry)
                 }
+            }
+            PureHtml::Ul => {
+                info!("Body has no <table>, nor <pre> but <ul> tag");
+                scrape_ul(body)
             }
         },
         SiteType::None => Ok(vec![]),

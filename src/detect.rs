@@ -12,6 +12,7 @@ pub enum SiteType {
 pub enum PureHtml {
     Table,
     Pre,
+    Ul,
 }
 
 // <table> detection is considered valid if
@@ -51,6 +52,8 @@ impl SiteType {
                 SiteType::NotNamed(PureHtml::Table)
             } else if body.contains("<pre>") {
                 SiteType::NotNamed(PureHtml::Pre)
+            } else if body.contains("<ul>") {
+                SiteType::NotNamed(PureHtml::Ul)
             } else {
                 SiteType::None
             }
