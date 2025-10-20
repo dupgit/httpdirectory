@@ -39,6 +39,7 @@ DIR      -  2023-07-25 07:43  trixie/
 - very simple websites containing only <ul> and <il> tags
 - h5ai fallback website
 - OCF adapted nginx flat theme
+- SNT index generator
 
 
 ## Usage
