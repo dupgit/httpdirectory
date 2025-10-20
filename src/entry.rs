@@ -1,6 +1,7 @@
 use crate::httpdirectory::Sorting;
 use chrono::NaiveDateTime;
 use log::{error, trace};
+use regex::Regex;
 use std::{cmp::Ordering, fmt};
 
 /// Defines an Entry for a file or a directory
@@ -63,6 +64,48 @@ fn get_date_from_inputs<'a>(date: &'a str, size: &'a str, reversed: bool) -> Opt
     }
 }
 
+// @todo: be more accurate with the modifier that should
+// be 1000 for Kb and 1024 for KiB ?
+fn is_kilo_bytes(size: &str) -> Option<String> {
+    let re = Regex::new(r"(?msi)(\d*.?\d*)\s*k|(\d*.?\d*)\s*kb|(\d*.?\d*)\s*kib").unwrap();
+    match re.captures(size) {
+        Some(value) => Some(value[1].to_string()),
+        None => None,
+    }
+}
+
+fn is_mega_bytes(size: &str) -> Option<String> {
+    let re = Regex::new(r"(?i)(\d*.?\d*)\s*m|(\d*.?\d*)\s*mb|(\d*.?\d*)\s*mib").unwrap();
+    match re.captures(size) {
+        Some(value) => Some(value[1].to_string()),
+        None => None,
+    }
+}
+
+fn is_giga_bytes(size: &str) -> Option<String> {
+    let re = Regex::new(r"(?i)(\d*.?\d*)\s*g|(\d*.?\d*)\s*gb|(\d*.?\d*)\s*gib").unwrap();
+    match re.captures(size) {
+        Some(value) => Some(value[1].to_string()),
+        None => None,
+    }
+}
+
+fn is_tera_bytes(size: &str) -> Option<String> {
+    let re = Regex::new(r"(?msi)(\d*.?\d*)\s*t|(\d*.?\d*)\s*tb|(\d*.?\d*)\s*tib").unwrap();
+    match re.captures(size) {
+        Some(value) => Some(value[1].to_string()),
+        None => None,
+    }
+}
+
+fn is_peta_bytes(size: &str) -> Option<String> {
+    let re = Regex::new(r"(?msi)(\d*.?\d*)\s*p|(\d*.?\d*)\s*pb|(\d*.?\d*)\s*pib").unwrap();
+    match re.captures(size) {
+        Some(value) => Some(value[1].to_string()),
+        None => None,
+    }
+}
+
 impl Entry {
     /// Creates a new Entry
     #[must_use]
@@ -108,26 +151,21 @@ impl Entry {
             // Directory
             real_size = 0;
             new_size = my_size.to_string();
-        } else if my_size.contains('k') || my_size.contains("kb") {
+        } else if let Some(captured_size) = is_kilo_bytes(&my_size) {
             real_size = 1024;
-            let no_kb = my_size.replace("kb", "");
-            new_size = no_kb.replace('k', "");
-        } else if my_size.contains('m') || my_size.contains("mb") {
+            new_size = captured_size;
+        } else if let Some(captured_size) = is_mega_bytes(&my_size) {
             real_size = 1_048_576;
-            let no_mb = my_size.replace("mb", "");
-            new_size = no_mb.replace('m', "");
-        } else if my_size.contains('g') || my_size.contains("gb") {
+            new_size = captured_size;
+        } else if let Some(captured_size) = is_giga_bytes(&my_size) {
             real_size = 1_073_741_824;
-            let no_gb = my_size.replace("gb", "");
-            new_size = no_gb.replace('g', "");
-        } else if my_size.contains('t') || my_size.contains("tb") {
+            new_size = captured_size;
+        } else if let Some(captured_size) = is_tera_bytes(&my_size) {
             real_size = 1_099_511_627_776;
-            let no_tb = my_size.replace("tb", "");
-            new_size = no_tb.replace('t', "");
-        } else if my_size.contains('p') || my_size.contains("pb") {
+            new_size = captured_size;
+        } else if let Some(captured_size) = is_peta_bytes(&my_size) {
             real_size = 1_125_899_906_842_624;
-            let no_pb = my_size.replace("pb", "");
-            new_size = no_pb.replace('p', "");
+            new_size = captured_size;
         } else {
             // size may not have any modifier and be expressed
             // directly in bytes

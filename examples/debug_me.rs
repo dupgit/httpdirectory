@@ -28,6 +28,7 @@ async fn main() {
         // "http://mirror.cov.ukservers.com/debian/",
         // "http://debian.osuosl.org/debian/",
         "http://mirrors.iu13.net/debian/",
+        "http://mirrors.ocf.berkeley.edu/debian/",
         // "http://debian.mirror.uk.sargasso.net/debian/",
         // "http://mirror.twds.com.tw/debian/",
         // "http://debian.ethz.ch/debian/",

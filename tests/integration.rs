@@ -1788,11 +1788,11 @@ async fn test_debian_archive_trafficmanager_net() {
     assert_entry(&entries[5], &EntryType::Directory, "project/", 0, "2008-11-17 23:05");
     assert_entry(&entries[6], &EntryType::Directory, "tools/", 0, "2012-10-10 16:29");
     assert_entry(&entries[7], &EntryType::Directory, "zzz-dists/", 0, "2023-10-07 11:07");
-    assert_entry(&entries[8], &EntryType::File, "extrafiles", 0, "2025-05-31 14:26");
-    assert_entry(&entries[9], &EntryType::File, "ls-lR.gz", 0, "2025-05-31 14:18");
-    assert_entry(&entries[10], &EntryType::File, "README", 0, "2025-05-17 08:29");
-    assert_entry(&entries[11], &EntryType::File, "README.CD-manufacture", 0, "2010-06-26 09:52");
-    assert_entry(&entries[12], &EntryType::File, "README.html", 0, "2025-05-17 08:29");
+    assert_entry(&entries[8], &EntryType::File, "extrafiles", 203776, "2025-05-31 14:26");
+    assert_entry(&entries[9], &EntryType::File, "ls-lR.gz", 15728640, "2025-05-31 14:18");
+    assert_entry(&entries[10], &EntryType::File, "README", 1228, "2025-05-17 08:29");
+    assert_entry(&entries[11], &EntryType::File, "README.CD-manufacture", 1331, "2010-06-26 09:52");
+    assert_entry(&entries[12], &EntryType::File, "README.html", 2867, "2025-05-17 08:29");
     assert_entry(&entries[13], &EntryType::File, "README.mirrors.html", 0, "2017-03-04 20:08");
     assert_entry(&entries[14], &EntryType::File, "README.mirrors.txt", 0, "2017-03-04 20:08");
 
