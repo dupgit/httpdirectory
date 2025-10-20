@@ -17,11 +17,7 @@ pub(crate) fn scrape_ul(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirEr
                 // Names that finishes with a trailing / are directories others are files
                 if let Some(last) = name.chars().last() {
                     if last == '/' {
-                        if link.to_lowercase() == "parent directory" {
-                            http_dir_entry.push(HttpDirectoryEntry::new(name, "", " - ", link));
-                        } else {
-                            http_dir_entry.push(HttpDirectoryEntry::new(name, "", " - ", link));
-                        }
+                        http_dir_entry.push(HttpDirectoryEntry::new(name, "", " - ", link));
                     } else {
                         http_dir_entry.push(HttpDirectoryEntry::new(name, "", "", link));
                     }
