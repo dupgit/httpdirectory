@@ -33,6 +33,7 @@ fn try_parse_date(date: &str) -> Option<NaiveDateTime> {
             "%d-%b-%Y %H:%M:%S", // 05-Apr-2024 11:59:30
             "%Y-%b-%d %H:%M:%S", // 2021-May-25 20:15:46
             "%m/%d/%Y %r %:z",   // 05/31/2025 01:54:45 PM +00:00
+            "%Y-%m-%dT%H:%MZ",   // 2025-10-20T14:17Z
         ];
 
         for pf in parse_format {
