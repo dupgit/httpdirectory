@@ -24,12 +24,11 @@ fn are_table_headers_present(table: ElementRef) -> bool {
         for column in columns {
             if re.is_match(column) {
                 return true;
-            } else {
-                warn!("This table does not contain any date header field");
             }
         }
     }
 
+    warn!("This table does not contain any date header field");
     false
 }
 
