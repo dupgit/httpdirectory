@@ -4,7 +4,8 @@ use regex::Regex;
 #[derive(Debug, PartialEq, Eq)]
 pub enum SiteType {
     NotNamed(PureHtml),
-    H5ai(String),
+    H5ai(String), // from https://github.com/lrsjng/h5ai
+    Snt,          // SNT index generator from https://snt.utwente.nl/en/
     None,
 }
 
@@ -40,6 +41,10 @@ fn detect_h5ai(body: &str) -> Option<String> {
     }
 }
 
+fn detect_snt(body: &str) -> bool {
+    body.contains("SNT index generator")
+}
+
 impl SiteType {
     /// Detects the possible type of the site we are
     /// scraping information from by "analyzing" it's
@@ -47,6 +52,8 @@ impl SiteType {
     pub fn detect(body: &str) -> Self {
         if let Some(version) = detect_h5ai(body) {
             SiteType::H5ai(version)
+        } else if detect_snt(body) {
+            SiteType::Snt
         } else {
             if detect_table(body) {
                 SiteType::NotNamed(PureHtml::Table)

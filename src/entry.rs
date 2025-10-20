@@ -35,6 +35,7 @@ fn try_parse_date(date: &str) -> Option<NaiveDateTime> {
             "%m/%d/%Y %r %:z",   // 05/31/2025 01:54:45 PM +00:00
             "%Y-%m-%dT%H:%MZ",   // 2025-10-20T14:17Z
             "%d-%m-%Y | %H:%M",  // 20-10-2025 | 13:52
+            "%Y-%m-%d %H:%M %Z", // 2025-10-20 16:17 CEST
         ];
 
         for pf in parse_format {
@@ -68,10 +69,29 @@ fn get_date_from_inputs<'a>(date: &'a str, size: &'a str, reversed: bool) -> Opt
     }
 }
 
+fn is_bytes(size: &str) -> Option<String> {
+    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*b|(\d*\.?\d*)\s*ib").unwrap();
+    match re.captures(size) {
+        Some(value) => {
+            if let Some(captured) = value.get(1) {
+                let captured = captured.as_str().to_string();
+                if captured.is_empty() {
+                    None
+                } else {
+                    Some(captured)
+                }
+            } else {
+                None
+            }
+        }
+        None => None,
+    }
+}
+
 // @todo: be more accurate with the modifier that should
 // be 1000 for Kb and 1024 for KiB ?
 fn is_kilo_bytes(size: &str) -> Option<String> {
-    let re = Regex::new(r"(?msi)(\d*.?\d*)\s*k|(\d*.?\d*)\s*kb|(\d*.?\d*)\s*kib").unwrap();
+    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*k|(\d*\.?\d*)\s*kb|(\d*\.?\d*)\s*kib").unwrap();
     match re.captures(size) {
         Some(value) => Some(value[1].to_string()),
         None => None,
@@ -79,7 +99,7 @@ fn is_kilo_bytes(size: &str) -> Option<String> {
 }
 
 fn is_mega_bytes(size: &str) -> Option<String> {
-    let re = Regex::new(r"(?i)(\d*.?\d*)\s*m|(\d*.?\d*)\s*mb|(\d*.?\d*)\s*mib").unwrap();
+    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*m|(\d*\.?\d*)\s*mb|(\d*\.?\d*)\s*mib").unwrap();
     match re.captures(size) {
         Some(value) => Some(value[1].to_string()),
         None => None,
@@ -87,7 +107,7 @@ fn is_mega_bytes(size: &str) -> Option<String> {
 }
 
 fn is_giga_bytes(size: &str) -> Option<String> {
-    let re = Regex::new(r"(?i)(\d*.?\d*)\s*g|(\d*.?\d*)\s*gb|(\d*.?\d*)\s*gib").unwrap();
+    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*g|(\d*\.?\d*)\s*gb|(\d*\.?\d*)\s*gib").unwrap();
     match re.captures(size) {
         Some(value) => Some(value[1].to_string()),
         None => None,
@@ -95,7 +115,7 @@ fn is_giga_bytes(size: &str) -> Option<String> {
 }
 
 fn is_tera_bytes(size: &str) -> Option<String> {
-    let re = Regex::new(r"(?msi)(\d*.?\d*)\s*t|(\d*.?\d*)\s*tb|(\d*.?\d*)\s*tib").unwrap();
+    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*t|(\d*\.?\d*)\s*tb|(\d*\.?\d*)\s*tib").unwrap();
     match re.captures(size) {
         Some(value) => Some(value[1].to_string()),
         None => None,
@@ -103,7 +123,7 @@ fn is_tera_bytes(size: &str) -> Option<String> {
 }
 
 fn is_peta_bytes(size: &str) -> Option<String> {
-    let re = Regex::new(r"(?msi)(\d*.?\d*)\s*p|(\d*.?\d*)\s*pb|(\d*.?\d*)\s*pib").unwrap();
+    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*p|(\d*\.?\d*)\s*pb|(\d*\.?\d*)\s*pib").unwrap();
     match re.captures(size) {
         Some(value) => Some(value[1].to_string()),
         None => None,
@@ -155,19 +175,28 @@ impl Entry {
             // Directory
             real_size = 0;
             new_size = my_size.to_string();
+        } else if let Some(captured_size) = is_bytes(&my_size) {
+            trace!("Bytes detected: {captured_size}");
+            real_size = 1;
+            new_size = captured_size;
         } else if let Some(captured_size) = is_kilo_bytes(&my_size) {
+            trace!("Kilo bytes detected: {captured_size}");
             real_size = 1024;
             new_size = captured_size;
         } else if let Some(captured_size) = is_mega_bytes(&my_size) {
+            trace!("Mega bytes detected: {captured_size}");
             real_size = 1_048_576;
             new_size = captured_size;
         } else if let Some(captured_size) = is_giga_bytes(&my_size) {
+            trace!("Giga bytes detected: {captured_size}");
             real_size = 1_073_741_824;
             new_size = captured_size;
         } else if let Some(captured_size) = is_tera_bytes(&my_size) {
+            trace!("Tera bytes detected: {captured_size}");
             real_size = 1_099_511_627_776;
             new_size = captured_size;
         } else if let Some(captured_size) = is_peta_bytes(&my_size) {
+            trace!("Peta bytes detected: {captured_size}");
             real_size = 1_125_899_906_842_624;
             new_size = captured_size;
         } else {

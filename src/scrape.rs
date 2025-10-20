@@ -3,9 +3,10 @@ use crate::{
     error::HttpDirError,
     h5ai::scrape_h5ai,
     httpdirectoryentry::HttpDirectoryEntry,
+    snt::scrape_snt,
     ul::scrape_ul,
 };
-use log::{debug, info, trace};
+use log::{debug, info, trace, warn};
 use regex::Regex;
 use scraper::{ElementRef, Html, Selector};
 
@@ -18,13 +19,15 @@ use scraper::{ElementRef, Html, Selector};
 // file list ("last modified", "modified" or "date")
 fn are_table_headers_present(table: ElementRef) -> bool {
     let th_selector = Selector::parse("th").unwrap();
-    let re = Regex::new(r"(?msi)Last modified|Modified|Date").unwrap();
+    let re = Regex::new(r"(?msi)Last modified|Modified|Date|Modification time").unwrap();
 
     for th in table.select(&th_selector) {
         let columns: Vec<_> = th.text().collect();
         for column in columns {
             if re.is_match(column) {
                 return true;
+            } else {
+                warn!("This table does not contain any date header field");
             }
         }
     }
@@ -306,6 +309,10 @@ pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> 
         SiteType::H5ai(version) => {
             info!("H5ai powered version {version} website detected");
             scrape_h5ai(body, &version)
+        }
+        SiteType::Snt => {
+            info!("SNT index generator website detected");
+            scrape_snt(body)
         }
         SiteType::NotNamed(html) => match html {
             PureHtml::Table => {
