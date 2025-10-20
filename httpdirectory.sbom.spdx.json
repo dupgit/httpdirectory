@@ -1,20 +1,20 @@
 {
   "SPDXID": "SPDXRef-DOCUMENT",
   "creationInfo": {
-    "created": "2025-10-20T19:40:40Z",
+    "created": "2025-10-20T19:51:58Z",
     "creators": [
       "Tool: cargo-sbom-v0.10.0"
     ]
   },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-731c2c09-26e3-40ff-ad1b-d3446521a790",
+  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-f3ca23c9-a279-411f-a476-b9ba22413fbe",
   "files": [
     {
       "SPDXID": "SPDXRef-File-httpdirectory",
       "checksums": [
         {
           "algorithm": "SHA1",
-          "checksumValue": "a96d415bb798f497871aea84e0cc8db7b4a568bb"
+          "checksumValue": "048425bf080a0cb654a54329bcede34e88c36707"
         }
       ],
       "fileName": "./Cargo.lock",
@@ -971,13 +971,13 @@
       "versionInfo": "1.0.3"
     },
     {
-      "SPDXID": "SPDXRef-Package-httpdirectory-0.16.0",
+      "SPDXID": "SPDXRef-Package-httpdirectory-0.16.1",
       "description": "Crawls directory webpage (HTTP index) into a structure",
       "downloadLocation": "NONE",
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "httpdirectory",
-      "versionInfo": "0.16.0"
+      "versionInfo": "0.16.1"
     },
     {
       "SPDXID": "SPDXRef-Package-hyper-1.7.0",
@@ -3834,7 +3834,7 @@
       "spdxElementId": "SPDXRef-DOCUMENT"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.16.0",
+      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.16.1",
       "relationshipType": "GENERATED_FROM",
       "spdxElementId": "SPDXRef-File-httpdirectory"
     },
@@ -4336,52 +4336,52 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-chrono-0.4.42",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-colored-3.0.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-const--format-0.2.35",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-env--logger-0.11.8",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-log-0.4.28",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-regex-1.12.2",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-reqwest-0.12.24",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-scraper-0.24.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tokio-1.48.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-url-2.5.7",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.0"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-atomic-waker-1.1.2",
