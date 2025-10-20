@@ -59,7 +59,7 @@ async fn main() {
                 if httpdir.len() < 7
                     || stats.files == 0
                     || stats.dirs == 0
-                    || stats.files + stats.dirs != stats.with_date
+                    || stats.files + stats.dirs + stats.parent_dir as u32 != stats.with_date + stats.without_date
                 {
                     println!("{}", "Strange result with this mirror:".red().bold());
                     println!("{}", stats.to_string().red());
