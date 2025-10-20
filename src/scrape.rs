@@ -1,10 +1,8 @@
 use crate::{
     detect::{PureHtml, SiteType},
     error::HttpDirError,
-    h5ai::scrape_h5ai,
     httpdirectoryentry::HttpDirectoryEntry,
-    snt::scrape_snt,
-    ul::scrape_ul,
+    scrapers::{h5ai::scrape_h5ai, snt::scrape_snt, ul::scrape_ul},
 };
 use log::{debug, info, trace, warn};
 use regex::Regex;
