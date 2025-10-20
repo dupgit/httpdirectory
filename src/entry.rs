@@ -23,24 +23,26 @@ pub struct Entry {
 // Tries to parse a string that should contain a date
 // with an array of known formats
 fn try_parse_date(date: &str) -> Option<NaiveDateTime> {
-    // Format to try to parse dates
-    let parse_format = [
-        "%Y-%m-%d %H:%M",    // 2023-12-03 17:33
-        "%d-%b-%Y %H:%M",    // 05-Apr-2024 11:59
-        "%Y-%b-%d %H:%M",    // 2021-May-25 20:15
-        "%Y-%m-%d %H:%M:%S", // 2023-12-03 17:33:19
-        "%d-%b-%Y %H:%M:%S", // 05-Apr-2024 11:59:30
-        "%Y-%b-%d %H:%M:%S", // 2021-May-25 20:15:46
-        "%m/%d/%Y %r %:z",   // 05/31/2025 01:54:45 PM +00:00
-    ];
+    if date.len() > 3 {
+        // Format to try to parse dates
+        let parse_format = [
+            "%Y-%m-%d %H:%M",    // 2023-12-03 17:33
+            "%d-%b-%Y %H:%M",    // 05-Apr-2024 11:59
+            "%Y-%b-%d %H:%M",    // 2021-May-25 20:15
+            "%Y-%m-%d %H:%M:%S", // 2023-12-03 17:33:19
+            "%d-%b-%Y %H:%M:%S", // 05-Apr-2024 11:59:30
+            "%Y-%b-%d %H:%M:%S", // 2021-May-25 20:15:46
+            "%m/%d/%Y %r %:z",   // 05/31/2025 01:54:45 PM +00:00
+        ];
 
-    for pf in parse_format {
-        match NaiveDateTime::parse_from_str(date, pf) {
-            Ok(d) => {
-                trace!("Successfully parsed date ({date}) with format '{pf}'");
-                return Some(d);
+        for pf in parse_format {
+            match NaiveDateTime::parse_from_str(date, pf) {
+                Ok(d) => {
+                    trace!("Successfully parsed date ({date}) with format '{pf}'");
+                    return Some(d);
+                }
+                Err(e) => trace!("Error while parsing date ({date}) with format '{pf}': {e}"),
             }
-            Err(e) => trace!("Error while parsing date ({date}) with format '{pf}': {e}"),
         }
     }
     None
