@@ -30,9 +30,6 @@ pub(crate) fn scrape_ul(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirEr
                 debug!("{name} and {link}");
             }
         }
-        // for il in ul.select(&il_selector) {
-        //     debug!("{il:?}");
-        // }
     }
     Ok(http_dir_entry)
 }
