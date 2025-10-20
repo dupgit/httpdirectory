@@ -224,7 +224,7 @@ impl Entry {
                     }
                 }
                 Err(e) => {
-                    error!("error parsing {new_size} into usize: {e}");
+                    error!("error parsing '{new_size}' into usize: {e}");
                     0
                 }
             }
@@ -232,7 +232,7 @@ impl Entry {
             match new_size.parse::<usize>() {
                 Ok(number) => real_size * number,
                 Err(e) => {
-                    error!("error parsing {new_size} into usize: {e}");
+                    error!("error parsing '{new_size}' into usize: {e}");
                     0
                 }
             }
