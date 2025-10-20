@@ -12,8 +12,9 @@ pub(crate) fn scrape_h5ai(body: &str, _version: &str) -> Result<Vec<HttpDirector
     let html = Html::parse_document(body);
     let div_selector = Selector::parse("div")?;
     let table_selector = Selector::parse("table")?;
+
     for node in html.select(&div_selector) {
-        for table in node.select(&table_selector) {
+        if let Some(table) = node.select(&table_selector).next() {
             return scrape_table(&table.html());
         }
     }
