@@ -39,7 +39,8 @@ fn try_parse_date(date: &str) -> Option<NaiveDateTime> {
             "%Y-%m-%d %H:%M %Z",    // 2025-10-20 16:17 CEST
             "%Y-%m-%d %H:%M:%S %Z", // 2025-09-06 18:15:23 CST
             "%B %d, %Y %H:%M",      // October 21, 2025 20:53
-            "%d %b %Y %H:%M:%S %z", // 06 Sep 2025 10:15:23 +0000
+            "%d %b %Y %H:%M:%S %z", // 06 Sep 2025 10:15:23 +000
+            "%d-%m-%Y %H:%M",       // 21-10-2025 14:19
         ];
 
         for pf in parse_format {
