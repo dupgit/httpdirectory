@@ -136,7 +136,7 @@ fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirErr
 
     for pre in pre_iter {
         if pre.inner_html().contains("<img") {
-            trace!("Analyzing <pre> tag with <img> tag");
+            debug!("Analyzing <pre> tag with <img> tag");
             // <img> tag represents the icon at the beginning of the line
             for line in pre.inner_html().split("<img") {
                 // Removing the img tag (we know that > exists in line)
@@ -166,9 +166,9 @@ fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirErr
                 // We have analyzed valid entries: no need to inspect other <pre> tags
                 return Ok(http_dir_entry);
             }
-            debug!("Unable to get entry from this body (no headers ?):\n{body}");
+            trace!("Unable to get entry from this body (no headers ?):\n{body}");
         } else {
-            debug!("Unable to get entry from this body (no <img> tag):\n{}", pre.inner_html());
+            trace!("Unable to get entry from this body (no <img> tag):\n{}", pre.inner_html());
         }
     }
     Ok(http_dir_entry)
@@ -278,6 +278,7 @@ fn scrape_pre_simple(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError
     let pre_iter = html.select(&pre_selector);
 
     for pre in pre_iter {
+        debug!("Analyzing <pre> tag");
         for line in pre.inner_html().lines() {
             if !line.is_empty() {
                 // Considering only non empty lines
@@ -335,7 +336,10 @@ pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> 
                 scrape_ul(body)
             }
         },
-        SiteType::None => Ok(vec![]),
+        SiteType::None => {
+            warn!("Site type has not been detected: doing nothing");
+            Ok(vec![])
+        }
     }
 }
 
