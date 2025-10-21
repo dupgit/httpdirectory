@@ -3,7 +3,7 @@ use crate::httpdirectoryentry::{CompareField, HttpDirectoryEntry};
 use crate::requests::{Request, join_url};
 use crate::scrape::scrape_body;
 use crate::stats::Stats;
-use log::{debug, error};
+use log::{debug, error, trace};
 use regex::Regex;
 use std::fmt;
 use std::sync::Arc;
@@ -35,6 +35,7 @@ impl HttpDirectory {
     pub async fn new(url: &str) -> Result<Self, HttpDirError> {
         let client = Request::new()?;
         let response = client.get(url).await?;
+        trace!("Response to get '{url}': {response:?}");
 
         let entries = get_entries_from_body(&response.text().await?);
         Ok(HttpDirectory {

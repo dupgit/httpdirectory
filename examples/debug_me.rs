@@ -32,8 +32,8 @@ async fn main() {
         // "http://mirror.twds.com.tw/debian/",
         // "http://debian.ethz.ch/debian/",
         // "http://repository.su/debian/",
-        "http://debian.snt.utwente.nl/debian/",
-        // "http//ftp.tu-chemnitz.de/debian/"
+        // "http://debian.snt.utwente.nl/debian/",
+        "http://ftp.tu-chemnitz.de/debian/",
         // "http://kartolo.sby.datautama.net.id/debian/",
         // "http://ftp.tu-chemnitz.de/debian/",
         // "http://mirrors.zju.edu.cn/debian/",
