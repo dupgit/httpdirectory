@@ -3,6 +3,7 @@
   * Refactors the code and puts the scrapers in a module
   * takes into account strange formatted `<pre>` with `<img>` tags
     websites
+  * adds a new date format (`%B %d, %Y %H:%M"` for "October 21, 2025 20:53")
 
 0.16.1
   * Corrects README using backticks for HTML tags
@@ -11,7 +12,7 @@
   * decodes h5ai formatted websites
   * new ChangeLog file
   * decodes SNT formatted website
-  * adds a new date format (`%Y-%m-%dT%H:%MZ` for "2025-10-20T14:17Z"
+  * adds new date formats (`%Y-%m-%dT%H:%MZ` for "2025-10-20T14:17Z"
     and `%d-%m-%Y | %H:%M` for "20-10-2025 | 13:52")
   * Interprets sizes with KiB, MiB and so on...
   * many small fixes to robustify the program
