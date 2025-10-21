@@ -316,6 +316,11 @@ pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> 
             info!("SNT index generator website detected");
             scrape_snt(body)
         }
+        SiteType::MiniServe(version) => {
+            info!("Miniserve version {version} website detected");
+            warn!("Not implemented yet");
+            Ok(vec![])
+        }
         SiteType::NotNamed(html) => match html {
             PureHtml::Table => {
                 info!("Body has <table> tag");
