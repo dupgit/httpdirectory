@@ -69,64 +69,59 @@ fn get_date_from_inputs<'a>(date: &'a str, size: &'a str, reversed: bool) -> Opt
     }
 }
 
-fn is_bytes(size: &str) -> Option<String> {
-    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*b|(\d*\.?\d*)\s*ib").unwrap();
-    match re.captures(size) {
-        Some(value) => {
-            if let Some(captured) = value.get(1) {
-                let captured = captured.as_str().to_string();
-                if captured.is_empty() {
-                    None
-                } else {
-                    Some(captured)
-                }
-            } else {
-                None
-            }
-        }
-        None => None,
-    }
-}
-
 // @todo: be more accurate with the modifier that should
 // be 1000 for Kb and 1024 for KiB ?
-fn is_kilo_bytes(size: &str) -> Option<String> {
-    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*k|(\d*\.?\d*)\s*kb|(\d*\.?\d*)\s*kib").unwrap();
-    match re.captures(size) {
-        Some(value) => Some(value[1].to_string()),
-        None => None,
-    }
-}
+// Direct capture of the size as a number and the unit (modifier)
+// using capture groups. There are 5 capture groups in that regex.
+fn capture_size_and_unit(size: &str) -> Option<(String, usize)> {
+    trace!("To be captured: {size}");
+    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*([kmgtp])i?b|(\d*\.?\d*)\s*([kmgtp]|b)|(\d*\.?\d*)").unwrap();
 
-fn is_mega_bytes(size: &str) -> Option<String> {
-    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*m|(\d*\.?\d*)\s*mb|(\d*\.?\d*)\s*mib").unwrap();
-    match re.captures(size) {
-        Some(value) => Some(value[1].to_string()),
-        None => None,
-    }
-}
+    let captured_modifier: usize;
+    let captured_size: String;
 
-fn is_giga_bytes(size: &str) -> Option<String> {
-    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*g|(\d*\.?\d*)\s*gb|(\d*\.?\d*)\s*gib").unwrap();
-    match re.captures(size) {
-        Some(value) => Some(value[1].to_string()),
-        None => None,
-    }
-}
+    if let Some(value) = re.captures(size) {
+        let match_cap: usize;
+        trace!("Captured some value: {value:?}");
+        if value.get(1).is_some() {
+            match_cap = 1;
+        } else if value.get(3).is_some() {
+            match_cap = 3;
+        } else if value.get(5).is_some() {
+            match_cap = 5;
+        } else {
+            return None;
+        }
 
-fn is_tera_bytes(size: &str) -> Option<String> {
-    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*t|(\d*\.?\d*)\s*tb|(\d*\.?\d*)\s*tib").unwrap();
-    match re.captures(size) {
-        Some(value) => Some(value[1].to_string()),
-        None => None,
-    }
-}
-
-fn is_peta_bytes(size: &str) -> Option<String> {
-    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*p|(\d*\.?\d*)\s*pb|(\d*\.?\d*)\s*pib").unwrap();
-    match re.captures(size) {
-        Some(value) => Some(value[1].to_string()),
-        None => None,
+        trace!("match group: {match_cap}");
+        if let Some(modifier) = value.get(match_cap + 1) {
+            captured_modifier = match modifier.as_str().chars().next() {
+                Some('b' | 'B') => 1,
+                Some('k' | 'K') => 1024,
+                Some('m' | 'M') => 1_048_576,
+                Some('g' | 'G') => 1_073_741_824,
+                Some('t' | 'T') => 1_099_511_627_776,
+                Some('p' | 'P') => 1_125_899_906_842_624,
+                _ => 0,
+            };
+        } else {
+            captured_modifier = 1;
+        }
+        trace!("modifier: {captured_modifier}");
+        if let Some(captured) = value.get(match_cap) {
+            captured_size = captured.as_str().to_string();
+            trace!("size: {captured_size}");
+            if captured_size.is_empty() {
+                None
+            } else {
+                Some((captured_size, captured_modifier))
+            }
+        } else {
+            None
+        }
+    } else {
+        trace!("Could not capture anything");
+        None
     }
 }
 
@@ -169,41 +164,19 @@ impl Entry {
     #[allow(clippy::cast_possible_truncation)]
     pub fn apparent_size(&self) -> usize {
         let real_size: usize;
-        let new_size;
+        let new_size: String;
         let my_size = self.size().to_lowercase();
         if my_size.contains('-') {
             // Directory
             real_size = 0;
             new_size = my_size.to_string();
-        } else if let Some(captured_size) = is_bytes(&my_size) {
-            trace!("Bytes detected: {captured_size}");
-            real_size = 1;
-            new_size = captured_size;
-        } else if let Some(captured_size) = is_kilo_bytes(&my_size) {
-            trace!("Kilo bytes detected: {captured_size}");
-            real_size = 1024;
-            new_size = captured_size;
-        } else if let Some(captured_size) = is_mega_bytes(&my_size) {
-            trace!("Mega bytes detected: {captured_size}");
-            real_size = 1_048_576;
-            new_size = captured_size;
-        } else if let Some(captured_size) = is_giga_bytes(&my_size) {
-            trace!("Giga bytes detected: {captured_size}");
-            real_size = 1_073_741_824;
-            new_size = captured_size;
-        } else if let Some(captured_size) = is_tera_bytes(&my_size) {
-            trace!("Tera bytes detected: {captured_size}");
-            real_size = 1_099_511_627_776;
-            new_size = captured_size;
-        } else if let Some(captured_size) = is_peta_bytes(&my_size) {
-            trace!("Peta bytes detected: {captured_size}");
-            real_size = 1_125_899_906_842_624;
+        } else if let Some((captured_size, captured_modifier)) = capture_size_and_unit(&my_size) {
+            trace!("Detected size: {captured_size}, modifier: {captured_modifier}");
+            real_size = captured_modifier;
             new_size = captured_size;
         } else {
-            // size may not have any modifier and be expressed
-            // directly in bytes
-            real_size = 1;
-            new_size = my_size.to_string();
+            new_size = String::new();
+            real_size = 0;
         }
 
         let new_size = new_size.trim();
