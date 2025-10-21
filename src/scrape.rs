@@ -136,11 +136,11 @@ fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirErr
 
     for pre in pre_iter {
         if pre.inner_html().contains("<img") {
-            trace!("Analyzing <pre> tag");
+            trace!("Analyzing <pre> tag with <img> tag");
             // <img> tag represents the icon at the beginning of the line
             for line in pre.inner_html().split("<img") {
                 // Removing the img tag (we know that > exists in line)
-                let new_line = strip_until_greater(line);
+                let new_line = strip_until_stop(line, "<a", false);
                 if !new_line.is_empty() {
                     // Considering only non empty lines
                     trace!("{new_line}");
@@ -238,28 +238,32 @@ pub fn get_link_and_name(column: &str) -> (&str, &str) {
 }
 
 // Returns true if href vector contains
-// Name, Last modified, Size, Description
-// in this exact order
+// Name, Last modified, Size in this exact order
+// Some websites does not provides a description
 fn is_this_a_real_header(href: &[&str]) -> bool {
-    let name = strip_until_greater(href[0]);
-    let date = strip_until_greater(href[1]);
-    let size = strip_until_greater(href[2]);
-    let description = strip_until_greater(href[3]);
-    trace!("This is the header: {name}, {date}, {size}, {description}");
-    name.to_lowercase() == "name"
-        && date.to_lowercase() == "last modified"
-        && size.to_lowercase() == "size"
-        && description.to_lowercase() == "description"
+    let name = strip_until_stop(href[0], ">", true);
+    let date = strip_until_stop(href[1], ">", true);
+    let size = strip_until_stop(href[2], ">", true);
+    // let description = strip_until_greater(href[3]);
+    trace!("This is the header: {name}, {date}, {size}");
+
+    name.to_lowercase() == "name" && date.to_lowercase() == "last modified" && size.to_lowercase() == "size"
+    // && description.to_lowercase() == "description"
 }
 
-// Removes prefix until '>' sign that we know
+// Removes prefix until the stop '>' sign that we know
 // exists in the line &str.
-fn strip_until_greater(line: &str) -> &str {
-    match line.find('>') {
-        Some(num) => match line.strip_prefix(&line[0..=num]) {
-            Some(line_without_prefix) => line_without_prefix.trim(),
-            None => unreachable!(), // because we now that line has the prefix we want to remove
-        },
+fn strip_until_stop<'a>(line: &'a str, stop: &str, remove: bool) -> &'a str {
+    match line.find(stop) {
+        Some(mut num) => {
+            if !remove && num >= 1 {
+                num = num - 1;
+            }
+            match line.strip_prefix(&line[0..=num]) {
+                Some(line_without_prefix) => line_without_prefix.trim(),
+                None => line.trim(),
+            }
+        }
         None => line.trim(),
     }
 }
