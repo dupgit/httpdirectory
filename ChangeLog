@@ -1,9 +1,10 @@
 0.16.2
   * Changes the way to get the size of a file along with its units
   * Refactors the code and puts the scrapers in a module
-  * takes into account strange formatted `<pre>` with `<img>` tags
+  * Takes into account strange formatted `<pre>` with `<img>` tags
     websites
-  * adds new date formats:
+  * Aligned display
+  * Adds new date formats:
     * `%B %d, %Y %H:%M"` for "October 21, 2025 20:53"
     * `%Y/%m/%d %H:%M:%S` for "2025/10/21 21:53:58"
     * `%d %b %Y %H:%M:%S %z` for "06 Sep 2025 10:15:23 +0000"
@@ -12,14 +13,14 @@
   * Corrects README using backticks for HTML tags
 
 0.16.0
-  * decodes h5ai formatted websites
-  * new ChangeLog file
-  * decodes SNT formatted website
-  * adds new date formats:
+  * Decodes h5ai formatted websites
+  * New ChangeLog file
+  * Decodes SNT formatted website
+  * Adds new date formats:
     * `%Y-%m-%dT%H:%MZ` for "2025-10-20T14:17Z"
     * `%d-%m-%Y | %H:%M` for "20-10-2025 | 13:52"
   * Interprets sizes with KiB, MiB and so on...
-  * many small fixes to robustify the program
+  * Many small fixes to robustify the program
 
 0.15.2
- * detects the right <table> in multi <table> websites
+ * Detects the right <table> in multi <table> websites

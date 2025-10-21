@@ -172,7 +172,7 @@ impl HttpDirectoryEntry {
 impl fmt::Display for HttpDirectoryEntry {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            HttpDirectoryEntry::ParentDirectory(_) => write!(f, "DIR  {:>8}  {:>16}  ..", "-", "")?,
+            HttpDirectoryEntry::ParentDirectory(_) => write!(f, "DIR  {:>9}  {:>16}  ..", "-", "")?,
             HttpDirectoryEntry::Directory(entry) => write!(f, "DIR  {entry}")?,
             HttpDirectoryEntry::File(entry) => write!(f, "FILE {entry}")?,
         }
@@ -236,7 +236,7 @@ mod tests {
         let httpdirectoryentry = HttpDirectoryEntry::new("name", "2025-05-20 20:19", "5.0K", "link/");
 
         let output = format!("{httpdirectoryentry}");
-        assert_eq!(output, "FILE     5.0K  2025-05-20 20:19  name");
+        assert_eq!(output, "FILE      5.0K  2025-05-20 20:19  name");
         assert_eq!(httpdirectoryentry.filename(), Some("name"));
         assert_eq!(httpdirectoryentry.dirname(), None);
         assert_eq!(httpdirectoryentry.name(), Some("name"));
@@ -247,7 +247,7 @@ mod tests {
         let httpdirectoryentry = HttpDirectoryEntry::new("name", "2025-05-20 20:19", "-", "link/");
 
         let output = format!("{httpdirectoryentry}");
-        assert_eq!(output, "DIR         -  2025-05-20 20:19  name");
+        assert_eq!(output, "DIR          -  2025-05-20 20:19  name");
         assert_eq!(httpdirectoryentry.dirname(), Some("name"));
         assert_eq!(httpdirectoryentry.filename(), None);
         assert_eq!(httpdirectoryentry.name(), Some("name"));
@@ -262,7 +262,7 @@ mod tests {
         let httpdirectoryentry = HttpDirectoryEntry::new("Parent directory", "", "-", "../");
 
         let output = format!("{httpdirectoryentry}");
-        assert_eq!(output, "DIR         -                    ..");
+        assert_eq!(output, "DIR          -                    ..");
         assert_eq!(httpdirectoryentry.dirname(), None);
         assert_eq!(httpdirectoryentry.filename(), None);
         assert_eq!(httpdirectoryentry.name(), None);
