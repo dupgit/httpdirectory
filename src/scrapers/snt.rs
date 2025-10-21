@@ -1,5 +1,5 @@
 use crate::{error::HttpDirError, httpdirectoryentry::HttpDirectoryEntry, scrape::scrape_table};
-use log::debug;
+use log::trace;
 use scraper::{Html, Selector};
 
 pub(crate) fn scrape_snt(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
@@ -18,8 +18,8 @@ pub(crate) fn scrape_snt(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirE
             for name_and_link in nav.select(&a_selector) {
                 let link = name_and_link.value().attr("href").unwrap_or_default();
                 let name = name_and_link.text().collect::<String>().trim().to_string();
+                trace!("New directory: {name}, {link}");
                 http_dir_entry.push(HttpDirectoryEntry::new(&name, "", " - ", link));
-                debug!("name_and_link: {link:?} and {name}");
             }
         }
     }
@@ -28,9 +28,9 @@ pub(crate) fn scrape_snt(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirE
     let table_selector = Selector::parse("table")?;
     for article in html.select(&article_selector) {
         if let Some(table) = article.select(&table_selector).next() {
-            debug!("{}", table.html());
             if let Ok(file_http_dir_entries) = scrape_table(&table.html()) {
                 for file in file_http_dir_entries {
+                    trace!("New file: {file:?}");
                     http_dir_entry.push(file);
                 }
             }
