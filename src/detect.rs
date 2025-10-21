@@ -34,11 +34,7 @@ fn detect_table(body: &str) -> bool {
 
 fn detect_h5ai(body: &str) -> Option<String> {
     let re = Regex::new(r"powered by h5ai ([v]?\d+.\d+.\d+[\+\-\.\w]*)").unwrap();
-
-    match re.captures(body) {
-        Some(value) => Some(value[1].to_string()),
-        None => None,
-    }
+    re.captures(body).map(|value| value[1].to_string())
 }
 
 fn detect_snt(body: &str) -> bool {
@@ -54,16 +50,14 @@ impl SiteType {
             SiteType::H5ai(version)
         } else if detect_snt(body) {
             SiteType::Snt
+        } else if detect_table(body) {
+            SiteType::NotNamed(PureHtml::Table)
+        } else if body.contains("<pre>") {
+            SiteType::NotNamed(PureHtml::Pre)
+        } else if body.contains("<ul>") {
+            SiteType::NotNamed(PureHtml::Ul)
         } else {
-            if detect_table(body) {
-                SiteType::NotNamed(PureHtml::Table)
-            } else if body.contains("<pre>") {
-                SiteType::NotNamed(PureHtml::Pre)
-            } else if body.contains("<ul>") {
-                SiteType::NotNamed(PureHtml::Ul)
-            } else {
-                SiteType::None
-            }
+            SiteType::None
         }
     }
 }

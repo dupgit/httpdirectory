@@ -27,12 +27,12 @@ pub(crate) fn scrape_snt(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirE
     let article_selector = Selector::parse("article")?;
     let table_selector = Selector::parse("table")?;
     for article in html.select(&article_selector) {
-        if let Some(table) = article.select(&table_selector).next() {
-            if let Ok(file_http_dir_entries) = scrape_table(&table.html()) {
-                for file in file_http_dir_entries {
-                    trace!("New file: {file:?}");
-                    http_dir_entry.push(file);
-                }
+        if let Some(table) = article.select(&table_selector).next()
+            && let Ok(file_http_dir_entries) = scrape_table(&table.html())
+        {
+            for file in file_http_dir_entries {
+                trace!("New file: {file:?}");
+                http_dir_entry.push(file);
             }
         }
     }
