@@ -6,6 +6,7 @@
   * adds new date formats:
     * `%B %d, %Y %H:%M"` for "October 21, 2025 20:53"
     * `%Y/%m/%d %H:%M:%S` for "2025/10/21 21:53:58"
+    * `%d %b %Y %H:%M:%S %z` for "06 Sep 2025 10:15:23 +0000"
 
 0.16.1
   * Corrects README using backticks for HTML tags
