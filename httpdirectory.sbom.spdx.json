@@ -1,20 +1,20 @@
 {
   "SPDXID": "SPDXRef-DOCUMENT",
   "creationInfo": {
-    "created": "2025-10-20T19:51:58Z",
+    "created": "2025-10-21T21:04:47Z",
     "creators": [
       "Tool: cargo-sbom-v0.10.0"
     ]
   },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-f3ca23c9-a279-411f-a476-b9ba22413fbe",
+  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-95be7d01-3cfe-4cd8-a3d8-be45416c4a09",
   "files": [
     {
       "SPDXID": "SPDXRef-File-httpdirectory",
       "checksums": [
         {
           "algorithm": "SHA1",
-          "checksumValue": "048425bf080a0cb654a54329bcede34e88c36707"
+          "checksumValue": "d9665b9f2cc859ec864652093837b7a69946f0b0"
         }
       ],
       "fileName": "./Cargo.lock",
@@ -971,13 +971,13 @@
       "versionInfo": "1.0.3"
     },
     {
-      "SPDXID": "SPDXRef-Package-httpdirectory-0.16.1",
+      "SPDXID": "SPDXRef-Package-httpdirectory-0.16.2",
       "description": "Crawls directory webpage (HTTP index) into a structure",
       "downloadLocation": "NONE",
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "httpdirectory",
-      "versionInfo": "0.16.1"
+      "versionInfo": "0.16.2"
     },
     {
       "SPDXID": "SPDXRef-Package-hyper-1.7.0",
@@ -1280,20 +1280,20 @@
       "versionInfo": "0.7.8"
     },
     {
-      "SPDXID": "SPDXRef-Package-is--terminal--polyfill-1.70.1",
+      "SPDXID": "SPDXRef-Package-is--terminal--polyfill-1.70.2",
       "description": "Polyfill for `is_terminal` stdlib feature for use with older MSRVs",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/is_terminal_polyfill@1.70.1",
+          "referenceLocator": "pkg:cargo/is_terminal_polyfill@1.70.2",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "is_terminal_polyfill",
-      "versionInfo": "1.70.1"
+      "versionInfo": "1.70.2"
     },
     {
       "SPDXID": "SPDXRef-Package-itoa-1.0.15",
@@ -1589,20 +1589,20 @@
       "versionInfo": "0.2.19"
     },
     {
-      "SPDXID": "SPDXRef-Package-once--cell--polyfill-1.70.1",
+      "SPDXID": "SPDXRef-Package-once--cell--polyfill-1.70.2",
       "description": "Polyfill for `OnceCell` stdlib feature for use with older MSRVs",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/once_cell_polyfill@1.70.1",
+          "referenceLocator": "pkg:cargo/once_cell_polyfill@1.70.2",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "once_cell_polyfill",
-      "versionInfo": "1.70.1"
+      "versionInfo": "1.70.2"
     },
     {
       "SPDXID": "SPDXRef-Package-once--cell-1.21.3",
@@ -2838,20 +2838,20 @@
       "versionInfo": "0.2.5"
     },
     {
-      "SPDXID": "SPDXRef-Package-unicode-ident-1.0.19",
+      "SPDXID": "SPDXRef-Package-unicode-ident-1.0.20",
       "description": "Determine whether characters have the XID_Start or XID_Continue properties according to Unicode Standard Annex #31",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/unicode-ident@1.0.19",
+          "referenceLocator": "pkg:cargo/unicode-ident@1.0.20",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "(MIT OR Apache-2.0) AND Unicode-3.0",
       "licenseDeclared": "(MIT OR Apache-2.0) AND Unicode-3.0",
       "name": "unicode-ident",
-      "versionInfo": "1.0.19"
+      "versionInfo": "1.0.20"
     },
     {
       "SPDXID": "SPDXRef-Package-unicode-width-0.2.2",
@@ -3834,7 +3834,7 @@
       "spdxElementId": "SPDXRef-DOCUMENT"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.16.1",
+      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.16.2",
       "relationshipType": "GENERATED_FROM",
       "spdxElementId": "SPDXRef-File-httpdirectory"
     },
@@ -3874,7 +3874,7 @@
       "spdxElementId": "SPDXRef-Package-anstream-0.6.21"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-is--terminal--polyfill-1.70.1",
+      "relatedSpdxElement": "SPDXRef-Package-is--terminal--polyfill-1.70.2",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-anstream-0.6.21"
     },
@@ -3899,7 +3899,7 @@
       "spdxElementId": "SPDXRef-Package-anstyle-wincon-3.0.10"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-once--cell--polyfill-1.70.1",
+      "relatedSpdxElement": "SPDXRef-Package-once--cell--polyfill-1.70.2",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-anstyle-wincon-3.0.10"
     },
@@ -4336,52 +4336,52 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-chrono-0.4.42",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-colored-3.0.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-const--format-0.2.35",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-env--logger-0.11.8",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-log-0.4.28",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-regex-1.12.2",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-reqwest-0.12.24",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-scraper-0.24.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tokio-1.48.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-url-2.5.7",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-atomic-waker-1.1.2",
@@ -5174,7 +5174,7 @@
       "spdxElementId": "SPDXRef-Package-potential--utf-0.1.3"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-unicode-ident-1.0.19",
+      "relatedSpdxElement": "SPDXRef-Package-unicode-ident-1.0.20",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-proc-macro2-1.0.101"
     },
@@ -5739,7 +5739,7 @@
       "spdxElementId": "SPDXRef-Package-syn-2.0.107"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-unicode-ident-1.0.19",
+      "relatedSpdxElement": "SPDXRef-Package-unicode-ident-1.0.20",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-syn-2.0.107"
     },
@@ -6204,7 +6204,7 @@
       "spdxElementId": "SPDXRef-Package-wasm-bindgen-macro-support-0.2.104"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-unicode-ident-1.0.19",
+      "relatedSpdxElement": "SPDXRef-Package-unicode-ident-1.0.20",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-wasm-bindgen-shared-0.2.104"
     },
