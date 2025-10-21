@@ -180,7 +180,7 @@ impl Entry {
         }
 
         let new_size = new_size.trim();
-        if my_size.contains('.') {
+        if new_size.contains('.') {
             match new_size.parse::<f64>() {
                 Ok(number) => {
                     if number.signum().is_finite()
@@ -201,6 +201,8 @@ impl Entry {
                     0
                 }
             }
+        } else if new_size.is_empty() {
+            0
         } else {
             match new_size.parse::<usize>() {
                 Ok(number) => real_size * number,
