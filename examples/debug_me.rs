@@ -23,7 +23,10 @@ async fn main() {
 
     for url in url_array {
         match HttpDirectory::new(url).await {
-            Ok(httpdir) => println!("{httpdir}"),
+            Ok(httpdir) => {
+                println!("{httpdir:#?}");
+                println!("{httpdir}");
+            }
             Err(myerr) => println!("{myerr}"),
         }
     }

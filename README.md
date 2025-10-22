@@ -41,6 +41,7 @@ DIR       -  2023-07-25 07:43  trixie/
 - h5ai fallback website
 - OCF adapted nginx flat theme
 - SNT index generator
+- miniserve's directory listing
 
 ## Usage
 

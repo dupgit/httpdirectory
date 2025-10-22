@@ -2,7 +2,7 @@ use crate::{
     detect::{PureHtml, SiteType},
     error::HttpDirError,
     httpdirectoryentry::HttpDirectoryEntry,
-    scrapers::{h5ai::scrape_h5ai, snt::scrape_snt, ul::scrape_ul},
+    scrapers::{h5ai::scrape_h5ai, miniserve::scrape_miniserve, snt::scrape_snt, ul::scrape_ul},
 };
 use log::{debug, info, trace, warn};
 use regex::Regex;
@@ -15,9 +15,9 @@ use scraper::{ElementRef, Html, Selector};
 // Tells whether the table we are inspecting is a table
 // that contains the headers that we should find in a
 // file list ("last modified", "modified" or "date")
-fn are_table_headers_present(table: ElementRef) -> bool {
+pub(crate) fn are_table_headers_present(table: ElementRef) -> bool {
     let th_selector = Selector::parse("th").unwrap();
-    let re = Regex::new(r"(?msi)Last modified|Modified|Date|Modification time").unwrap();
+    let re = Regex::new(r"(?msi)Last modified|Modified|Date|Modification time|Last modification").unwrap();
 
     for th in table.select(&th_selector) {
         let columns: Vec<_> = th.text().collect();
@@ -174,7 +174,7 @@ fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirErr
     Ok(http_dir_entry)
 }
 
-fn remove_empty_cell(mut vector: Vec<&str>) -> Vec<&str> {
+pub(crate) fn remove_empty_cell(mut vector: Vec<&str>) -> Vec<&str> {
     vector.retain(|v| !v.trim().is_empty());
     vector
 }
@@ -318,8 +318,7 @@ pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> 
         }
         SiteType::MiniServe(version) => {
             info!("Miniserve version {version} website detected");
-            warn!("Not implemented yet");
-            Ok(vec![])
+            scrape_miniserve(body, &version)
         }
         SiteType::NotNamed(html) => match html {
             PureHtml::Table => {
