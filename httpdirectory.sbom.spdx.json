@@ -1,20 +1,20 @@
 {
   "SPDXID": "SPDXRef-DOCUMENT",
   "creationInfo": {
-    "created": "2025-10-21T21:04:47Z",
+    "created": "2025-10-22T18:47:16Z",
     "creators": [
       "Tool: cargo-sbom-v0.10.0"
     ]
   },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-95be7d01-3cfe-4cd8-a3d8-be45416c4a09",
+  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-234dd047-928a-45ae-ba88-11ff704934c7",
   "files": [
     {
       "SPDXID": "SPDXRef-File-httpdirectory",
       "checksums": [
         {
           "algorithm": "SHA1",
-          "checksumValue": "d9665b9f2cc859ec864652093837b7a69946f0b0"
+          "checksumValue": "cd535f9dd870c7eba55d976e41ef6ccd2017fd6e"
         }
       ],
       "fileName": "./Cargo.lock",
@@ -971,13 +971,13 @@
       "versionInfo": "1.0.3"
     },
     {
-      "SPDXID": "SPDXRef-Package-httpdirectory-0.16.2",
+      "SPDXID": "SPDXRef-Package-httpdirectory-0.16.3",
       "description": "Crawls directory webpage (HTTP index) into a structure",
       "downloadLocation": "NONE",
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "httpdirectory",
-      "versionInfo": "0.16.2"
+      "versionInfo": "0.16.3"
     },
     {
       "SPDXID": "SPDXRef-Package-hyper-1.7.0",
@@ -2093,13 +2093,13 @@
       "versionInfo": "1.1.2"
     },
     {
-      "SPDXID": "SPDXRef-Package-rustls-0.23.33",
+      "SPDXID": "SPDXRef-Package-rustls-0.23.34",
       "description": "Rustls is a modern TLS library written in Rust.",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/rustls@0.23.33",
+          "referenceLocator": "pkg:cargo/rustls@0.23.34",
           "referenceType": "purl"
         }
       ],
@@ -2107,7 +2107,7 @@
       "licenseConcluded": "Apache-2.0 OR ISC OR MIT",
       "licenseDeclared": "Apache-2.0 OR ISC OR MIT",
       "name": "rustls",
-      "versionInfo": "0.23.33"
+      "versionInfo": "0.23.34"
     },
     {
       "SPDXID": "SPDXRef-Package-rustls-pki-types-1.12.0",
@@ -3834,7 +3834,7 @@
       "spdxElementId": "SPDXRef-DOCUMENT"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.16.2",
+      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.16.3",
       "relationshipType": "GENERATED_FROM",
       "spdxElementId": "SPDXRef-File-httpdirectory"
     },
@@ -4336,52 +4336,52 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-chrono-0.4.42",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.3"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-colored-3.0.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.3"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-const--format-0.2.35",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.3"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-env--logger-0.11.8",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.3"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-log-0.4.28",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.3"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-regex-1.12.2",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.3"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-reqwest-0.12.24",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.3"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-scraper-0.24.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.3"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tokio-1.48.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.3"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-url-2.5.7",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.2"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.16.3"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-atomic-waker-1.1.2",
@@ -4474,7 +4474,7 @@
       "spdxElementId": "SPDXRef-Package-hyper-rustls-0.27.7"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-rustls-0.23.33",
+      "relatedSpdxElement": "SPDXRef-Package-rustls-0.23.34",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-hyper-rustls-0.27.7"
     },
@@ -5441,27 +5441,27 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-once--cell-1.21.3",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-rustls-0.23.33"
+      "spdxElementId": "SPDXRef-Package-rustls-0.23.34"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-rustls-pki-types-1.12.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-rustls-0.23.33"
+      "spdxElementId": "SPDXRef-Package-rustls-0.23.34"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-rustls-webpki-0.103.7",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-rustls-0.23.33"
+      "spdxElementId": "SPDXRef-Package-rustls-0.23.34"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-subtle-2.6.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-rustls-0.23.33"
+      "spdxElementId": "SPDXRef-Package-rustls-0.23.34"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-zeroize-1.8.2",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-rustls-0.23.33"
+      "spdxElementId": "SPDXRef-Package-rustls-0.23.34"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-zeroize-1.8.2",
@@ -5904,7 +5904,7 @@
       "spdxElementId": "SPDXRef-Package-tokio-native-tls-0.3.1"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-rustls-0.23.33",
+      "relatedSpdxElement": "SPDXRef-Package-rustls-0.23.34",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-tokio-rustls-0.26.4"
     },
