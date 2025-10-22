@@ -3,7 +3,7 @@ use crate::{
     httpdirectoryentry::HttpDirectoryEntry,
     scrape::{are_table_headers_present, remove_empty_cell},
 };
-use log::{error, trace};
+use log::trace;
 use scraper::{ElementRef, Html, Selector};
 
 pub(crate) fn scrape_miniserve(body: &str, _version: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {

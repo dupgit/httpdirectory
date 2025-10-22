@@ -257,7 +257,7 @@ fn strip_until_stop<'a>(line: &'a str, stop: &str, remove: bool) -> &'a str {
     match line.find(stop) {
         Some(mut num) => {
             if !remove && num >= 1 {
-                num = num - 1;
+                num -= 1;
             }
             match line.strip_prefix(&line[0..=num]) {
                 Some(line_without_prefix) => line_without_prefix.trim(),
