@@ -39,7 +39,7 @@ fn try_parse_date(date: &str) -> Option<NaiveDateTime> {
             "%Y-%m-%d %H:%M %Z",    // 2025-10-20 16:17 CEST
             "%Y-%m-%d %H:%M:%S %Z", // 2025-09-06 18:15:23 CST
             "%B %d, %Y %H:%M",      // October 21, 2025 20:53
-            "%d %b %Y %H:%M:%S %z", // 06 Sep 2025 10:15:23 +000
+            "%d %b %Y %H:%M:%S %z", // 06 Sep 2025 10:15:23 +0000
             "%d-%m-%Y %H:%M",       // 21-10-2025 14:19
         ];
 
@@ -406,5 +406,116 @@ mod tests {
         assert_eq!(entry2.cmp_by_size(&entry1, &Sorting::Ascending), Ordering::Less);
         assert_eq!(entry1.cmp_by_size(&entry2, &Sorting::Descending), Ordering::Less);
         assert_eq!(entry2.cmp_by_size(&entry1, &Sorting::Descending), Ordering::Greater);
+    }
+
+    #[test]
+    fn test_date_format_1() {
+        let entry = Entry::new("name", "link", "2023-12-03 17:33", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2023-12-03 17:33");
+    }
+
+    #[test]
+    fn test_date_format_2() {
+        let entry = Entry::new("name", "link", "05-Apr-2024 11:59", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2024-04-05 11:59");
+    }
+
+    #[test]
+    fn test_date_format_3() {
+        let entry = Entry::new("name", "link", "2021-May-25 20:15", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2021-05-25 20:15");
+    }
+
+    #[test]
+    fn test_date_format_4() {
+        let entry = Entry::new("name", "link", "2023-12-03 17:33:19", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2023-12-03 17:33");
+    }
+
+    #[test]
+    fn test_date_format_5() {
+        let entry = Entry::new("name", "link", "05-Apr-2024 11:59:30", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2024-04-05 11:59");
+    }
+
+    #[test]
+    fn test_date_format_6() {
+        let entry = Entry::new("name", "link", "2021-May-25 20:15:46", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2021-05-25 20:15");
+    }
+
+    #[test]
+    fn test_date_format_7() {
+        let entry = Entry::new("name", "link", "2025/10/21 21:53:58", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2025-10-21 21:53");
+    }
+
+    #[test]
+    fn test_date_format_8() {
+        let entry = Entry::new("name", "link", "05/31/2025 01:54:45 PM +00:00", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2025-05-31 13:54");
+    }
+
+    #[test]
+    fn test_date_format_9() {
+        let entry = Entry::new("name", "link", "2025-10-20T14:17Z", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2025-10-20 14:17");
+    }
+
+    #[test]
+    fn test_date_format_10() {
+        let entry = Entry::new("name", "link", "20-10-2025 | 13:52", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2025-10-20 13:52");
+    }
+
+    #[test]
+    fn test_date_format_11() {
+        let entry = Entry::new("name", "link", "2025-10-20 16:17 CEST", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2025-10-20 16:17");
+    }
+
+    #[test]
+    fn test_date_format_12() {
+        let entry = Entry::new("name", "link", "2025-09-06 18:15:23 CST", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2025-09-06 18:15");
+    }
+
+    #[test]
+    fn test_date_format_13() {
+        let entry = Entry::new("name", "link", "October 21, 2025 20:53", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2025-10-21 20:53");
+    }
+
+    #[test]
+    fn test_date_format_14() {
+        let entry = Entry::new("name", "link", "06 Sep 2025 10:15:23 +0000", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2025-09-06 10:15");
+    }
+
+    #[test]
+    fn test_date_format_15() {
+        let entry = Entry::new("name", "link", "21-10-2025 14:19", "4.0 kib");
+        let date_str = entry.date.unwrap().format("%Y-%m-%d %H:%M").to_string();
+        assert_eq!(date_str, "2025-10-21 14:19");
+    }
+
+    #[test]
+    fn test_date_not_a_format() {
+        let entry = Entry::new("name", "link", "21-2025-10, 14:19", "4.0 kib");
+        assert!(entry.date.is_none());
     }
 }
