@@ -18,7 +18,8 @@ async fn main() {
         // "https://cloud-images.ubuntu.com/noble/20250430/",
         // "https://mirrors.ircam.fr/pub/fedora/linux/releases",
         // "https://cloud.debian.org/images/cloud/",
-        "http://127.0.0.1:8080",
+        "http://prodata.swmed.edu/download/pub",
+        // "http://127.0.0.1:8080",
     ];
 
     for url in url_array {
