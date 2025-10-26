@@ -23,7 +23,7 @@ pub struct Entry {
 // Tries to parse a string that should contain a date
 // with an array of known formats
 fn try_parse_date(date: &str) -> Option<NaiveDateTime> {
-    if date.len() > 3 {
+    if date.len() > 3 && date.contains(':') {
         // Format to try to parse dates
         let parse_format = [
             "%Y-%m-%d %H:%M",       // 2023-12-03 17:33
