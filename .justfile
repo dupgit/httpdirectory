@@ -16,6 +16,9 @@ install-dev-tools:
 
 # Bumps {patch} (major, minor or patch) version number and does a release
 bump patch: check-typos
+    # Verifying that the MSRV is still Ok.
+    cargo msrv verify
+
     # Ensures that the source code is correctly formatted -> it should not modify anything
     cargo fmt
 
