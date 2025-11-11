@@ -8,6 +8,7 @@ repository = "https://github.com/dupgit/httpdirectory"
 license = "MIT OR Apache-2.0"
 keywords = ["http", "directory", "file", "autoindex", "httpdir"]
 categories = ["web-programming", "parsing"]
+rust-version = "1.88"
 
 [dependencies]
 chrono = "0.4.40"
