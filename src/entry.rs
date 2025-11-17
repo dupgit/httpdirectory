@@ -60,6 +60,7 @@ fn try_parse_date(date: &str) -> Option<NaiveDateTime> {
 // may be in reverse order in the html page
 // reversed is true when we are already testing size instead of date
 // so there is no need to reverse twice.
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 fn get_date_from_inputs<'a>(date: &'a str, size: &'a str, reversed: bool) -> Option<(NaiveDateTime, &'a str)> {
     if let Some(parsed_date) = try_parse_date(date) {
         Some((parsed_date, size))
@@ -172,21 +173,21 @@ impl Entry {
     #[must_use]
     #[allow(clippy::cast_sign_loss)]
     #[allow(clippy::cast_possible_truncation)]
+    #[cfg_attr(feature = "hotpath", hotpath::measure)]
     pub fn apparent_size(&self) -> usize {
         let real_size: usize;
         let new_size: String;
         let my_size = self.size().to_lowercase();
+
         if my_size.contains('-') {
             // Directory
-            real_size = 0;
-            new_size = my_size.to_string();
+            return 0;
         } else if let Some((captured_size, captured_modifier)) = capture_size_and_unit(&my_size) {
             trace!("Detected size: {captured_size}, modifier: {captured_modifier}");
             real_size = captured_modifier;
             new_size = captured_size;
         } else {
-            new_size = String::new();
-            real_size = 0;
+            return 0;
         }
 
         let new_size = new_size.trim();
@@ -201,27 +202,26 @@ impl Entry {
                         // We know that .abs() will return a positive value
                         // if number is greater than `usize::MAX` then number
                         // is truncated to usize::MAX
-                        real_size * ((number.abs() * 10.0) as usize) / 10
+                        return real_size * ((number.abs() * 10.0) as usize) / 10;
                     } else {
-                        0
+                        return 0;
                     }
                 }
                 Err(e) => {
                     error!("error parsing '{new_size}' into usize: {e}");
-                    0
+                    return 0;
                 }
             }
-        } else if new_size.is_empty() {
-            0
-        } else {
+        } else if !new_size.is_empty() {
             match new_size.parse::<usize>() {
-                Ok(number) => real_size * number,
+                Ok(number) => return real_size * number,
                 Err(e) => {
                     error!("error parsing '{new_size}' into usize: {e}");
-                    0
+                    return 0;
                 }
             }
         }
+        0
     }
 
     /// Returns the size of the Entry as an &str.

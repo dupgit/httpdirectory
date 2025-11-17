@@ -32,6 +32,7 @@ impl HttpDirectory {
     /// Returns an error if a request client could not be made
     /// or that the request to the url did not return correctly
     /// with a 200 HTTP status code
+    #[cfg_attr(feature = "hotpath", hotpath::measure)]
     pub async fn new(url: &str) -> Result<Self, HttpDirError> {
         let client = Request::new()?;
         let response = client.get(url).await?;
@@ -56,6 +57,7 @@ impl HttpDirectory {
     /// - an error occurred while trying to retrieve data from the new
     ///   directory
     /// - the web server did not respond with 200 HTTP status code
+    #[cfg_attr(feature = "hotpath", hotpath::measure)]
     pub async fn cd(mut self, dir: &str) -> Result<Self, HttpDirError> {
         let url = join_url(&self.url, dir)?;
         debug!("cd is going to {url}");
@@ -85,6 +87,7 @@ impl HttpDirectory {
     /// Sorts the Directory entries by their sizes
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
+    #[cfg_attr(feature = "hotpath", hotpath::measure)]
     pub fn sort_by_size(mut self, order: Sorting) -> Self {
         self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Size, &order));
         self
@@ -93,6 +96,7 @@ impl HttpDirectory {
     /// Returns only elements of the `HttpDirectory` listing that
     /// matches the predicate f. An element of this predicate is
     /// of type `HttpDirectoryEntry`
+    #[cfg_attr(feature = "hotpath", hotpath::measure)]
     #[must_use]
     pub fn filtering<F>(&self, mut f: F) -> Self
     where
@@ -213,6 +217,7 @@ impl Default for HttpDirectory {
     }
 }
 
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
     match scrape_body(body) {
         Ok(entries) => entries,

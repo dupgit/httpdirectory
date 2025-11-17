@@ -3,6 +3,7 @@ use httpdirectory::httpdirectory::{HttpDirectory, Sorting};
 use std::env::var;
 
 #[tokio::main]
+#[cfg_attr(feature = "hotpath", hotpath::main(percentiles = [99]))]
 async fn main() {
     let no_color_compliance = match var("NO_COLOR").is_ok() {
         true => WriteStyle::Never,
@@ -14,7 +15,7 @@ async fn main() {
     env_logger::Builder::from_env(Env::default().default_filter_or("")).write_style(no_color_compliance).init();
 
     if let Ok(httpdir) = HttpDirectory::new("https://cloud.debian.org/images/cloud/").await {
-        match httpdir.dirs().filter_by_name("bookworm/") {
+        match httpdir.dirs().filter_by_name("trixie/") {
             Ok(httpdir) => {
                 if httpdir.len() > 0 {
                     let entries = httpdir.entries();

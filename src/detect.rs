@@ -20,6 +20,7 @@ pub enum PureHtml {
 // <table> detection is considered valid if
 // we can match a column name "Modified",
 // "Last Modified" or "Date" within the table
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 fn detect_table(body: &str) -> bool {
     // Some websites prints "Modified" instead of "Last modified"
     let re = Regex::new(r"(?msi)<table(.+?<th.+?(Last )?modified.+?</th.+?)</table").unwrap();
@@ -33,15 +34,18 @@ fn detect_table(body: &str) -> bool {
     }
 }
 
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 fn detect_h5ai(body: &str) -> Option<String> {
     let re = Regex::new(r"powered by h5ai ([v]?\d+.\d+.\d+[\+\-\.\w]*)").unwrap();
     re.captures(body).map(|value| value[1].to_string())
 }
 
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 fn detect_snt(body: &str) -> bool {
     body.contains("SNT index generator")
 }
 
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 fn detect_miniserve(body: &str) -> Option<String> {
     let re = Regex::new(
         r#"<div class="version"><a href="https://github.com/svenstaro/miniserve">miniserve</a>/(\d+.\d+.\d+)</div>"#,
@@ -54,6 +58,7 @@ impl SiteType {
     /// Detects the possible type of the site we are
     /// scraping information from by "analyzing" it's
     /// body.
+    #[cfg_attr(feature = "hotpath", hotpath::measure)]
     pub fn detect(body: &str) -> Self {
         if let Some(version) = detect_h5ai(body) {
             SiteType::H5ai(version)

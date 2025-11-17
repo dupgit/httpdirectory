@@ -17,6 +17,7 @@ where
 }
 
 #[tokio::main]
+#[cfg_attr(feature = "hotpath", hotpath::main(percentiles = [99]), flavor = "current_thread")]
 async fn main() {
     let no_color_compliance = match var("NO_COLOR").is_ok() {
         true => WriteStyle::Never,
