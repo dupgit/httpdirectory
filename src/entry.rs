@@ -1,5 +1,6 @@
 use crate::httpdirectory::Sorting;
 use chrono::NaiveDateTime;
+use lazy_static::lazy_static;
 use log::{error, trace};
 use regex::Regex;
 use std::{cmp::Ordering, fmt};
@@ -18,6 +19,13 @@ pub struct Entry {
 
     /// Apparent size as reported by the HTTP page
     size: String,
+}
+
+lazy_static! {
+    // Direct capture of the size as a number and the unit (modifier)
+    // using capture groups. There are 5 capture groups in that regex.
+    static ref SIZE_RE: Regex =
+        Regex::new(r"(?i)(\d*\.?\d*)\s*([kmgtp])i?b|(\d*\.?\d*)\s*([kmgtp]|b)|(\d*\.?\d*)").unwrap();
 }
 
 // Tries to parse a string that should contain a date
@@ -77,21 +85,19 @@ fn get_date_from_inputs<'a>(date: &'a str, size: &'a str, reversed: bool) -> Opt
 
 // @todo: be more accurate with the modifier that should
 // be 1000 for Kb and 1024 for KiB ?
-// Direct capture of the size as a number and the unit (modifier)
-// using capture groups. There are 5 capture groups in that regex.
 // This will never fail because of the regex. It may return None
 // when `size` string does not contain any number and the captured
 // number with unit 1 in case it could not capture any unit modifier
 // ie: wrong units will not be detected and answer may be wrong.
 // @todo: do we need to detect such error ?
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 fn capture_size_and_unit(size: &str) -> Option<(String, usize)> {
     trace!("To be captured: {size}");
-    let re = Regex::new(r"(?i)(\d*\.?\d*)\s*([kmgtp])i?b|(\d*\.?\d*)\s*([kmgtp]|b)|(\d*\.?\d*)").unwrap();
 
     let captured_modifier: usize;
     let captured_size: String;
 
-    if let Some(value) = re.captures(size) {
+    if let Some(value) = SIZE_RE.captures(size) {
         let match_cap: usize;
         trace!("Captured some value: {value:?}");
         if value.get(1).is_some() {
