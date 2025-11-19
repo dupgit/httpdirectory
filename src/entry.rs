@@ -17,13 +17,18 @@ pub struct Entry {
     /// Date of that file or directory
     date: Option<NaiveDateTime>,
 
-    /// Apparent size as reported by the HTTP page
-    size: String,
+    /// Apparent size as reported by the HTTP page used for printing
+    apparent_size: String,
+
+    /// Computed size used for sorting
+    size: usize,
 }
 
 lazy_static! {
     // Direct capture of the size as a number and the unit (modifier)
     // using capture groups. There are 5 capture groups in that regex.
+    // It does not capture the unit multiplier type if any (ie: i) for
+    // now. See `capture_size_and_unit()` method.
     static ref SIZE_RE: Regex =
         Regex::new(r"(?i)(\d*\.?\d*)\s*([kmgtp])i?b|(\d*\.?\d*)\s*([kmgtp]|b)|(\d*\.?\d*)").unwrap();
 }
@@ -142,6 +147,66 @@ fn capture_size_and_unit(size: &str) -> Option<(String, usize)> {
     }
 }
 
+/// Returns the apparent size as a usize number.
+/// It is not an accurate size as 42K results in
+/// 42 * 1024 = 43008 (the real size in bytes may
+/// be a bit greater or a bit lower to this)
+/// In case the size is greater than `usize::MAX`
+/// it may be truncated to that value
+#[must_use]
+#[allow(clippy::cast_sign_loss)]
+#[allow(clippy::cast_possible_truncation)]
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
+pub fn apparent_size(size: &str) -> usize {
+    let real_size: usize;
+    let new_size: String;
+    let my_size = size.to_lowercase();
+
+    if my_size.contains('-') {
+        // Directory
+        return 0;
+    } else if let Some((captured_size, captured_modifier)) = capture_size_and_unit(&my_size) {
+        trace!("Detected size: {captured_size}, modifier: {captured_modifier}");
+        real_size = captured_modifier;
+        new_size = captured_size;
+    } else {
+        return 0;
+    }
+
+    let new_size = new_size.trim();
+    if new_size.contains('.') {
+        match new_size.parse::<f64>() {
+            Ok(number) => {
+                if number.signum().is_finite()
+                    && number < 18_446_744_073_709_551_615.0
+                    && number > -18_446_744_073_709_551_615.0
+                {
+                    // number is not Nan nor ∞
+                    // We know that .abs() will return a positive value
+                    // if number is greater than `usize::MAX` then number
+                    // is truncated to usize::MAX
+                    return real_size * ((number.abs() * 10.0) as usize) / 10;
+                } else {
+                    return 0;
+                }
+            }
+            Err(e) => {
+                error!("error parsing '{new_size}' into usize: {e}");
+                return 0;
+            }
+        }
+    } else if !new_size.is_empty() {
+        match new_size.parse::<usize>() {
+            Ok(number) => return real_size * number,
+            Err(e) => {
+                error!("error parsing '{new_size}' into usize: {e}");
+                return 0;
+            }
+        }
+    }
+    0
+}
+
 impl Entry {
     /// Creates a new Entry
     #[must_use]
@@ -166,78 +231,26 @@ impl Entry {
             name,
             link,
             date,
-            size: guessed_size.to_string(),
+            apparent_size: guessed_size.to_string(),
+            size: apparent_size(guessed_size),
         }
     }
 
-    /// Returns the apparent size as a usize number.
-    /// It is not an accurate size as 42K results in
-    /// 42 * 1024 = 43008 (the real size in bytes may
-    /// be a bit greater or a bit lower to this)
-    /// In case the size is greater than `usize::MAX`
-    /// it may be truncated to that value
+    /// Returns the size of the Entry as an &str as read on the
+    /// original website. It may contain a number or ' - ' if
+    /// the entry is a directory.
+    /// The number may be followed by units ie: K, M, G, T or P.
     #[must_use]
-    #[allow(clippy::cast_sign_loss)]
-    #[allow(clippy::cast_possible_truncation)]
-    #[cfg_attr(feature = "hotpath", hotpath::measure)]
-    pub fn apparent_size(&self) -> usize {
-        let real_size: usize;
-        let new_size: String;
-        let my_size = self.size().to_lowercase();
-
-        if my_size.contains('-') {
-            // Directory
-            return 0;
-        } else if let Some((captured_size, captured_modifier)) = capture_size_and_unit(&my_size) {
-            trace!("Detected size: {captured_size}, modifier: {captured_modifier}");
-            real_size = captured_modifier;
-            new_size = captured_size;
-        } else {
-            return 0;
-        }
-
-        let new_size = new_size.trim();
-        if new_size.contains('.') {
-            match new_size.parse::<f64>() {
-                Ok(number) => {
-                    if number.signum().is_finite()
-                        && number < 18_446_744_073_709_551_615.0
-                        && number > -18_446_744_073_709_551_615.0
-                    {
-                        // number is not Nan nor ∞
-                        // We know that .abs() will return a positive value
-                        // if number is greater than `usize::MAX` then number
-                        // is truncated to usize::MAX
-                        return real_size * ((number.abs() * 10.0) as usize) / 10;
-                    } else {
-                        return 0;
-                    }
-                }
-                Err(e) => {
-                    error!("error parsing '{new_size}' into usize: {e}");
-                    return 0;
-                }
-            }
-        } else if !new_size.is_empty() {
-            match new_size.parse::<usize>() {
-                Ok(number) => return real_size * number,
-                Err(e) => {
-                    error!("error parsing '{new_size}' into usize: {e}");
-                    return 0;
-                }
-            }
-        }
-        0
+    pub fn apparent_size(&self) -> &str {
+        &self.apparent_size
     }
 
-    /// Returns the size of the Entry as an &str.
-    /// It may contain a number or ' - ' if the entry is a directory.
-    /// The number may be followed by K, M, G, T or P.
-    /// use `apparent_size()` method to get the size of the file
-    /// as a usize number.
+    /// Gets the size of the file as a usize number. This size has
+    /// been guessed and calculated when parsing each line of data
+    /// scraping the website.
     #[must_use]
-    pub fn size(&self) -> &str {
-        &self.size
+    pub fn size(&self) -> usize {
+        self.size
     }
 
     // Returns the name of the file or directory
@@ -270,8 +283,8 @@ impl Entry {
     #[must_use]
     pub fn cmp_by_size(&self, other: &Self, order: &Sorting) -> Ordering {
         match order {
-            Sorting::Ascending => self.apparent_size().cmp(&other.apparent_size()),
-            Sorting::Descending => other.apparent_size().cmp(&self.apparent_size()),
+            Sorting::Ascending => self.size.cmp(&other.size),
+            Sorting::Descending => other.size.cmp(&self.size),
         }
     }
 }
@@ -279,8 +292,8 @@ impl Entry {
 impl fmt::Display for Entry {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self.date {
-            Some(date) => write!(f, "{:>9}  {}  {}", self.size, date.format("%Y-%m-%d %H:%M"), self.name),
-            None => write!(f, "{:>9}  {:>16}  {}", self.size, "", self.name),
+            Some(date) => write!(f, "{:>9}  {}  {}", self.apparent_size, date.format("%Y-%m-%d %H:%M"), self.name),
+            None => write!(f, "{:>9}  {:>16}  {}", self.apparent_size, "", self.name),
         }
     }
 }
@@ -291,10 +304,10 @@ mod tests {
     #[test]
     fn test_apparent_size_float() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "5.0K");
-        assert_eq!(entry.apparent_size(), 5120);
+        assert_eq!(entry.size, 5120);
 
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "5.3k");
-        assert_eq!(entry.apparent_size(), 5427);
+        assert_eq!(entry.size, 5427);
     }
 
     #[test]
@@ -306,7 +319,7 @@ mod tests {
             "999999999999999999999999999999999999999999999999999999999.0P",
         );
 
-        assert_eq!(entry.apparent_size(), 0);
+        assert_eq!(entry.size, 0);
     }
 
     #[test]
@@ -320,91 +333,91 @@ mod tests {
     fn test_apparent_size_usize() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "524");
 
-        assert_eq!(entry.apparent_size(), 524);
+        assert_eq!(entry.size, 524);
     }
 
     #[test]
     fn test_apparent_size_modifier_t() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "1t");
 
-        assert_eq!(entry.apparent_size(), 1_099_511_627_776);
+        assert_eq!(entry.size, 1_099_511_627_776);
     }
 
     #[test]
     fn test_apparent_size_modifier_p() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "1P");
 
-        assert_eq!(entry.apparent_size(), 1_125_899_906_842_624);
+        assert_eq!(entry.size, 1_125_899_906_842_624);
     }
 
     #[test]
     fn test_apparent_size_modifier_tb() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "1tB");
 
-        assert_eq!(entry.apparent_size(), 1_099_511_627_776);
+        assert_eq!(entry.size, 1_099_511_627_776);
     }
 
     #[test]
     fn test_apparent_size_modifier_pb() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "1Pb");
 
-        assert_eq!(entry.apparent_size(), 1_125_899_906_842_624);
+        assert_eq!(entry.size, 1_125_899_906_842_624);
     }
 
     #[test]
     fn test_apparent_size_modifier_tib() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "1tiB");
 
-        assert_eq!(entry.apparent_size(), 1_099_511_627_776);
+        assert_eq!(entry.size, 1_099_511_627_776);
     }
 
     #[test]
     fn test_apparent_size_modifier_pib() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "1Pib");
 
-        assert_eq!(entry.apparent_size(), 1_125_899_906_842_624);
+        assert_eq!(entry.size, 1_125_899_906_842_624);
     }
 
     #[test]
     fn test_apparent_size_modifier_tib_with_space() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "1 TiB");
 
-        assert_eq!(entry.apparent_size(), 1_099_511_627_776);
+        assert_eq!(entry.size, 1_099_511_627_776);
     }
 
     #[test]
     fn test_apparent_size_modifier_pib_with_space() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "1 PiB");
 
-        assert_eq!(entry.apparent_size(), 1_125_899_906_842_624);
+        assert_eq!(entry.size, 1_125_899_906_842_624);
     }
 
     #[test]
     fn test_apparent_size_wrong_modifier() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "4 ÀiB");
 
-        assert_eq!(entry.apparent_size(), 4);
+        assert_eq!(entry.size, 4);
     }
 
     #[test]
     fn test_apparent_size_zero() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "0");
 
-        assert_eq!(entry.apparent_size(), 0);
+        assert_eq!(entry.size, 0);
     }
 
     #[test]
     fn test_apparent_size_directory() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", " - ");
 
-        assert_eq!(entry.apparent_size(), 0);
+        assert_eq!(entry.size, 0);
     }
 
     #[test]
     fn test_apparent_size_wrong_input() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "Not_A_Size");
 
-        assert_eq!(entry.apparent_size(), 0);
+        assert_eq!(entry.size, 0);
     }
 
     #[test]
@@ -436,7 +449,7 @@ mod tests {
     fn test_apparent_size_wrong_input_with_modifier() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "Not_A_SizeT");
 
-        assert_eq!(entry.apparent_size(), 0);
+        assert_eq!(entry.size, 0);
     }
 
     #[test]

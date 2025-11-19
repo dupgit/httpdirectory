@@ -44,9 +44,11 @@ impl HttpDirectoryEntry {
 
         let entry = Entry::new(name.trim(), link.trim(), date.trim(), size.trim());
 
-        // `size` may be flipped with `date` so using the one guessed in entry
-        // that is likely to be more accurate
-        if entry.size().contains('-') || entry.size().contains('—') {
+        // `size` may be flipped with `date` so using the one returned
+        // by `Entry::new()` in `entry` variable: that is likely to be
+        // more accurate. `-` and `—` are different character. The latter
+        // is used by trafficmanager.net (ie: `&mdash;` in HTML)
+        if entry.apparent_size().contains('-') || entry.apparent_size().contains('—') {
             HttpDirectoryEntry::Directory(entry)
         } else {
             HttpDirectoryEntry::File(entry)
@@ -199,7 +201,7 @@ pub fn assert_entry(dir_entry: &HttpDirectoryEntry, entry_type: &EntryType, name
     match dir_entry {
         HttpDirectoryEntry::Directory(entry) => {
             assert!(matches!(entry_type, EntryType::Directory));
-            assert_eq!(entry.apparent_size(), size);
+            assert_eq!(entry.size(), size);
             assert_eq!(entry.name(), name);
             if let Some(entry_date) = entry.date() {
                 let entry_date_str = entry_date.format("%Y-%m-%d %H:%M").to_string();
@@ -208,7 +210,7 @@ pub fn assert_entry(dir_entry: &HttpDirectoryEntry, entry_type: &EntryType, name
         }
         HttpDirectoryEntry::File(entry) => {
             assert!(matches!(entry_type, EntryType::File));
-            assert_eq!(entry.apparent_size(), size);
+            assert_eq!(entry.size(), size);
             assert_eq!(entry.name(), name);
             if let Some(entry_date) = entry.date() {
                 let entry_date_str = entry_date.format("%Y-%m-%d %H:%M").to_string();

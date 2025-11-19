@@ -127,7 +127,7 @@ fn files_only(entry: &HttpDirectoryEntry) -> bool {
 // Utility function to filter files whose apparent size is bigger than 5 Kb
 fn files_only_whose_size_is_greater_than_5120(entry: &HttpDirectoryEntry) -> bool {
     match entry {
-        HttpDirectoryEntry::File(e) => e.apparent_size() > 5_120,
+        HttpDirectoryEntry::File(e) => e.size() > 5_120,
         _ => false,
     }
 }
@@ -190,7 +190,7 @@ fn bench_selectivity(c: &mut Criterion) {
     group.bench_function("high_selectivity_cloned", |b| {
         b.iter(|| {
             black_box(directory.filtering_v1(|entry| match entry {
-                HttpDirectoryEntry::File(e) => e.apparent_size() > 900_000,
+                HttpDirectoryEntry::File(e) => e.size() > 900_000,
                 _ => false,
             }))
         })
@@ -198,7 +198,7 @@ fn bench_selectivity(c: &mut Criterion) {
     group.bench_function("high_selectivity_capacity", |b| {
         b.iter(|| {
             black_box(directory.filtering_v4(|entry| match entry {
-                HttpDirectoryEntry::File(e) => e.apparent_size() > 900_000,
+                HttpDirectoryEntry::File(e) => e.size() > 900_000,
                 _ => false,
             }))
         })
@@ -208,7 +208,7 @@ fn bench_selectivity(c: &mut Criterion) {
     group.bench_function("low_selectivity_cloned", |b| {
         b.iter(|| {
             black_box(directory.filtering_v1(|entry| match entry {
-                HttpDirectoryEntry::File(e) => e.apparent_size() > 5_000,
+                HttpDirectoryEntry::File(e) => e.size() > 5_000,
                 _ => false,
             }))
         })
@@ -216,7 +216,7 @@ fn bench_selectivity(c: &mut Criterion) {
     group.bench_function("low_selectivity_capacity", |b| {
         b.iter(|| {
             black_box(directory.filtering_v4(|entry| match entry {
-                HttpDirectoryEntry::File(e) => e.apparent_size() > 1000, // Beaucoup d'éléments
+                HttpDirectoryEntry::File(e) => e.size() > 1000, // Beaucoup d'éléments
                 _ => false,
             }))
         })

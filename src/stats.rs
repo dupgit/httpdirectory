@@ -45,7 +45,7 @@ impl Stats {
 
     pub(crate) fn add_file(&mut self, file: &Entry) -> &Self {
         self.files += 1;
-        self.total_size += file.apparent_size() as u64;
+        self.total_size += file.size() as u64;
         match file.date() {
             Some(_) => self.with_date += 1,
             None => self.without_date += 1,

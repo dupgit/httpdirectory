@@ -1,3 +1,10 @@
+0.17.0
+  * Speed improvements
+  * Computing the size of a file only once and keeping it along in
+    the Entry structure.
+  * hotpath features to enable timing of some chosen functions
+  * MSRV is 1.88
+
 0.16.3
   * Decodes miniserve's directory listing
   * Adds tests
