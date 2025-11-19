@@ -77,3 +77,7 @@ bench:
 # Check for typos
 check-typos:
     typos src/ README.md tests examples .justfile benches ChangeLog
+
+# Invoke clippy in pedantic mode
+clippy:
+    cargo clippy -- -W clippy::pedantic
