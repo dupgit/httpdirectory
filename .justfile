@@ -9,6 +9,8 @@ alias t := test
 alias d := document
 alias c := coverage
 alias p := publish
+alias e := example
+alias b := bench
 
 # Installs all cargo tools to build a release or test coverage
 install-dev-tools:
@@ -81,3 +83,7 @@ check-typos:
 # Invoke clippy in pedantic mode
 clippy:
     cargo clippy -- -W clippy::pedantic
+
+# Run examples with hotpath feature
+example example="debug_me":
+    cargo r --release --example {{example}} --features=hotpath
