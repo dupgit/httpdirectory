@@ -250,17 +250,25 @@ impl Entry {
         self.size
     }
 
-    // Returns the name of the file or directory
+    /// Returns the name of the file or directory
     #[must_use]
     pub fn name(&self) -> &str {
         &self.name
     }
 
+    /// Returns the link of the file or directory
+    #[must_use]
+    pub fn link(&self) -> &str {
+        &self.link
+    }
+
+    /// Returns the date of the file or directory
     #[must_use]
     pub fn date(&self) -> Option<NaiveDateTime> {
         self.date
     }
 
+    /// Compares two `Entry` by name and returns an `Ordering`
     #[must_use]
     pub fn cmp_by_name(&self, other: &Self, order: &Sorting) -> Ordering {
         match order {
@@ -269,6 +277,7 @@ impl Entry {
         }
     }
 
+    /// Compares two `Entry` by date and returns an `Ordering`
     #[must_use]
     pub fn cmp_by_date(&self, other: &Self, order: &Sorting) -> Ordering {
         match order {
@@ -277,6 +286,7 @@ impl Entry {
         }
     }
 
+    /// Compares two `Entry` by size and returns an `Ordering`
     #[must_use]
     pub fn cmp_by_size(&self, other: &Self, order: &Sorting) -> Ordering {
         match order {
