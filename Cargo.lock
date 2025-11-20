@@ -1059,7 +1059,6 @@ dependencies = [
  "env_logger",
  "hotpath",
  "httpmock",
- "lazy_static",
  "log",
  "regex",
  "reqwest",

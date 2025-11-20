@@ -1,8 +1,8 @@
 use crate::httpdirectory::Sorting;
 use chrono::NaiveDateTime;
-use lazy_static::lazy_static;
 use log::{error, trace};
 use regex::Regex;
+use std::sync::LazyLock;
 use std::{cmp::Ordering, fmt};
 
 /// Defines an Entry for a file or a directory
@@ -24,14 +24,12 @@ pub struct Entry {
     size: usize,
 }
 
-lazy_static! {
-    // Direct capture of the size as a number and the unit (modifier)
-    // using capture groups. There are 5 capture groups in that regex.
-    // It does not capture the unit multiplier type if any (ie: i) for
-    // now. See `capture_size_and_unit()` method.
-    static ref SIZE_RE: Regex =
-        Regex::new(r"(?i)(\d*\.?\d*)\s*([kmgtp])i?b|(\d*\.?\d*)\s*([kmgtp]|b)|(\d*\.?\d*)").unwrap();
-}
+// Direct capture of the size as a number and the unit (modifier)
+// using capture groups. There are 5 capture groups in that regex.
+// It does not capture the unit multiplier type if any (ie: i) for
+// now. See `capture_size_and_unit()` method.
+static SIZE_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?i)(\d*\.?\d*)\s*([kmgtp])i?b|(\d*\.?\d*)\s*([kmgtp]|b)|(\d*\.?\d*)").unwrap());
 
 // Tries to parse a string that should contain a date
 // with an array of known formats
