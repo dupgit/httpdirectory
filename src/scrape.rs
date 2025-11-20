@@ -208,32 +208,29 @@ fn get_date_and_size(line: &str) -> (&str, &str) {
 // Returns a tuple with the text of the link and the
 // linked text as name. Here : ("bionic/", "bionic/")
 pub fn get_link_and_name(column: &str) -> (&str, &str) {
-    match column.find('>') {
-        Some(num) => {
-            let name = &column[num + 1..];
-            let link = match &column[0..num].strip_prefix(r#"<a href=""#) {
-                // Removing '<a href="' that prefixes the line
-                Some(link) => match link.strip_suffix(r#"""#) {
-                    // Removing trailing " if any
-                    Some(l) => l,
-                    None => link,
-                },
-                None => match column[0..num].strip_suffix(r#"""#) {
-                    // Removing trailing " if any
-                    Some(l) => l,
-                    None => &column[0..num],
-                },
-            };
-            let link = link.trim();
-            let name = name.trim();
-            trace!(" -> link: {link}, name: {name}");
-            (link.trim(), name.trim())
-        }
-        None => {
-            let name = column.trim();
-            trace!(" -> link: , name: {name}");
-            ("", name)
-        }
+    if let Some(num) = column.find('>') {
+        let name = &column[num + 1..];
+        let link = match &column[0..num].strip_prefix(r#"<a href=""#) {
+            // Removing '<a href="' that prefixes the line
+            Some(link) => match link.strip_suffix(r#"""#) {
+                // Removing trailing " if any
+                Some(l) => l,
+                None => link,
+            },
+            None => match column[0..num].strip_suffix(r#"""#) {
+                // Removing trailing " if any
+                Some(l) => l,
+                None => &column[0..num],
+            },
+        };
+        let link = link.trim();
+        let name = name.trim();
+        trace!(" -> link: {link}, name: {name}");
+        (link, name)
+    } else {
+        let name = column.trim();
+        trace!(" -> link: , name: {name}");
+        ("", name)
     }
 }
 

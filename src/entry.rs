@@ -186,9 +186,8 @@ pub fn apparent_size(size: &str) -> usize {
                     // if number is greater than `usize::MAX` then number
                     // is truncated to usize::MAX
                     return real_size * ((number.abs() * 10.0) as usize) / 10;
-                } else {
-                    return 0;
                 }
+                return 0;
             }
             Err(e) => {
                 error!("error parsing '{new_size}' into usize: {e}");
