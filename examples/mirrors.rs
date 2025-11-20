@@ -1,10 +1,12 @@
 use colored::Colorize;
 use env_logger::{Env, WriteStyle};
+use httpdirectory::error::HttpDirError;
 use httpdirectory::httpdirectory::HttpDirectory;
 use std::env::var;
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
+use tokio::task::JoinSet;
 
 // The output is wrapped in a Result to allow matching on errors.
 // Returns an Iterator to the Reader of the lines of the file.
@@ -36,21 +38,24 @@ async fn main() {
             urls.push(line);
         }
     }
+    let capacity = urls.len();
+    println!("Total mirror sites: {capacity}");
+    let mut result_httpdir_vec: Vec<Result<HttpDirectory, HttpDirError>> = Vec::with_capacity(capacity);
+    let mut tasks = JoinSet::new();
 
-    // note the use of `into_iter()` to consume `items`
-    let tasks: Vec<_> =
-        urls.into_iter().map(|url| tokio::spawn(async move { HttpDirectory::new(&url).await })).collect();
-    // await the tasks for resolve's to complete and give back our items
-    let mut option_httpdir_vec = vec![];
-    for task in tasks {
-        option_httpdir_vec.push(task.await.unwrap());
+    // spawning tasks
+    let _vec_abort_handle: Vec<_> =
+        urls.into_iter().map(|url| tasks.spawn(async move { HttpDirectory::new(&url).await })).collect();
+
+    while let Some(task) = tasks.join_next().await {
+        result_httpdir_vec.push(task.unwrap());
     }
 
     let mut correct = 0;
     let mut errored = 0;
     // verify that we've got the results
-    for option_httpdir in &option_httpdir_vec {
-        match option_httpdir {
+    for result_httpdir in &result_httpdir_vec {
+        match result_httpdir {
             Ok(httpdir) => {
                 let stats = httpdir.stats();
 
