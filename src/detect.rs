@@ -19,8 +19,7 @@ pub enum PureHtml {
 }
 
 // Regex used to determine `SiteType`
-static H5AI_RE: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"powered by h5ai ([v]?\d+.\d+.\d+[\+\-\.\w]*)").unwrap());
+static H5AI_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"powered by h5ai (v\d+.\d+.\d+)").unwrap());
 
 // Some websites are using "Modified" instead of "Last modified"
 static TABLE_RE: LazyLock<Regex> =
