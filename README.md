@@ -1,7 +1,7 @@
 # *httpdirectory*'s readme
 
 This project is in an early stage of development but is already
-correct on many websites: the 408 debian mirrors I could join
+correct on many websites: the ~400 debian mirrors I could join
 were correctly interpreted
 
 ## Description
