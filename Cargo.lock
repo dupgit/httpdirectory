@@ -1064,6 +1064,7 @@ dependencies = [
  "reqwest",
  "scraper",
  "tokio",
+ "unwrap_unreachable",
  "url",
 ]
 
@@ -2706,6 +2707,12 @@ name = "untrusted"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8ecb6da28b8a351d773b68d5825ac39017e680750f980f3a1a85cd8dd28a47c1"
+
+[[package]]
+name = "unwrap_unreachable"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4629b45dd934deefc2f249cc9015ecf135c621e5d4f4f83ec33d7b5b2b0d20da"
 
 [[package]]
 name = "ureq"

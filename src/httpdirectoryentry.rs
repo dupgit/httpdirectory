@@ -231,6 +231,7 @@ mod tests {
         crate::{httpdirectory::Sorting, httpdirectoryentry::CompareField},
         chrono::NaiveDate,
         std::cmp::Ordering,
+        unwrap_unreachable::UnwrapUnreachable,
     };
 
     #[test]
@@ -255,7 +256,7 @@ mod tests {
         assert_eq!(httpdirectoryentry.name(), Some("name"));
         assert_eq!(
             httpdirectoryentry.date(),
-            Some(NaiveDate::from_ymd_opt(2025, 05, 20).unwrap().and_hms_opt(20, 19, 00).unwrap())
+            Some(NaiveDate::from_ymd_opt(2025, 05, 20).unreachable().and_hms_opt(20, 19, 00).unreachable())
         );
     }
 

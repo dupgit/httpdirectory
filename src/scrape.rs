@@ -7,6 +7,12 @@ use crate::{
 use log::{debug, info, trace, warn};
 use regex::Regex;
 use scraper::{ElementRef, Html, Selector};
+use std::sync::LazyLock;
+use unwrap_unreachable::UnwrapUnreachable;
+
+static TABLE_DATE: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?msi)Last modified|Modified|Date|Modification time|Last modification").unreachable()
+});
 
 // @todo: add some validation statistics to decide if
 // what we have been scraping is real data or not
@@ -16,13 +22,12 @@ use scraper::{ElementRef, Html, Selector};
 // that contains the headers that we should find in a
 // file list ("last modified", "modified" or "date")
 pub(crate) fn are_table_headers_present(table: ElementRef) -> bool {
-    let th_selector = Selector::parse("th").unwrap();
-    let re = Regex::new(r"(?msi)Last modified|Modified|Date|Modification time|Last modification").unwrap();
+    let th_selector = Selector::parse("th").unreachable();
 
     for th in table.select(&th_selector) {
         let columns: Vec<_> = th.text().collect();
         for column in columns {
-            if re.is_match(column) {
+            if TABLE_DATE.is_match(column) {
                 return true;
             }
         }

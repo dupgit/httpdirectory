@@ -1,5 +1,6 @@
 use regex::Regex;
 use std::sync::LazyLock;
+use unwrap_unreachable::UnwrapUnreachable;
 
 /// Site type enumeration.
 #[derive(Debug, PartialEq, Eq)]
@@ -19,21 +20,21 @@ pub enum PureHtml {
 }
 
 // Regex used to determine `SiteType`
-static H5AI_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"powered by h5ai (v\d+.\d+.\d+)").unwrap());
+static H5AI_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"powered by h5ai (v\d+.\d+.\d+)").unreachable());
 
 // Some websites are using "Modified" instead of "Last modified"
 static TABLE_RE: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"(?msi)<table(.+?<th.+?(Last )?modified.+?</th.+?)</table").unwrap());
+    LazyLock::new(|| Regex::new(r"(?msi)<table(.+?<th.+?(Last )?modified.+?</th.+?)</table").unreachable());
 
 // Some other websites are using "Date" instead of "Last modified" or "Modified"
 static TABLE_DATE_RE: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"(?msi)<table(.+?<th.+?Date.+?</th.+?)</table").unwrap());
+    LazyLock::new(|| Regex::new(r"(?msi)<table(.+?<th.+?Date.+?</th.+?)</table").unreachable());
 
 static MINISERVE_RE: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(
         r#"<div class="version"><a href="https://github.com/svenstaro/miniserve">miniserve</a>/(\d+.\d+.\d+)</div>"#,
     )
-    .unwrap()
+    .unreachable()
 });
 
 // <table> detection is considered valid if

@@ -234,6 +234,7 @@ mod tests {
         super::{HttpDirectory, HttpDirectoryEntry, Request},
         crate::{httpdirectory::Sorting, httpdirectoryentry::EntryType, httpdirectoryentry::assert_entry},
         std::sync::Arc,
+        unwrap_unreachable::UnwrapUnreachable,
     };
 
     #[test]
@@ -345,9 +346,9 @@ DIR          -  2025-01-02 12:32  entry4
 
     #[test]
     fn test_httpdirectory_filter_by_name_simple_regex() {
-        // unwrap here is ok since we know this should not return anything else
+        // unreachable here is ok since we know this should not return anything else
         // than Ok(httpdir) if it does it should panic as the test failed.
-        let httpdir = prepare_httpdir().filter_by_name("debian").unwrap();
+        let httpdir = prepare_httpdir().filter_by_name("debian").unreachable();
         assert_eq!(httpdir.len(), 2);
 
         let entries = httpdir.entries();
@@ -368,9 +369,9 @@ DIR          -  2025-01-02 12:32  entry4
 
     #[test]
     fn test_httpdirectory_filter_by_name_less_simple_regex() {
-        // unwrap here is ok since we know this should not return anything else
+        // unreachable here is ok since we know this should not return anything else
         // than Ok(httpdir) if it does it should panic as the test failed.
-        let httpdir = prepare_httpdir().filter_by_name(r#"debian\d|entry|file\d"#).unwrap();
+        let httpdir = prepare_httpdir().filter_by_name(r#"debian\d|entry|file\d"#).unreachable();
         assert_eq!(httpdir.len(), 5);
 
         let entries = httpdir.entries();

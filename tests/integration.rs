@@ -4,6 +4,7 @@ use httpdirectory::{
     httpdirectoryentry::assert_entry,
 };
 use httpmock::prelude::*;
+use unwrap_unreachable::UnwrapUnreachable;
 
 #[tokio::test]
 async fn test_empty_200_status() {
@@ -216,9 +217,9 @@ async fn test_debian_example() {
     let dirs = httpdir.dirs();
     assert_eq!(dirs.len(), 11);
 
-    // unwrap is is fine as we know that "b" regex is
+    // unreachable is is fine as we know that "b" regex is
     // a valid regex
-    let filtered = dirs.filter_by_name("b").unwrap();
+    let filtered = dirs.filter_by_name("b").unreachable();
     let entries = filtered.entries();
 
     assert_eq!(filtered.len(), 7);
@@ -668,9 +669,9 @@ async fn test_pre_img_example() {
     let files = httpdir.files();
     assert_eq!(files.len(), 68);
 
-    // unwrap is is fine as we know that "b" regex is
+    // unreachable is is fine as we know that "b" regex is
     // a valid regex
-    let filtered = files.filter_by_name("amd64.img").unwrap();
+    let filtered = files.filter_by_name("amd64.img").unreachable();
     let entries = filtered.entries();
 
     assert_eq!(filtered.len(), 1);
