@@ -48,7 +48,7 @@ bump patch: check-typos
 
 # Runs tests for the project
 test:
-    cargo nextest run
+    cargo nextest run --features test-output
     cargo t --doc
 
 # Creates the documentation and open it in a browser
@@ -72,9 +72,9 @@ coverage:
     cargo tarpaulin --frozen --exclude-files benches/*.rs -o Html
     open tarpaulin-report.html
 
-# Runs benches
-bench:
-    cargo bench
+# Runs benches (use module name in benches/ as bench_name)
+bench bench_name='integration_bench':
+    cargo bench --bench {{bench_name}}
 
 # Check for typos
 check-typos:

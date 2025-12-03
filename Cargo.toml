@@ -28,6 +28,7 @@ unwrap_unreachable = "0.1.1"
 hotpath = ["dep:hotpath", "hotpath/hotpath"]
 hotpath-alloc = ["hotpath/hotpath-alloc"]
 hotpath-off = ["hotpath/hotpath-off"]
+test-output = []
 
 [dev-dependencies]
 httpmock = "0.8.1"
@@ -35,6 +36,10 @@ criterion = { version = "0.7", features = ["html_reports"] }
 
 [[bench]]
 name = "filtering_bench"
+harness = false
+
+[[bench]]
+name = "integration_bench"
 harness = false
 
 [lints.clippy]
