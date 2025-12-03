@@ -21,13 +21,12 @@ reqwest = { version = "0.12.15", features = ["charset"] }
 scraper = "0.24.0"
 tokio = { version = "1.44.2", features = ["macros", "rt-multi-thread"] }
 url = "2.5.4"
-hotpath = { version = "0.6", optional = true }
+hotpath = { version = "0.7.6", optional = true }
 unwrap_unreachable = "0.1.1"
 
 [features]
 hotpath = ["dep:hotpath", "hotpath/hotpath"]
-hotpath-alloc-bytes-total = ["hotpath/hotpath-alloc-bytes-total"]
-hotpath-alloc-count-total = ["hotpath/hotpath-alloc-count-total"]
+hotpath-alloc = ["hotpath/hotpath-alloc"]
 hotpath-off = ["hotpath/hotpath-off"]
 
 [dev-dependencies]

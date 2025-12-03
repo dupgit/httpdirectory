@@ -6,6 +6,7 @@ use scraper::{Html, Selector};
 // and we do not want to do anything with javascript.
 // Getting the two divs (`fallback-hints` and `fallback`) and
 // decode the table found if any (should be on `fallback` div)
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 pub(crate) fn scrape_h5ai(body: &str, _version: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     let http_dir_entry = vec![];
 

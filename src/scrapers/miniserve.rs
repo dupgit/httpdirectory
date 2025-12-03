@@ -6,6 +6,7 @@ use crate::{
 use log::trace;
 use scraper::{ElementRef, Html, Selector};
 
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 pub(crate) fn scrape_miniserve(body: &str, _version: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     let http_dir_entry = vec![];
 

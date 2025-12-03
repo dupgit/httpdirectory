@@ -43,6 +43,7 @@ pub(crate) fn are_table_headers_present(table: ElementRef) -> bool {
 // column (first one) is not empty (it has text) so
 // it may be that this is in fact the name & link
 // column
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 pub(crate) fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     let mut http_dir_entry = vec![];
 
@@ -131,6 +132,7 @@ pub(crate) fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDi
 // Tries to search in a <pre> formatted table that
 // contains <img> tag that represents the icon of
 // the file
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     let mut should_be_considered_valid = false;
     let mut http_dir_entry = vec![];
@@ -272,6 +274,7 @@ fn strip_until_stop<'a>(line: &'a str, stop: &str, remove: bool) -> &'a str {
 
 // Tries to search in a basic <pre> formatted table
 // without any <img> tag
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 fn scrape_pre_simple(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     let mut http_dir_entry = vec![];
 

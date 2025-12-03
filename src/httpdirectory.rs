@@ -232,7 +232,10 @@ fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
 mod tests {
     use {
         super::{HttpDirectory, HttpDirectoryEntry, Request},
-        crate::{httpdirectory::Sorting, httpdirectoryentry::EntryType, httpdirectoryentry::assert_entry},
+        crate::{
+            httpdirectory::Sorting,
+            httpdirectoryentry::{EntryType, assert_entry},
+        },
         std::sync::Arc,
         unwrap_unreachable::UnwrapUnreachable,
     };

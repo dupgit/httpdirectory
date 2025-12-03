@@ -2,6 +2,7 @@ use crate::{error::HttpDirError, httpdirectoryentry::HttpDirectoryEntry, scrape:
 use log::debug;
 use scraper::{Html, Selector};
 
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 pub(crate) fn scrape_ul(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
     let mut http_dir_entry = vec![];
 
