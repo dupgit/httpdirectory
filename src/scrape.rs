@@ -5,14 +5,8 @@ use crate::{
     scrapers::{h5ai::scrape_h5ai, miniserve::scrape_miniserve, snt::scrape_snt, ul::scrape_ul},
 };
 use log::{debug, info, trace, warn};
-use regex::Regex;
 use scraper::{ElementRef, Html, Selector};
-use std::sync::LazyLock;
 use unwrap_unreachable::UnwrapUnreachable;
-
-static TABLE_DATE: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"(?msi)Last modified|Modified|Date|Modification time|Last modification").unreachable()
-});
 
 // @todo: add some validation statistics to decide if
 // what we have been scraping is real data or not
@@ -21,13 +15,22 @@ static TABLE_DATE: LazyLock<Regex> = LazyLock::new(|| {
 // Tells whether the table we are inspecting is a table
 // that contains the headers that we should find in a
 // file list ("last modified", "modified" or "date")
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 pub(crate) fn are_table_headers_present(table: ElementRef) -> bool {
     let th_selector = Selector::parse("th").unreachable();
 
     for th in table.select(&th_selector) {
         let columns: Vec<_> = th.text().collect();
         for column in columns {
-            if TABLE_DATE.is_match(column) {
+            // This is may be less beautiful than a Regex but it
+            // is x100 times faster !
+            let lowered = column.to_lowercase();
+            if lowered.contains("last modified")
+                || lowered.contains("modified")
+                || lowered.contains("date")
+                || lowered.contains("modification time")
+                || lowered.contains("last modification")
+            {
                 return true;
             }
         }
@@ -48,14 +51,14 @@ pub(crate) fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDi
     let mut http_dir_entry = vec![];
 
     let html = Html::parse_document(body);
-    let table_selector = Selector::parse("table")?;
+    let table_selector = Selector::parse("table").unreachable();
     let table_iter = html.select(&table_selector);
+    let row_selector = Selector::parse("tr").unreachable();
+    let col_selector = Selector::parse("td").unreachable();
+    let link_selector = Selector::parse("a").unreachable();
 
     for table in table_iter {
         if are_table_headers_present(table) {
-            let row_selector = Selector::parse("tr")?;
-            let col_selector = Selector::parse("td")?;
-            let link_selector = Selector::parse("a")?;
             for row in table.select(&row_selector) {
                 let one_line: Vec<_> = row.select(&col_selector).collect();
                 let mut one_line_iter = one_line.iter();
@@ -181,6 +184,7 @@ fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirErr
     Ok(http_dir_entry)
 }
 
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
 pub(crate) fn remove_empty_cell(mut vector: Vec<&str>) -> Vec<&str> {
     vector.retain(|v| !v.trim().is_empty());
     vector
