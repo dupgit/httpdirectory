@@ -7,6 +7,7 @@ use log::{debug, error, trace};
 use regex::Regex;
 use std::fmt;
 use std::sync::Arc;
+use std::time::{Duration, Instant};
 
 /// Main structure that provides methods to access, parse a directory
 /// webpage and fill that structure.
@@ -15,6 +16,23 @@ pub struct HttpDirectory {
     entries: Vec<HttpDirectoryEntry>,
     url: Arc<String>,
     request: Arc<Request>,
+    timings: Arc<Timings>,
+}
+
+#[derive(Debug, Default, Clone)]
+struct Timings {
+    /// Total time passed processing the http request
+    http_request: Duration,
+    get_entries: Duration,
+}
+
+impl Timings {
+    fn new(http_request: Duration, get_entries: Duration) -> Self {
+        Timings {
+            http_request,
+            get_entries,
+        }
+    }
 }
 
 pub enum Sorting {
@@ -34,15 +52,22 @@ impl HttpDirectory {
     /// with a 200 HTTP status code
     #[cfg_attr(feature = "hotpath", hotpath::measure)]
     pub async fn new(url: &str) -> Result<Self, HttpDirError> {
+        let now = Instant::now();
         let client = Request::new()?;
         let response = client.get(url).await?;
+        let http_request = now.elapsed();
         trace!("Response to get '{url}': {response:?}");
 
+        let now = Instant::now();
         let entries = get_entries_from_body(&response.text().await?);
+        let get_entries = now.elapsed();
+        let timings = Timings::new(http_request, get_entries);
+
         Ok(HttpDirectory {
             entries,
             url: Arc::new(url.to_string()),
             request: Arc::new(client),
+            timings: Arc::new(timings),
         })
     }
 
@@ -61,9 +86,15 @@ impl HttpDirectory {
     pub async fn cd(mut self, dir: &str) -> Result<Self, HttpDirError> {
         let url = join_url(&self.url, dir)?;
         debug!("cd is going to {url}");
+        let now = Instant::now();
         let response = self.request.get(&url).await?;
+        let http_request = now.elapsed();
+        let now = Instant::now();
         let entries = get_entries_from_body(&response.text().await?);
+        let get_entries = now.elapsed();
+        let timings = Timings::new(http_request, get_entries);
         self.entries = entries;
+        self.timings = Arc::new(timings);
         self.url = Arc::new(url);
         Ok(self)
     }
@@ -108,6 +139,7 @@ impl HttpDirectory {
             entries,
             url: Arc::clone(&self.url),
             request: Arc::clone(&self.request),
+            timings: Arc::clone(&self.timings),
         }
     }
 
@@ -193,11 +225,39 @@ impl HttpDirectory {
     pub fn get_url(&self) -> Arc<String> {
         self.url.clone()
     }
+
+    /// Returns the process time that the HTTP request in itself
+    /// took.
+    #[must_use]
+    pub fn http_request_time(&self) -> Duration {
+        self.timings.http_request
+    }
+
+    /// Returns the process time that the analyze of
+    /// the HTML retrieved content took
+    #[must_use]
+    pub fn get_entries_time(&self) -> Duration {
+        self.timings.get_entries
+    }
+
+    /// Returns the process time that the HTTP request in itself
+    /// took.
+    #[must_use]
+    pub fn total_time(&self) -> Duration {
+        self.timings.get_entries + self.timings.http_request
+    }
 }
 
 impl fmt::Display for HttpDirectory {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        writeln!(f, "{}", &self.url)?;
+        writeln!(
+            f,
+            "Processed '{}' in {:.2?} ({:.2?} + {:.2?})",
+            &self.url,
+            self.total_time(),
+            self.http_request_time(),
+            self.get_entries_time()
+        )?;
         for entry in &self.entries {
             writeln!(f, "{entry}")?;
         }
@@ -213,6 +273,7 @@ impl Default for HttpDirectory {
             entries: vec![],
             url: Arc::new(String::new()),
             request: Arc::new(Request::None),
+            timings: Arc::new(Timings::default()),
         }
     }
 }
@@ -326,7 +387,7 @@ mod tests {
         let output = format!("{httpdir}");
         assert_eq!(
             output,
-            r##"
+            r##"Processed '' in 0.00ns (0.00ns + 0.00ns)
 DIR          -  2025-01-26 12:54  dir1
 DIR          -  2025-02-16 13:37  test2
 DIR          -  2025-03-01 07:11  debian3
@@ -420,7 +481,7 @@ DIR          -  2025-01-02 12:32  entry4
         let output = format!("{httpdir}");
         assert_eq!(
             output,
-            r##"
+            r##"Processed '' in 0.00ns (0.00ns + 0.00ns)
 DIR          -                    ..
 DIR          -  2025-03-01 07:11  debian3
 FILE      123M  2024-12-08 08:22  debian4
@@ -447,7 +508,7 @@ DIR          -  2025-02-16 13:37  test2
         let output = format!("{httpdir}");
         assert_eq!(
             output,
-            r##"
+            r##"Processed '' in 0.00ns (0.00ns + 0.00ns)
 DIR          -                    ..
 DIR          -  2025-02-16 13:37  test2
 FILE      2345  2023-01-01 00:00  files2
@@ -479,7 +540,7 @@ DIR          -  2025-03-01 07:11  debian3
         let output = format!("{httpdir}");
         assert_eq!(
             output,
-            r##"
+            r##"Processed '' in 0.00ns (0.00ns + 0.00ns)
 DIR          -                    ..
 FILE       123  1987-10-09 04:37  file1
 FILE      2345  2023-01-01 00:00  files2
@@ -506,7 +567,7 @@ FILE       67K  2025-07-17 23:59  entry3
         let output = format!("{httpdir}");
         assert_eq!(
             output,
-            r##"
+            r##"Processed '' in 0.00ns (0.00ns + 0.00ns)
 DIR          -                    ..
 FILE       67K  2025-07-17 23:59  entry3
 DIR          -  2025-03-01 07:11  debian3
@@ -538,7 +599,7 @@ FILE       123  1987-10-09 04:37  file1
         let output = format!("{httpdir}");
         assert_eq!(
             output,
-            r##"
+            r##"Processed '' in 0.00ns (0.00ns + 0.00ns)
 DIR          -                    ..
 DIR          -  2025-01-26 12:54  dir1
 DIR          -  2025-02-16 13:37  test2
@@ -565,7 +626,7 @@ FILE      123M  2024-12-08 08:22  debian4
         let output = format!("{httpdir}");
         assert_eq!(
             output,
-            r##"
+            r##"Processed '' in 0.00ns (0.00ns + 0.00ns)
 DIR          -                    ..
 FILE      123M  2024-12-08 08:22  debian4
 FILE       67K  2025-07-17 23:59  entry3
