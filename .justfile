@@ -35,7 +35,7 @@ bump patch: check-typos
 
     # Building, testing and building doc to ensure one can build with these dependencies
     cargo build --release
-    cargo test --release
+    cargo test --release --features test-output,test-helpers
     cargo doc --no-deps
 
     # Generetaing a Software Bills of Materials in SPDX∘format (sorting will reduce the diff size and allow one to figure out what has really changed)
@@ -48,7 +48,7 @@ bump patch: check-typos
 
 # Runs tests for the project
 test:
-    cargo nextest run --features test-output
+    cargo nextest run --features test-output,test-helpers
     cargo t --doc
 
 # Creates the documentation and open it in a browser
@@ -69,12 +69,12 @@ publish: git-publish rust-publish
 
 # Runs a coverage test and open it's result in a web browser
 coverage:
-    cargo tarpaulin --frozen --exclude-files benches/*.rs -o Html
+    cargo tarpaulin --frozen --exclude-files benches/*.rs -o Html --features test-helpers
     open tarpaulin-report.html
 
 # Runs benches (use module name in benches/ as bench_name)
 bench bench_name='integration_bench':
-    cargo bench --bench {{bench_name}}
+    cargo bench --bench {{bench_name}} --features test-helpers
 
 # Check for typos
 check-typos:

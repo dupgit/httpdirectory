@@ -1,132 +1,128 @@
 extern crate httpdirectory;
-use httpdirectory::{httpdirectory::HttpDirectory, httpdirectoryentry::EntryType, httpdirectoryentry::assert_entry};
+use httpdirectory::{
+    httpdirectory::{HttpDirectory, get_entries_from_body},
+    httpdirectoryentry::{EntryType, HttpDirectoryEntry, assert_entry},
+};
 use httpmock::prelude::*;
 
-pub async fn run_debian_archive_trafficmanager_net() -> Result<(), Box<dyn std::error::Error>> {
-    // Start a lightweight mock server.
-    let server = MockServer::start();
-    let url = server.url("/debian");
-
-    let mock = server.mock(|when, then| {
-    when.path("/debian");
-    then.status(200).body(r##"
-        <!DOCTYPE html>
-        <html>
+const DEBIAN_ARCHIVE_TRAFFICMANAGER_NET_INPUT: &str = r##"
+<!DOCTYPE html>
+<html>
 	<head>
 		<title>debian</title>
 		<link rel="canonical" href="/debian/"  />
 		<meta charset="utf-8">
 		<meta name="color-scheme" content="light dark">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style nonce="1f96551d-4fda-4b07-9f80-f0a947c1a2ad">
-        * { padding: 0; margin: 0; box-sizing: border-box; }
+<style nonce="1f96551d-4fda-4b07-9f80-f0a947c1a2ad">
+* { padding: 0; margin: 0; box-sizing: border-box; }
 
-        body {
+body {
 	font-family: Inter, system-ui, sans-serif;
 	font-size: 16px;
 	text-rendering: optimizespeed;
 	background-color: #f3f6f7;
 	min-height: 100vh;
-        }
+}
 
-        img,
-        svg {
+img,
+svg {
 	vertical-align: middle;
 	z-index: 1;
-        }
+}
 
-        img {
+img {
 	max-width: 100%;
 	max-height: 100%;
 	border-radius: 5px;
-        }
+}
 
-        td img {
+td img {
 	max-width: 1.5em;
 	max-height: 2em;
 	object-fit: cover;
-        }
+}
 
-        body,
-        a,
-        svg,
-        .layout.current,
-        .layout.current svg,
-        .go-up {
+body,
+a,
+svg,
+.layout.current,
+.layout.current svg,
+.go-up {
 	color: #333;
 	text-decoration: none;
-        }
+}
 
-        #layout-list, #layout-grid {
+#layout-list, #layout-grid {
 	cursor: pointer;
-        }
+}
 
-        .wrapper {
+.wrapper {
 	max-width: 1200px;
 	margin-left: auto;
 	margin-right: auto;
-        }
+}
 
-        header,
-        .meta {
+header,
+.meta {
 	padding-left: 5%;
 	padding-right: 5%;
-        }
+}
 
-        td a {
+td a {
 	color: #006ed3;
 	text-decoration: none;
-        }
+}
 
-        td a:hover {
+td a:hover {
 	color: #0095e4;
-        }
+}
 
-        td a:visited {
+td a:visited {
 	color: #800080;
-        }
+}
 
-        td a:visited:hover {
+td a:visited:hover {
 	color: #b900b9;
-        }
+}
 
-        th:first-child,
-        td:first-child {
+th:first-child,
+td:first-child {
 	width: 5%;
-        }
+}
 
-        th:last-child,
-        td:last-child {
+th:last-child,
+td:last-child {
 	width: 5%;
-        }
+}
 
-        .size,
-        .timestamp {
+.size,
+.timestamp {
 	font-size: 14px;
-        }
+}
 
-        .grid .size {
+.grid .size {
 	font-size: 12px;
 	margin-top: .5em;
 	color: #496a84;
-        }
+}
 
-        header {
+header {
 	padding-top: 15px;
 	padding-bottom: 15px;
 	box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 10%);
-        }
+}
 
-        .breadcrumbs {
+.breadcrumbs {
 	text-transform: uppercase;
 	font-size: 10px;
 	letter-spacing: 1px;
 	color: #939393;
 	margin-bottom: 5px;
 	padding-left: 3px;
-        }
+}
 
-        h1 {
+h1 {
 	font-size: 20px;
 	font-family: Poppins, system-ui, sans-serif;
 	font-weight: normal;
@@ -134,68 +130,68 @@ pub async fn run_debian_archive_trafficmanager_net() -> Result<(), Box<dyn std::
 	overflow-x: hidden;
 	text-overflow: ellipsis;
 	color: #c5c5c5;
-        }
+}
 
-        h1 a,
-        th a {
+h1 a,
+th a {
 	color: #000;
-        }
+}
 
-        h1 a {
+h1 a {
 	padding: 0 3px;
 	margin: 0 1px;
-        }
+}
 
-        h1 a:hover {
+h1 a:hover {
 	background: #ffffc4;
-        }
+}
 
-        h1 a:first-child {
+h1 a:first-child {
 	margin: 0;
-        }
+}
 
-        header,
-        main {
+header,
+main {
 	background-color: white;
-        }
+}
 
-        main {
+main {
 	margin: 3em auto 0;
 	border-radius: 5px;
 	box-shadow: 0 2px 5px 1px rgb(0 0 0 / 5%);
-        }
+}
 
-        .meta {
+.meta {
 	display: flex;
 	gap: 1em;
 	font-size: 14px;
 	border-bottom: 1px solid #e5e9ea;
 	padding-top: 1em;
 	padding-bottom: 1em;
-        }
+}
 
-        #summary {
+#summary {
 	display: flex;
 	gap: 1em;
 	align-items: center;
 	margin-right: auto;
-        }
+}
 
-        .filter-container {
+.filter-container {
 	position: relative;
 	display: inline-block;
 	margin-left: 1em;
-        }
+}
 
-        #search-icon {
+#search-icon {
 	color: #777;
 	position: absolute;
 	height: 1em;
 	top: .6em;
 	left: .5em;
-        }
+}
 
-        #filter {
+#filter {
 	padding: .5em 1em .5em 2.5em;
 	border: none;
 	border: 1px solid #CCC;
@@ -204,35 +200,35 @@ pub async fn run_debian_archive_trafficmanager_net() -> Result<(), Box<dyn std::
 	position: relative;
 	z-index: 2;
 	background: none;
-        }
+}
 
-        .layout,
-        .layout svg {
+.layout,
+.layout svg {
 	color: #9a9a9a;
-        }
+}
 
-        table {
+table {
 	width: 100%;
 	border-collapse: collapse;
-        }
+}
 
-        tbody tr,
-        tbody tr a,
-        .entry a {
+tbody tr,
+tbody tr a,
+.entry a {
 	transition: all .15s;
-        }
+}
 
-        tbody tr:hover,
-        .grid .entry a:hover {
+tbody tr:hover,
+.grid .entry a:hover {
 	background-color: #f4f9fd;
-        }
+}
 
-        th,
-        td {
+th,
+td {
 	text-align: left;
-        }
+}
 
-        th {
+th {
 	position: sticky;
 	top: 0;
 	background: white;
@@ -242,55 +238,55 @@ pub async fn run_debian_archive_trafficmanager_net() -> Result<(), Box<dyn std::
 	font-size: 14px;
 	letter-spacing: 1px;
 	padding: .75em 0;
-        }
+}
 
-        td {
+td {
 	white-space: nowrap;
-        }
+}
 
-        td:nth-child(2) {
+td:nth-child(2) {
 	width: 75%;
-        }
+}
 
-        td:nth-child(2) a {
+td:nth-child(2) a {
 	padding: 1em 0;
 	display: block;
-        }
+}
 
-        td:nth-child(3),
-        th:nth-child(3) {
+td:nth-child(3),
+th:nth-child(3) {
 	padding: 0 20px 0 20px;
 	min-width: 150px;
-        }
+}
 
-        td .go-up {
+td .go-up {
 	text-transform: uppercase;
 	font-size: 12px;
 	font-weight: bold;
-        }
+}
 
-        .name,
-        .go-up {
+.name,
+.go-up {
 	word-break: break-all;
 	overflow-wrap: break-word;
 	white-space: pre-wrap;
-        }
+}
 
-        .listing .icon-tabler {
+.listing .icon-tabler {
 	color: #454545;
-        }
+}
 
-        .listing .icon-tabler-folder-filled {
+.listing .icon-tabler-folder-filled {
 	color: #ffb900 !important;
-        }
+}
 
-        .sizebar {
+.sizebar {
 	position: relative;
 	padding: 0.25rem 0.5rem;
 	display: flex;
-        }
+}
 
-        .sizebar-bar {
+.sizebar-bar {
 	background-color: #dbeeff;
 	position: absolute;
 	top: 0;
@@ -300,63 +296,63 @@ pub async fn run_debian_archive_trafficmanager_net() -> Result<(), Box<dyn std::
 	z-index: 0;
 	height: 100%;
 	pointer-events: none;
-        }
+}
 
-        .sizebar-text {
+.sizebar-text {
 	position: relative;
 	z-index: 1;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-        }
+}
 
-        .grid {
+.grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(16em, 1fr));
 	gap: 2px;
-        }
+}
 
-        .grid .entry {
+.grid .entry {
 	position: relative;
 	width: 100%;
-        }
+}
 
-        .grid .entry a {
+.grid .entry a {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	padding: 1.5em;
 	height: 100%;
-        }
+}
 
-        .grid .entry svg {
+.grid .entry svg {
 	width: 75px;
 	height: 75px;
-        }
+}
 
-        .grid .entry img {
+.grid .entry img {
 	max-height: 200px;
 	object-fit: cover;
-        }
+}
 
-        .grid .entry .name {
+.grid .entry .name {
 	margin-top: 1em;
-        }
+}
 
-        footer {
+footer {
 	padding: 40px 20px;
 	font-size: 12px;
 	text-align: center;
-        }
+}
 
-        .caddy-logo {
+.caddy-logo {
 	display: inline-block;
 	height: 2.5em;
 	margin: 0 auto;
-        }
+}
 
-        @media (max-width: 600px) {
+@media (max-width: 600px) {
 	.hideable {
 		display: none;
 	}
@@ -386,10 +382,10 @@ pub async fn run_debian_archive_trafficmanager_net() -> Result<(), Box<dyn std::
 	.grid .entry {
 		max-width: initial;
 	}
-        }
+}
 
 
-        @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
 	html {
 		background: black; /* overscroll */
 	}
@@ -483,11 +479,11 @@ pub async fn run_debian_archive_trafficmanager_net() -> Result<(), Box<dyn std::
 	#R circle {
 		stroke: #ccc !important;
 	}
-        }
+}
 
-        </style>
-        </head>
-        <body>
+</style>
+</head>
+<body>
 	<header>
 		<div class="wrapper">
 			<div class="breadcrumbs">Folder Path</div>
@@ -1089,17 +1085,11 @@ pub async fn run_debian_archive_trafficmanager_net() -> Result<(), Box<dyn std::
 			timeList.forEach(localizeDatetime);
 		</script>
 	</body>
-        </html>
-        "##);
-});
+</html>
+"##;
 
-    let httpdir = match HttpDirectory::new(&url).await {
-        Ok(httpdir) => httpdir,
-        Err(e) => panic!("{e}"),
-    };
-
-    assert_eq!(httpdir.len(), 15);
-    let entries = httpdir.entries();
+fn assert_debian_archive_trafficmanager_net_entries(entries: &Vec<HttpDirectoryEntry>) {
+    assert_eq!(entries.len(), 15);
 
     assert_entry(&entries[0], &EntryType::ParentDirectory, "..", 0, "0000-00-00 00:00");
     assert_entry(&entries[1], &EntryType::Directory, "dists/", 0, "2025-05-17 08:29");
@@ -1116,8 +1106,38 @@ pub async fn run_debian_archive_trafficmanager_net() -> Result<(), Box<dyn std::
     assert_entry(&entries[12], &EntryType::File, "README.html", 2867, "2025-05-17 08:29");
     assert_entry(&entries[13], &EntryType::File, "README.mirrors.html", 291, "2017-03-04 20:08");
     assert_entry(&entries[14], &EntryType::File, "README.mirrors.txt", 86, "2017-03-04 20:08");
+}
+
+#[allow(dead_code)]
+pub async fn mock_debian_archive_trafficmanager_net() -> Result<(), Box<dyn std::error::Error>> {
+    // Start a lightweight mock server.
+    let server = MockServer::start();
+    let url = server.url("/debian");
+
+    let mock = server.mock(|when, then| {
+        when.path("/debian");
+        then.status(200).body(DEBIAN_ARCHIVE_TRAFFICMANAGER_NET_INPUT);
+    });
+
+    let httpdir = match HttpDirectory::new(&url).await {
+        Ok(httpdir) => httpdir,
+        Err(e) => panic!("{e}"),
+    };
+
+    let entries = httpdir.entries();
+    assert_debian_archive_trafficmanager_net_entries(entries);
 
     mock.assert();
+
+    Ok(())
+}
+
+#[allow(dead_code)]
+pub fn run_debian_archive_trafficmanager_net() -> Result<(), Box<dyn std::error::Error>> {
+    let body = DEBIAN_ARCHIVE_TRAFFICMANAGER_NET_INPUT;
+    let entries = get_entries_from_body(body);
+
+    assert_debian_archive_trafficmanager_net_entries(&entries);
 
     Ok(())
 }

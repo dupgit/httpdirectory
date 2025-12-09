@@ -46,47 +46,57 @@ async fn test_empty_404_status() {
 /// Tests <table> tag
 #[tokio::test]
 pub async fn test_debian_example() {
-    common::table::run_debian_example().await.unreachable();
+    common::table::run_debian_example().unreachable();
+    common::table::mock_debian_example().await.unreachable();
 }
 
 /// Tests <table> tag with another format
 #[tokio::test]
 async fn test_old_bsd_example() {
-    common::table::run_old_bsd_example().await.unreachable();
+    common::table::run_first_old_bsd_example().unreachable();
+    common::table::run_second_old_bsd_example().unreachable();
+    common::table::mock_old_bsd_example().await.unreachable();
 }
 
 /// Tests <pre> tag with other formatted columns
 #[tokio::test]
 async fn test_bsd_example() {
-    common::pre::run_bsd_example().await.unreachable();
+    common::pre::run_bsd_example().unreachable();
+    common::pre::mock_bsd_example().await.unreachable();
 }
 
 #[tokio::test]
 async fn test_pre_img_example() {
-    common::pre::run_pre_img_example().await.unreachable();
+    common::pre::run_pre_img_example().unreachable();
+    common::pre::mock_pre_img_example().await.unreachable();
 }
 
 #[tokio::test]
 async fn test_debian_archive_trafficmanager_net() {
-    common::traffic_manager::run_debian_archive_trafficmanager_net().await.unreachable();
+    common::traffic_manager::run_debian_archive_trafficmanager_net().unreachable();
+    common::traffic_manager::mock_debian_archive_trafficmanager_net().await.unreachable();
 }
 
 #[tokio::test]
 async fn test_debian_h5ai() {
-    common::h5ai::run_debian_h5ai().await.unreachable();
+    common::h5ai::run_debian_h5ai().unreachable();
+    common::h5ai::mock_debian_h5ai().await.unreachable();
 }
 
 #[tokio::test]
 async fn test_debian_ul() {
-    common::ul::run_debian_ul().await.unreachable();
+    common::ul::run_debian_ul().unreachable();
+    common::ul::mock_debian_ul().await.unreachable();
 }
 
 #[tokio::test]
 async fn test_debian_snt() {
-    common::snt::run_debian_snt().await.unreachable();
+    common::snt::run_debian_snt().unreachable();
+    common::snt::mock_debian_snt().await.unreachable();
 }
 
 #[tokio::test]
 async fn test_self_miniserve() {
-    common::miniserve::run_self_miniserve().await.unreachable();
+    common::miniserve::run_self_miniserve().unreachable();
+    common::miniserve::mock_self_miniserve().await.unreachable();
 }

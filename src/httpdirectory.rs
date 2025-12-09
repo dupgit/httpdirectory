@@ -278,8 +278,7 @@ impl Default for HttpDirectory {
     }
 }
 
-#[cfg_attr(feature = "hotpath", hotpath::measure)]
-fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
+fn entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
     match scrape_body(body) {
         Ok(entries) => entries,
         Err(e) => {
@@ -287,6 +286,17 @@ fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
             vec![]
         }
     }
+}
+
+#[cfg(any(test, feature = "test-helpers"))]
+pub fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
+    entries_from_body(body)
+}
+
+#[cfg(not(any(test, feature = "test-helpers")))]
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
+pub(crate) fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
+    entries_from_body(body)
 }
 
 #[cfg(test)]

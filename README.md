@@ -81,3 +81,19 @@ You can see some examples in the example directory:
 - [debug me](https://github.com/dupgit/httpdirectory/tree/master/examples/debug_me.rs) that is used in debugging
   sessions to try to improve the program by being able to interpret
   more websites
+
+
+## Features
+
+Two features have been introduced to ease tests:
+- `test-output` that allows to print the test output when it fails
+- `test-helpers` that changes `get_entries_from_body()` function into a public
+  one for tests only. Not using this feature for test will fail all tests.
+
+Use those features either with `cargo t --features test-helpers,test-output` or 
+`just t`. This also applies to benchmarking: use `cargo bench --features test-helpers` 
+or `just b`
+
+One feature is here to help tracking execution time of some annotated functions. Use
+it on examples either directly `cargo r --release --example debug_me --features=hotpath`
+or `just example debug_me`

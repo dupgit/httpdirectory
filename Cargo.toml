@@ -29,6 +29,7 @@ hotpath = ["dep:hotpath", "hotpath/hotpath"]
 hotpath-alloc = ["hotpath/hotpath-alloc"]
 hotpath-off = ["hotpath/hotpath-off"]
 test-output = []
+test-helpers = []
 
 [dev-dependencies]
 httpmock = "0.8.1"
