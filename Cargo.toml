@@ -18,7 +18,7 @@ env_logger = "0.11.8"
 log = "0.4.27"
 regex = "1.11.1"
 reqwest = { version = "0.12.15", features = ["charset"] }
-scraper = "0.24.0"
+scraper = "0.25.0"
 tokio = { version = "1.44.2", features = ["macros", "rt-multi-thread"] }
 url = "2.5.4"
 hotpath = { version = "0.9.0", optional = true }
@@ -32,7 +32,7 @@ test-helpers = []
 
 [dev-dependencies]
 httpmock = "0.8.1"
-criterion = { version = "0.7", features = ["html_reports"] }
+criterion = { version = "0.8", features = ["html_reports"] }
 
 [[bench]]
 name = "filtering_bench"
