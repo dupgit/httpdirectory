@@ -1,3 +1,9 @@
+0.17.2
+  * benches and hotpath features to ease performance measurements
+  * updates hotpath to 0.9.0
+  * Simplify simple regex by using simple comparison tests (x100 speedup)
+  * Using UnwrapUnreachable trait
+
 0.17.1
   * Removes lazy_static in favor of std::sync::LazyLock
   * Simplify Regex for h5ai
