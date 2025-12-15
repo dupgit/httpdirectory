@@ -6,10 +6,12 @@ mod common {
     include!("../tests/common/mod.rs");
 }
 
+const MEASUREMENT_TIME: u64 = 5;
+
 fn benchmark_debian_table_examples(c: &mut Criterion) {
     let rt = Runtime::new().expect("Failed to create runtime");
     let mut group = c.benchmark_group("table");
-    group.measurement_time(Duration::from_secs(10));
+    group.measurement_time(Duration::from_secs(MEASUREMENT_TIME));
 
     group.bench_function("debian_example", |b| {
         b.iter(|| {
@@ -59,7 +61,7 @@ fn benchmark_debian_table_examples(c: &mut Criterion) {
 fn benchmark_debian_pre_examples(c: &mut Criterion) {
     let rt = Runtime::new().expect("Failed to create runtime");
     let mut group = c.benchmark_group("pre");
-    group.measurement_time(Duration::from_secs(10));
+    group.measurement_time(Duration::from_secs(MEASUREMENT_TIME));
 
     group.bench_function("bsd_example", |b| {
         b.iter(|| {
@@ -87,7 +89,7 @@ fn benchmark_debian_pre_examples(c: &mut Criterion) {
 fn benchmark_debian_h5ai_example(c: &mut Criterion) {
     let rt = Runtime::new().expect("Failed to create runtime");
     let mut group = c.benchmark_group("h5ai");
-    group.measurement_time(Duration::from_secs(10));
+    group.measurement_time(Duration::from_secs(MEASUREMENT_TIME));
 
     group.bench_function("debian_h5ai", |b| {
         b.iter(|| {
@@ -104,7 +106,7 @@ fn benchmark_debian_h5ai_example(c: &mut Criterion) {
 fn benchmark_self_miniserve(c: &mut Criterion) {
     let rt = Runtime::new().expect("Failed to create runtime");
     let mut group = c.benchmark_group("miniserve");
-    group.measurement_time(Duration::from_secs(10));
+    group.measurement_time(Duration::from_secs(MEASUREMENT_TIME));
 
     group.bench_function("self_miniserve", |b| {
         b.iter(|| {
@@ -121,7 +123,7 @@ fn benchmark_self_miniserve(c: &mut Criterion) {
 fn benchmark_debian_snt(c: &mut Criterion) {
     let rt = Runtime::new().expect("Failed to create runtime");
     let mut group = c.benchmark_group("snt");
-    group.measurement_time(Duration::from_secs(10));
+    group.measurement_time(Duration::from_secs(MEASUREMENT_TIME));
 
     group.bench_function("debian_snt", |b| {
         b.iter(|| {
@@ -138,7 +140,7 @@ fn benchmark_debian_snt(c: &mut Criterion) {
 fn benchmark_debian_ul(c: &mut Criterion) {
     let rt = Runtime::new().expect("Failed to create runtime");
     let mut group = c.benchmark_group("ul");
-    group.measurement_time(Duration::from_secs(10));
+    group.measurement_time(Duration::from_secs(MEASUREMENT_TIME));
 
     group.bench_function("debian_ul", |b| {
         b.iter(|| {
