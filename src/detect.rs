@@ -51,7 +51,11 @@ fn detect_table(body: &str) -> bool {
 
 #[cfg_attr(feature = "hotpath", hotpath::measure)]
 fn detect_h5ai(body: &str) -> Option<String> {
-    H5AI_RE.captures(body).map(|value| value[1].to_string())
+    if body.contains("powered by h5ai") {
+        H5AI_RE.captures(body).map(|value| value[1].to_string())
+    } else {
+        None
+    }
 }
 
 #[cfg_attr(feature = "hotpath", hotpath::measure)]
@@ -61,7 +65,11 @@ fn detect_snt(body: &str) -> bool {
 
 #[cfg_attr(feature = "hotpath", hotpath::measure)]
 fn detect_miniserve(body: &str) -> Option<String> {
-    MINISERVE_RE.captures(body).map(|value| value[1].to_string())
+    if body.contains(r#"<div class="version"><a href="https://github.com/svenstaro/miniserve">miniserve</a>/"#) {
+        MINISERVE_RE.captures(body).map(|value| value[1].to_string())
+    } else {
+        None
+    }
 }
 
 impl SiteType {

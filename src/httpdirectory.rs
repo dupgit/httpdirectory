@@ -89,9 +89,11 @@ impl HttpDirectory {
         let now = Instant::now();
         let response = self.request.get(&url).await?;
         let http_request = now.elapsed();
+
         let now = Instant::now();
         let entries = get_entries_from_body(&response.text().await?);
         let get_entries = now.elapsed();
+
         let timings = Timings::new(http_request, get_entries);
         self.entries = entries;
         self.timings = Arc::new(timings);
@@ -288,11 +290,14 @@ fn entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
     }
 }
 
+/// feature gated to be used only in tests - this method
+/// should not be public
 #[cfg(any(test, feature = "test-helpers"))]
 pub fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
     entries_from_body(body)
 }
 
+/// feature gated for production use
 #[cfg(not(any(test, feature = "test-helpers")))]
 #[cfg_attr(feature = "hotpath", hotpath::measure)]
 pub(crate) fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
