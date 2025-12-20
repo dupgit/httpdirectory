@@ -143,7 +143,7 @@ fn bench_filtering_methods(c: &mut Criterion) {
 
         let mut group = c.benchmark_group(format!("filtering_size_{}", size));
         if size >= 5000 {
-            group.measurement_time(Duration::new(10, 0));
+            group.measurement_time(Duration::new(5, 0));
         }
 
         group.bench_function("naive", |b| b.iter(|| black_box(directory.filtering_naive(files_only))));
