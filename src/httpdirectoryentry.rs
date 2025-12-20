@@ -184,6 +184,7 @@ impl fmt::Display for HttpDirectoryEntry {
 
 /// Helper Enum for tests. This is not intended to be used for
 /// any other usage than tests.
+#[cfg(any(test, feature = "test-helpers"))]
 #[derive(Debug)]
 pub enum EntryType {
     ParentDirectory,
@@ -195,6 +196,7 @@ pub enum EntryType {
 /// Helper function to assert a directory entry is what is expected
 /// This function is used for testing the library and not intended
 /// for any other usage. Compares the size with the apparent size.
+#[cfg(any(test, feature = "test-helpers"))]
 pub fn assert_entry(dir_entry: &HttpDirectoryEntry, entry_type: &EntryType, name: &str, size: usize, date_str: &str) {
     // Use `cargo test --features test-output -- --nocapture` to show outputs while testing
     #[cfg(feature = "test-output")]
