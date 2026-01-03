@@ -47,7 +47,7 @@ pub(crate) fn are_table_headers_present(table: ElementRef) -> bool {
 // it may be that this is in fact the name & link
 // column
 #[cfg_attr(feature = "hotpath", hotpath::measure)]
-pub(crate) fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
+pub(crate) fn scrape_table(body: &str) -> Vec<HttpDirectoryEntry> {
     let mut http_dir_entry = vec![];
 
     let html = Html::parse_document(body);
@@ -129,7 +129,7 @@ pub(crate) fn scrape_table(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDi
         }
     }
 
-    Ok(http_dir_entry)
+    http_dir_entry
 }
 
 // Tries to search in a <pre> formatted table that
@@ -332,7 +332,7 @@ pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> 
         SiteType::NotNamed(html) => match html {
             PureHtml::Table => {
                 info!("Body has <table> tag");
-                scrape_table(body)
+                Ok(scrape_table(body))
             }
             PureHtml::Pre => {
                 info!("Body has <pre> tag");

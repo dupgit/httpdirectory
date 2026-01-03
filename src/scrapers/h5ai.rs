@@ -16,7 +16,7 @@ pub(crate) fn scrape_h5ai(body: &str, _version: &str) -> Result<Vec<HttpDirector
 
     for node in html.select(&div_selector) {
         if let Some(table) = node.select(&table_selector).next() {
-            return scrape_table(&table.html());
+            return Ok(scrape_table(&table.html()));
         }
     }
     Ok(http_dir_entry)
