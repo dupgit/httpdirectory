@@ -41,16 +41,14 @@ impl Request {
             Ok(_) => {
                 trace!("Requesting '{url}'");
                 match self.client.get(url).send().await {
-                    Ok(response) => match response.status() {
-                        StatusCode::OK => Ok(response),
-                        _ => {
-                            error!("Error while retrieving url {url} content: {}", response.status());
-                            Err(HttpDirError::ContentError(format!(
-                                "Error while retrieving url {url} content: {}",
-                                response.status()
-                            )))
-                        }
-                    },
+                    Ok(response) if response.status() == StatusCode::OK => Ok(response),
+                    Ok(response) => {
+                        error!("Error while retrieving url {url} content: {}", response.status());
+                        Err(HttpDirError::ContentError(format!(
+                            "Error while retrieving url {url} content: {}",
+                            response.status()
+                        )))
+                    }
                     Err(e) => Err(HttpDirError::HttpError(e)),
                 }
             }
