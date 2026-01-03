@@ -181,8 +181,12 @@ impl HttpDirectory {
     #[must_use]
     pub fn stats(&self) -> Stats {
         let mut stats = Stats::new();
-        for e in self.entries() {
-            stats.count(e);
+        for entry in self.entries() {
+            match entry {
+                HttpDirectoryEntry::ParentDirectory(_) => stats.add_parent_directory(),
+                HttpDirectoryEntry::Directory(dir) => stats.add_directory(dir),
+                HttpDirectoryEntry::File(file) => stats.add_file(file),
+            };
         }
         stats
     }
@@ -310,6 +314,7 @@ mod tests {
         crate::{
             httpdirectory::Sorting,
             httpdirectoryentry::{EntryType, assert_entry},
+            stats::Stats,
         },
         unwrap_unreachable::UnwrapUnreachable,
     };
@@ -649,5 +654,99 @@ DIR          -  2025-01-02 12:32  entry4
         assert_eq!(stats.dirs, 4);
         assert_eq!(stats.files, 4);
         assert_eq!(stats.total_size, 129_045_924);
+    }
+
+    // Testing Stats
+
+    #[test]
+    fn test_stats_new() {
+        let stats = Stats::new();
+
+        assert_eq!(stats.parent_dir, 0);
+        assert_eq!(stats.dirs, 0);
+        assert_eq!(stats.files, 0);
+        assert_eq!(stats.total_size, 0);
+        assert_eq!(stats.with_date, 0);
+        assert_eq!(stats.total_size, 0);
+    }
+
+    #[test]
+    fn test_stats_count() {
+        let httpdirectoryentry = HttpDirectoryEntry::new("name", "2025-05-31 16:58", "-", "name/");
+        let mut httpdirectory = HttpDirectory::default();
+        httpdirectory.entries = vec![httpdirectoryentry];
+        let stats = httpdirectory.stats();
+
+        assert_eq!(stats.parent_dir, 0);
+        assert_eq!(stats.dirs, 1);
+        assert_eq!(stats.files, 0);
+        assert_eq!(stats.total_size, 0);
+        assert_eq!(stats.with_date, 1);
+        assert_eq!(stats.without_date, 0);
+
+        let httpdirectoryentry = HttpDirectoryEntry::new("name", "2025-05-31 16:58", "3.1K", "name/");
+        httpdirectory.entries.push(httpdirectoryentry);
+        let stats = httpdirectory.stats();
+
+        assert_eq!(stats.parent_dir, 0);
+        assert_eq!(stats.dirs, 1);
+        assert_eq!(stats.files, 1);
+        assert_eq!(stats.total_size, 3174);
+        assert_eq!(stats.with_date, 2);
+        assert_eq!(stats.without_date, 0);
+
+        let httpdirectoryentry = HttpDirectoryEntry::new("Parent Directory", "2025-05-31 16:58", "-", "../");
+        httpdirectory.entries.push(httpdirectoryentry);
+        let stats = httpdirectory.stats();
+
+        assert_eq!(stats.parent_dir, 1);
+        assert_eq!(stats.dirs, 1);
+        assert_eq!(stats.files, 1);
+        assert_eq!(stats.total_size, 3174);
+        assert_eq!(stats.with_date, 2);
+        assert_eq!(stats.without_date, 1);
+    }
+
+    #[test]
+    fn test_stats_output() {
+        let httpdirectoryentry = HttpDirectoryEntry::new("name", "2025-05-31 16:58", "3.1K", "name/");
+        let mut httpdirectory = HttpDirectory::default();
+        httpdirectory.entries = vec![httpdirectoryentry];
+        let stats = httpdirectory.stats();
+        let output = r##"Parent directory: 0
+Directories: 0
+Files: 1
+Total apparent file sizes: 3174
+Entries with dates: 1
+Entries without any date: 0
+"##;
+
+        assert_eq!(stats.to_string(), output);
+    }
+
+    #[test]
+    fn test_stats_count_no_date() {
+        let httpdirectoryentry = HttpDirectoryEntry::new("name", "", "-", "name/");
+        let mut httpdirectory = HttpDirectory::default();
+        httpdirectory.entries = vec![httpdirectoryentry];
+        let mut stats = httpdirectory.stats();
+
+        assert_eq!(stats.parent_dir, 0);
+        assert_eq!(stats.dirs, 1);
+        assert_eq!(stats.files, 0);
+        assert_eq!(stats.total_size, 0);
+        assert_eq!(stats.with_date, 0);
+        assert_eq!(stats.without_date, 1);
+
+        let httpdirectoryentry = HttpDirectoryEntry::new("name", "", "3.1K", "name/");
+        httpdirectory.entries.push(httpdirectoryentry);
+        stats = httpdirectory.stats();
+
+        assert_eq!(stats.parent_dir, 0);
+        assert_eq!(stats.dirs, 1);
+        assert_eq!(stats.files, 1);
+        assert_eq!(stats.total_size, 3174);
+        assert_eq!(stats.with_date, 0);
+        assert_eq!(stats.without_date, 2);
     }
 }
