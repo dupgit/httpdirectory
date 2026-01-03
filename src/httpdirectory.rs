@@ -77,8 +77,6 @@ impl HttpDirectory {
     /// # Errors
     ///
     /// Will return an error if:
-    /// - the request engine has not been selected (a default one should
-    ///   have been selected for you)
     /// - an error occurred while trying to retrieve data from the new
     ///   directory
     /// - the web server did not respond with 200 HTTP status code
@@ -269,12 +267,13 @@ impl fmt::Display for HttpDirectory {
 
 impl Default for HttpDirectory {
     /// Returns an `HttpDirectory` initialized with default
-    /// values (empty vector, empty url and no `HttpEngine`)
+    /// values (empty vector, empty url and defaults Request
+    /// and Timings)
     fn default() -> Self {
         HttpDirectory {
             entries: vec![],
             url: Arc::new(String::new()),
-            request: Arc::new(Request::None),
+            request: Arc::new(Request::default()),
             timings: Arc::new(Timings::default()),
         }
     }
@@ -307,27 +306,13 @@ pub(crate) fn get_entries_from_body(body: &str) -> Vec<HttpDirectoryEntry> {
 #[cfg(test)]
 mod tests {
     use {
-        super::{HttpDirectory, HttpDirectoryEntry, Request},
+        super::{HttpDirectory, HttpDirectoryEntry},
         crate::{
             httpdirectory::Sorting,
             httpdirectoryentry::{EntryType, assert_entry},
         },
-        std::sync::Arc,
         unwrap_unreachable::UnwrapUnreachable,
     };
-
-    #[test]
-    fn test_httpdirectory_default() {
-        let httpdir = HttpDirectory::default();
-        assert!(httpdir.is_empty());
-        assert_eq!(httpdir.url, Arc::new("".to_string()));
-
-        match Arc::into_inner(httpdir.request) {
-            Some(Request::Reqwest(request)) => panic!("{request:?} should be None"),
-            Some(Request::None) => (),
-            None => panic!("Arc should return Some(Request::None) and not None"),
-        }
-    }
 
     #[tokio::test]
     async fn test_httpdirectory_no_base_url() {
