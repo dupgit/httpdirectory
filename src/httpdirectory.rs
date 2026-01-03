@@ -184,8 +184,8 @@ impl HttpDirectory {
         for entry in self.entries() {
             match entry {
                 HttpDirectoryEntry::ParentDirectory(_) => stats.add_parent_directory(),
-                HttpDirectoryEntry::Directory(dir) => stats.add_directory(dir),
-                HttpDirectoryEntry::File(file) => stats.add_file(file),
+                HttpDirectoryEntry::Directory(dir) => stats.add_directory(dir.date()),
+                HttpDirectoryEntry::File(file) => stats.add_file(file.date(), file.size()),
             };
         }
         stats

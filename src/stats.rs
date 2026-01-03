@@ -1,4 +1,4 @@
-use crate::entry::Entry;
+use chrono::NaiveDateTime;
 use std::fmt;
 
 /// Gives statistics about an `HttpDirectoryEntry`
@@ -34,19 +34,19 @@ impl Stats {
         self
     }
 
-    pub(crate) fn add_directory(&mut self, dir: &Entry) -> &Self {
+    pub(crate) fn add_directory(&mut self, dir_date: Option<NaiveDateTime>) -> &Self {
         self.dirs += 1;
-        match dir.date() {
+        match dir_date {
             Some(_) => self.with_date += 1,
             None => self.without_date += 1,
         }
         self
     }
 
-    pub(crate) fn add_file(&mut self, file: &Entry) -> &Self {
+    pub(crate) fn add_file(&mut self, file_date: Option<NaiveDateTime>, file_size: usize) -> &Self {
         self.files += 1;
-        self.total_size += file.size() as u64;
-        match file.date() {
+        self.total_size += file_size as u64;
+        match file_date {
             Some(_) => self.with_date += 1,
             None => self.without_date += 1,
         }
