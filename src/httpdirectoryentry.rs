@@ -1,9 +1,9 @@
 use crate::entry::Entry;
 use chrono::NaiveDateTime;
-use log::trace;
 use regex::Regex;
 use std::cmp::Ordering;
 use std::fmt;
+use tracing::trace;
 
 /// `HttpDirectoryEntry` represents either the `ParentDirectory`,
 /// a `Directory` or a `File` that have a name, link, date and size

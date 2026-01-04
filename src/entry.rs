@@ -1,8 +1,8 @@
 use chrono::NaiveDateTime;
-use log::{error, trace};
 use regex::Regex;
 use std::sync::LazyLock;
 use std::{cmp::Ordering, fmt};
+use tracing::{error, trace};
 use unwrap_unreachable::UnwrapUnreachable;
 
 /// Defines an Entry for a file or a directory

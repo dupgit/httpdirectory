@@ -3,12 +3,12 @@ use crate::httpdirectoryentry::{CompareField, HttpDirectoryEntry};
 use crate::requests::Request;
 use crate::scrape::scrape_body;
 use crate::stats::Stats;
-use log::{debug, error, trace};
 use regex::Regex;
 use reqwest::Url;
 use std::fmt;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
+use tracing::{debug, error, trace};
 
 /// Main structure that provides methods to access, parse a directory
 /// webpage and fill that structure.

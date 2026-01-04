@@ -4,8 +4,8 @@ use crate::{
     httpdirectoryentry::HttpDirectoryEntry,
     scrapers::{h5ai::scrape_h5ai, miniserve::scrape_miniserve, snt::scrape_snt, ul::scrape_ul},
 };
-use log::{debug, info, trace, warn};
 use scraper::{ElementRef, Html, Selector};
+use tracing::{debug, info, trace, warn};
 use unwrap_unreachable::UnwrapUnreachable;
 
 // @todo: add some validation statistics to decide if

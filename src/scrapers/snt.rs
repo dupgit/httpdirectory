@@ -1,6 +1,6 @@
 use crate::{error::HttpDirError, httpdirectoryentry::HttpDirectoryEntry, scrape::scrape_table};
-use log::trace;
 use scraper::{Html, Selector};
+use tracing::trace;
 
 #[cfg_attr(feature = "hotpath", hotpath::measure)]
 pub(crate) fn scrape_snt(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {

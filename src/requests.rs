@@ -1,7 +1,7 @@
 use crate::HTTPDIR_USER_AGENT;
 use crate::error::HttpDirError;
-use log::{error, trace};
 use reqwest::{Client, Response, StatusCode};
+use tracing::{error, trace};
 
 #[derive(Debug, Default)]
 pub(crate) struct Request {

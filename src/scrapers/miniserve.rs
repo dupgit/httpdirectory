@@ -3,8 +3,8 @@ use crate::{
     httpdirectoryentry::HttpDirectoryEntry,
     scrape::{are_table_headers_present, remove_empty_cell},
 };
-use log::trace;
 use scraper::{ElementRef, Html, Selector};
+use tracing::trace;
 
 #[cfg_attr(feature = "hotpath", hotpath::measure)]
 pub(crate) fn scrape_miniserve(body: &str, _version: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
