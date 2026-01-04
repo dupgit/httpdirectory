@@ -4,11 +4,12 @@ default:
 
 name := "httpdirectory"
 
-# Alias definitions
+# Alias definitions for humans
 
 alias t := test
 alias d := document
 alias c := coverage
+alias ct := check-typos
 alias p := publish
 alias e := example
 alias b := bench
