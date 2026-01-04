@@ -145,6 +145,43 @@ fn capture_size_and_unit(size: &str) -> Option<(String, usize)> {
     }
 }
 
+// new_size must contain a number with a dot ie: 423.3
+// real_size contains the value of a modifier: k or Kib stands for 1024 bytes
+// see capture_size_and_unit() function above.
+#[allow(clippy::cast_sign_loss)]
+#[allow(clippy::cast_possible_truncation)]
+fn parse_float_to_usize(new_size: &str, real_size: usize) -> usize {
+    match new_size.parse::<f64>() {
+        Ok(number) => {
+            if number.signum().is_finite()
+                && number < 18_446_744_073_709_551_615.0
+                && number > -18_446_744_073_709_551_615.0
+            {
+                // number is not Nan nor ∞
+                // We know that .abs() will return a positive value
+                // if number is greater than `usize::MAX` then number
+                // is truncated to usize::MAX
+                return real_size * ((number.abs() * 10.0) as usize) / 10;
+            }
+            0
+        }
+        Err(e) => {
+            error!("error parsing '{new_size}' into usize: {e}");
+            0
+        }
+    }
+}
+
+fn parse_to_usize(new_size: &str, real_size: usize) -> usize {
+    match new_size.parse::<usize>() {
+        Ok(number) => real_size * number,
+        Err(e) => {
+            error!("error parsing '{new_size}' into usize: {e}");
+            0
+        }
+    }
+}
+
 /// Returns the apparent size as a usize number.
 /// It is not an accurate size as 42K results in
 /// 42 * 1024 = 43008 (the real size in bytes may
@@ -152,55 +189,33 @@ fn capture_size_and_unit(size: &str) -> Option<(String, usize)> {
 /// In case the size is greater than `usize::MAX`
 /// it may be truncated to that value
 #[must_use]
-#[allow(clippy::cast_sign_loss)]
-#[allow(clippy::cast_possible_truncation)]
 #[cfg_attr(feature = "hotpath", hotpath::measure)]
 pub fn apparent_size(size: &str) -> usize {
+    // Shortly determine if size is from a directory
+    if size.contains('-') {
+        return 0;
+    }
+
     let real_size: usize;
     let new_size: String;
-    let my_size = size.to_lowercase();
 
-    if my_size.contains('-') {
-        // Directory
-        return 0;
-    } else if let Some((captured_size, captured_modifier)) = capture_size_and_unit(&my_size) {
-        trace!("Detected size: {captured_size}, modifier: {captured_modifier}");
-        real_size = captured_modifier;
-        new_size = captured_size;
-    } else {
-        return 0;
+    match capture_size_and_unit(&size.to_lowercase()) {
+        Some((captured_size, captured_modifier)) => {
+            trace!("Detected size: {captured_size}, modifier: {captured_modifier}");
+            real_size = captured_modifier;
+            new_size = captured_size.trim().to_string();
+        }
+        None => {
+            return 0;
+        }
     }
 
-    let new_size = new_size.trim();
     if new_size.contains('.') {
-        match new_size.parse::<f64>() {
-            Ok(number) => {
-                if number.signum().is_finite()
-                    && number < 18_446_744_073_709_551_615.0
-                    && number > -18_446_744_073_709_551_615.0
-                {
-                    // number is not Nan nor ∞
-                    // We know that .abs() will return a positive value
-                    // if number is greater than `usize::MAX` then number
-                    // is truncated to usize::MAX
-                    return real_size * ((number.abs() * 10.0) as usize) / 10;
-                }
-                return 0;
-            }
-            Err(e) => {
-                error!("error parsing '{new_size}' into usize: {e}");
-                return 0;
-            }
-        }
+        return parse_float_to_usize(&new_size, real_size);
     } else if !new_size.is_empty() {
-        match new_size.parse::<usize>() {
-            Ok(number) => return real_size * number,
-            Err(e) => {
-                error!("error parsing '{new_size}' into usize: {e}");
-                return 0;
-            }
-        }
+        return parse_to_usize(&new_size, real_size);
     }
+
     0
 }
 
