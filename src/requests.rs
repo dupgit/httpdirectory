@@ -63,3 +63,24 @@ impl Request {
 pub fn join_url(base: &str, dir: &str) -> Result<String, HttpDirError> {
     Ok(Url::parse(base)?.join(dir)?.to_string())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_bad_url() {
+        match Request::new() {
+            Ok(client) => assert!(client.get("this_is_not_a valid_url").await.is_err()),
+            Err(e) => panic!("This test failed: {e}"),
+        }
+    }
+
+    #[tokio::test]
+    async fn test_url_does_not_exists() {
+        match Request::new() {
+            Ok(client) => assert!(client.get("https://this-does-not-exists.org/").await.is_err()),
+            Err(e) => panic!("This test failed: {e}"),
+        }
+    }
+}
