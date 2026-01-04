@@ -15,10 +15,13 @@ alias b := bench
 
 # Installs all cargo tools to build a release or test coverage
 install-dev-tools:
-    cargo install cargo-release cargo-sbom cargo-tarpaulin cargo-nextest typos-cli
+    cargo install cargo-release cargo-sbom cargo-tarpaulin cargo-nextest typos-cli conventional_commits_linter
 
 # Bumps {patch} (major, minor or patch) version number and does a release
 bump patch: check-typos
+    # Linting commits from latest tag
+    conventional_commits_linter --max-commit-title-length 75 $(git rev-list --tags --max-count=1)
+
     # Verifying that the MSRV is still Ok.
     cargo msrv verify
 
