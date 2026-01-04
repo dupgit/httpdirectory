@@ -18,8 +18,6 @@ pub enum HttpDirError {
     /// Parsing error when manipulating urls (`cd()` method
     /// does manipulates url for instance)
     ParseError(url::ParseError),
-
-    ScrapeError(String),
 }
 
 impl fmt::Display for HttpDirError {
@@ -29,7 +27,6 @@ impl fmt::Display for HttpDirError {
             HttpDirError::ContentError(e) => write!(f, "Error: {e}"),
             HttpDirError::Regex(e) => write!(f, "Error: {e}"),
             HttpDirError::ParseError(e) => write!(f, "Error: {e}"),
-            HttpDirError::ScrapeError(e) => write!(f, "{e}"),
         }
     }
 }
