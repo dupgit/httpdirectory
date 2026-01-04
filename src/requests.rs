@@ -4,7 +4,7 @@ use log::{error, trace};
 use reqwest::{Client, Response, StatusCode, Url};
 
 #[derive(Debug, Default)]
-pub struct Request {
+pub(crate) struct Request {
     client: Client,
 }
 
@@ -60,7 +60,7 @@ impl Request {
     }
 }
 
-pub fn join_url(base: &str, dir: &str) -> Result<String, HttpDirError> {
+pub(crate) fn join_url(base: &str, dir: &str) -> Result<String, HttpDirError> {
     Ok(Url::parse(base)?.join(dir)?.to_string())
 }
 
