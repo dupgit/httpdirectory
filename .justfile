@@ -10,6 +10,7 @@ alias t := test
 alias d := document
 alias c := coverage
 alias ct := check-typos
+alias cc := check-commits
 alias p := publish
 alias e := example
 alias b := bench
@@ -18,11 +19,12 @@ alias b := bench
 install-dev-tools:
     cargo install cargo-release cargo-sbom cargo-tarpaulin cargo-nextest typos-cli conventional_commits_linter
 
-# Bumps {patch} (major, minor or patch) version number and does a release
-bump patch: check-typos
-    # Linting commits from latest tag
+# Linting commits from latest tag
+check-commits:
     conventional_commits_linter --max-commit-title-length 75 $(git rev-list --tags --max-count=1)
 
+# Bumps {patch} (major, minor or patch) version number and does a release
+bump patch: check-typos check-commits
     # Verifying that the MSRV is still Ok.
     cargo msrv verify
 
@@ -61,7 +63,7 @@ document:
     cargo doc --no-deps --open
 
 # Publishing in the git repository (with tags)
-git-publish:
+git-publish: check-commits
     git push
     git push --tags
 
