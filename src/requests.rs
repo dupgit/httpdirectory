@@ -1,7 +1,7 @@
 use crate::HTTPDIR_USER_AGENT;
 use crate::error::HttpDirError;
 use log::{error, trace};
-use reqwest::{Client, Response, StatusCode, Url};
+use reqwest::{Client, Response, StatusCode};
 
 #[derive(Debug, Default)]
 pub(crate) struct Request {
@@ -58,10 +58,6 @@ impl Request {
             }
         }
     }
-}
-
-pub(crate) fn join_url(base: &str, dir: &str) -> Result<String, HttpDirError> {
-    Ok(Url::parse(base)?.join(dir)?.to_string())
 }
 
 #[cfg(test)]

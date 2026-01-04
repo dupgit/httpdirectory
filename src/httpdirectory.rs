@@ -1,10 +1,11 @@
 use crate::error::HttpDirError;
 use crate::httpdirectoryentry::{CompareField, HttpDirectoryEntry};
-use crate::requests::{Request, join_url};
+use crate::requests::Request;
 use crate::scrape::scrape_body;
 use crate::stats::Stats;
 use log::{debug, error, trace};
 use regex::Regex;
+use reqwest::Url;
 use std::fmt;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
@@ -77,7 +78,7 @@ impl HttpDirectory {
     /// - the web server did not respond with 200 HTTP status code
     #[cfg_attr(feature = "hotpath", hotpath::measure)]
     pub async fn cd(mut self, dir: &str) -> Result<Self, HttpDirError> {
-        let url = join_url(&self.url, dir)?;
+        let url = Url::parse(&self.url)?.join(dir)?.to_string();
         debug!("cd is going to {url}");
         let now = Instant::now();
         let response = self.request.get(&url).await?;
