@@ -73,7 +73,7 @@ pub async fn mock_debian_ul() -> Result<(), Box<dyn std::error::Error>> {
         then.status(200).body(DEBIAN_UL_INPUT);
     });
 
-    let httpdir = match HttpDirectory::new(&url).await {
+    let httpdir = match HttpDirectory::new(&url, None).await {
         Ok(httpdir) => httpdir,
         Err(e) => panic!("{e}"),
     };

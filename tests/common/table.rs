@@ -172,7 +172,7 @@ pub async fn mock_debian_example() -> Result<(), Box<dyn std::error::Error>> {
         then.status(200).body(DEBIAN_EXAMPLE_INPUT);
     });
 
-    let httpdir = match HttpDirectory::new(&url).await {
+    let httpdir = match HttpDirectory::new(&url, None).await {
         Ok(httpdir) => httpdir,
         Err(e) => panic!("{e}"),
     };
@@ -362,7 +362,7 @@ pub async fn mock_old_bsd_example() -> Result<(), Box<dyn std::error::Error>> {
         then.status(200).body(FIRST_OLD_BSD_EXAMPLE_INPUT);
     });
 
-    let httpdir = match HttpDirectory::new(url).await {
+    let httpdir = match HttpDirectory::new(url, None).await {
         Ok(httpdir) => httpdir,
         Err(e) => panic!("{e}"),
     };

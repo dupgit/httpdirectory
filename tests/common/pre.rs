@@ -70,7 +70,7 @@ pub async fn mock_bsd_example() -> Result<(), Box<dyn std::error::Error>> {
         then.status(200).body(BSD_EXAMPLE_INPUT);
     });
 
-    let httpdir = match HttpDirectory::new(&url).await {
+    let httpdir = match HttpDirectory::new(&url, None).await {
         Ok(httpdir) => httpdir,
         Err(e) => panic!("{e}"),
     };
@@ -261,7 +261,7 @@ pub async fn mock_pre_img_example() -> Result<(), Box<dyn std::error::Error>> {
         then.status(200).body(PRE_IMG_EXAMPLE_INPUT);
     });
 
-    let httpdir = match HttpDirectory::new(&url).await {
+    let httpdir = match HttpDirectory::new(&url, None).await {
         Ok(httpdir) => httpdir,
         Err(e) => panic!("{e}"),
     };

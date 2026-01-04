@@ -105,7 +105,7 @@ pub async fn mock_self_miniserve() -> Result<(), Box<dyn std::error::Error>> {
         then.status(200).body(SELF_MINISERVE_INPUT);
     });
 
-    let httpdir = match HttpDirectory::new(&url).await {
+    let httpdir = match HttpDirectory::new(&url, None).await {
         Ok(httpdir) => httpdir,
         Err(e) => panic!("{e}"),
     };

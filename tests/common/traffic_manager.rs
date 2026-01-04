@@ -1119,7 +1119,7 @@ pub async fn mock_debian_archive_trafficmanager_net() -> Result<(), Box<dyn std:
         then.status(200).body(DEBIAN_ARCHIVE_TRAFFICMANAGER_NET_INPUT);
     });
 
-    let httpdir = match HttpDirectory::new(&url).await {
+    let httpdir = match HttpDirectory::new(&url, None).await {
         Ok(httpdir) => httpdir,
         Err(e) => panic!("{e}"),
     };

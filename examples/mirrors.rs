@@ -63,13 +63,13 @@ async fn main() {
 
     // spawning tasks
     // Limit to 16 tasks at a time
-    let semaphore = Arc::new(Semaphore::new(16));
+    let semaphore = Arc::new(Semaphore::new(32));
 
     for url in urls {
         let semaphore = semaphore.clone();
         tasks.spawn(async move {
             let _permit = semaphore.acquire().await.expect("Semaphore closed prematurely");
-            HttpDirectory::new(&url).await
+            HttpDirectory::new(&url, Some(30)).await
         });
     }
 

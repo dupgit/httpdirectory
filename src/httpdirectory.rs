@@ -39,7 +39,9 @@ impl Timings {
 // @todo: ? implement an iterator ?
 impl HttpDirectory {
     /// Crawls the `url` and returns (if no error occurred) the
-    /// `HttpDirectory` of that url
+    /// `HttpDirectory` of that url. `timeout_s` optionally defines
+    /// a global request timeout in seconds. `None` is no timeout
+    /// at all.
     ///
     /// # Errors
     ///
@@ -47,9 +49,9 @@ impl HttpDirectory {
     /// or that the request to the url did not return correctly
     /// with a 200 HTTP status code
     #[cfg_attr(feature = "hotpath", hotpath::measure)]
-    pub async fn new(url: &str) -> Result<Self, HttpDirError> {
+    pub async fn new(url: &str, timeout_s: Option<u64>) -> Result<Self, HttpDirError> {
         let now = Instant::now();
-        let client = Request::new()?;
+        let client = Request::new(timeout_s)?;
         let response = client.get(url).await?;
         let http_request = now.elapsed();
         trace!("Response to get '{url}': {response:?}");

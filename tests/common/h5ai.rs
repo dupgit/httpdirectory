@@ -162,7 +162,7 @@ pub async fn mock_debian_h5ai() -> Result<(), Box<dyn std::error::Error>> {
         then.status(200).body(DEBIAN_H5AI_INPUT);
     });
 
-    let httpdir = match HttpDirectory::new(&url).await {
+    let httpdir = match HttpDirectory::new(&url, None).await {
         Ok(httpdir) => httpdir,
         Err(e) => panic!("{e}"),
     };
