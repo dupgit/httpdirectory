@@ -1,8 +1,8 @@
 # *httpdirectory*'s readme
 
-This project is in an early stage of development but is already
-correct on many websites: the ~400 debian mirrors I could join
-were correctly interpreted
+This project can interpret correctly roughly 400 debian mirrors in
+the wild. It has a coverage percentage above 90%.
+Contributions are very welcomed.
 
 ## Description
 
