@@ -1,4 +1,4 @@
-use httpdirectory::httpdirectory::{HttpDirectory, Sorting};
+use httpdirectory::httpdirectory::HttpDirectory;
 mod common;
 
 #[tokio::main]
@@ -19,7 +19,7 @@ async fn main() {
                                 Ok(bookworm) => {
                                     println!("{bookworm}");
                                     println!("Directories (if any)");
-                                    println!("{}", bookworm.dirs().sort_by_date(Sorting::Ascending));
+                                    println!("{}", bookworm.dirs().sort_by_date(true));
                                     println!("Files (if any)");
                                     println!("{}", bookworm.files());
                                 }

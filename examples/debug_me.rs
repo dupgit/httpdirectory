@@ -1,5 +1,4 @@
 use httpdirectory::httpdirectory::HttpDirectory;
-use httpdirectory::httpdirectory::Sorting;
 mod common;
 
 #[tokio::main]
@@ -23,7 +22,7 @@ async fn main() {
             Ok(httpdir) => {
                 println!("{httpdir:#?}");
                 println!("{httpdir}");
-                let sorted = httpdir.sort_by_size(Sorting::Ascending);
+                let sorted = httpdir.sort_by_size(true);
                 println!("{}", sorted);
                 println!("Len: {}", sorted.len());
             }

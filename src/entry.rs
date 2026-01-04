@@ -1,4 +1,3 @@
-use crate::httpdirectory::Sorting;
 use chrono::NaiveDateTime;
 use log::{error, trace};
 use regex::Regex;
@@ -271,28 +270,31 @@ impl Entry {
 
     /// Compares two `Entry` by name and returns an `Ordering`
     #[must_use]
-    pub fn cmp_by_name(&self, other: &Self, order: &Sorting) -> Ordering {
-        match order {
-            Sorting::Ascending => self.name.cmp(&other.name),
-            Sorting::Descending => other.name.cmp(&self.name),
+    pub fn cmp_by_name(&self, other: &Self, ascending: bool) -> Ordering {
+        if ascending {
+            self.name.cmp(&other.name)
+        } else {
+            other.name.cmp(&self.name)
         }
     }
 
     /// Compares two `Entry` by date and returns an `Ordering`
     #[must_use]
-    pub fn cmp_by_date(&self, other: &Self, order: &Sorting) -> Ordering {
-        match order {
-            Sorting::Ascending => self.date.cmp(&other.date),
-            Sorting::Descending => other.date.cmp(&self.date),
+    pub fn cmp_by_date(&self, other: &Self, ascending: bool) -> Ordering {
+        if ascending {
+            self.date.cmp(&other.date)
+        } else {
+            other.date.cmp(&self.date)
         }
     }
 
     /// Compares two `Entry` by size and returns an `Ordering`
     #[must_use]
-    pub fn cmp_by_size(&self, other: &Self, order: &Sorting) -> Ordering {
-        match order {
-            Sorting::Ascending => self.size.cmp(&other.size),
-            Sorting::Descending => other.size.cmp(&self.size),
+    pub fn cmp_by_size(&self, other: &Self, ascending: bool) -> Ordering {
+        if ascending {
+            self.size.cmp(&other.size)
+        } else {
+            other.size.cmp(&self.size)
         }
     }
 }
@@ -308,7 +310,7 @@ impl fmt::Display for Entry {
 
 #[cfg(test)]
 mod tests {
-    use {super::Entry, crate::httpdirectory::Sorting, std::cmp::Ordering, unwrap_unreachable::UnwrapUnreachable};
+    use {super::Entry, std::cmp::Ordering, unwrap_unreachable::UnwrapUnreachable};
     #[test]
     fn test_apparent_size_float() {
         let entry = Entry::new("name", "link", "2025-05-20 20:19", "5.0K");
@@ -486,10 +488,10 @@ mod tests {
         let entry1 = Entry::new("name", "link", "2025-05-20 20:19", "112");
         let entry2 = Entry::new("othername", "link", "2025-05-20 20:19", "112");
 
-        assert_eq!(entry1.cmp_by_name(&entry2, &Sorting::Ascending), Ordering::Less);
-        assert_eq!(entry2.cmp_by_name(&entry1, &Sorting::Ascending), Ordering::Greater);
-        assert_eq!(entry1.cmp_by_name(&entry2, &Sorting::Descending), Ordering::Greater);
-        assert_eq!(entry2.cmp_by_name(&entry1, &Sorting::Descending), Ordering::Less);
+        assert_eq!(entry1.cmp_by_name(&entry2, true), Ordering::Less);
+        assert_eq!(entry2.cmp_by_name(&entry1, true), Ordering::Greater);
+        assert_eq!(entry1.cmp_by_name(&entry2, false), Ordering::Greater);
+        assert_eq!(entry2.cmp_by_name(&entry1, false), Ordering::Less);
     }
 
     #[test]
@@ -497,10 +499,10 @@ mod tests {
         let entry1 = Entry::new("name", "link", "2025-05-21 03:45", "112");
         let entry2 = Entry::new("othername", "link", "2025-05-20 20:19", "112");
 
-        assert_eq!(entry1.cmp_by_date(&entry2, &Sorting::Ascending), Ordering::Greater);
-        assert_eq!(entry2.cmp_by_date(&entry1, &Sorting::Ascending), Ordering::Less);
-        assert_eq!(entry1.cmp_by_date(&entry2, &Sorting::Descending), Ordering::Less);
-        assert_eq!(entry2.cmp_by_date(&entry1, &Sorting::Descending), Ordering::Greater);
+        assert_eq!(entry1.cmp_by_date(&entry2, true), Ordering::Greater);
+        assert_eq!(entry2.cmp_by_date(&entry1, true), Ordering::Less);
+        assert_eq!(entry1.cmp_by_date(&entry2, false), Ordering::Less);
+        assert_eq!(entry2.cmp_by_date(&entry1, false), Ordering::Greater);
     }
 
     #[test]
@@ -508,10 +510,10 @@ mod tests {
         let entry1 = Entry::new("name", "link", "2025-05-21 03:45", "4.0k");
         let entry2 = Entry::new("othername", "link", "2025-05-20 20:19", "112");
 
-        assert_eq!(entry1.cmp_by_size(&entry2, &Sorting::Ascending), Ordering::Greater);
-        assert_eq!(entry2.cmp_by_size(&entry1, &Sorting::Ascending), Ordering::Less);
-        assert_eq!(entry1.cmp_by_size(&entry2, &Sorting::Descending), Ordering::Less);
-        assert_eq!(entry2.cmp_by_size(&entry1, &Sorting::Descending), Ordering::Greater);
+        assert_eq!(entry1.cmp_by_size(&entry2, true), Ordering::Greater);
+        assert_eq!(entry2.cmp_by_size(&entry1, true), Ordering::Less);
+        assert_eq!(entry1.cmp_by_size(&entry2, false), Ordering::Less);
+        assert_eq!(entry2.cmp_by_size(&entry1, false), Ordering::Greater);
     }
 
     #[test]

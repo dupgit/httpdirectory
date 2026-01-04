@@ -35,11 +35,6 @@ impl Timings {
     }
 }
 
-pub enum Sorting {
-    Ascending,
-    Descending,
-}
-
 // @todo: ? implement an iterator ?
 impl HttpDirectory {
     /// Crawls the `url` and returns (if no error occurred) the
@@ -99,28 +94,31 @@ impl HttpDirectory {
         Ok(self)
     }
 
-    /// Sorts the Directory entries by their names
+    /// Sorts the Directory entries by their names in ascending order when
+    /// `ascending` is `true`, in descending order otherwise
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
-    pub fn sort_by_name(mut self, order: Sorting) -> Self {
-        self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Name, &order));
+    pub fn sort_by_name(mut self, ascending: bool) -> Self {
+        self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Name, ascending));
         self
     }
 
-    /// Sorts the Directory entries by their dates
+    /// Sorts the Directory entries by their dates in ascending order when
+    /// `ascending` is `true`, in descending order otherwise
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
-    pub fn sort_by_date(mut self, order: Sorting) -> Self {
-        self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Date, &order));
+    pub fn sort_by_date(mut self, ascending: bool) -> Self {
+        self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Date, ascending));
         self
     }
 
-    /// Sorts the Directory entries by their sizes
+    /// Sorts the Directory entries by their sizes in ascending order when
+    /// `ascending` is `true`, in descending order otherwise
     #[must_use]
     #[allow(clippy::needless_pass_by_value)]
     #[cfg_attr(feature = "hotpath", hotpath::measure)]
-    pub fn sort_by_size(mut self, order: Sorting) -> Self {
-        self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Size, &order));
+    pub fn sort_by_size(mut self, ascending: bool) -> Self {
+        self.entries.sort_by(|a, b| a.cmp_by_field(b, &CompareField::Size, ascending));
         self
     }
 
@@ -312,7 +310,6 @@ mod tests {
     use {
         super::{HttpDirectory, HttpDirectoryEntry},
         crate::{
-            httpdirectory::Sorting,
             httpdirectoryentry::{EntryType, assert_entry},
             stats::Stats,
         },
@@ -470,7 +467,7 @@ DIR          -  2025-01-02 12:32  entry4
 
     #[test]
     fn test_httpdirectory_sort_by_name() {
-        let httpdir = prepare_httpdir().sort_by_name(Sorting::Ascending);
+        let httpdir = prepare_httpdir().sort_by_name(true);
 
         let entries = httpdir.entries();
         assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
@@ -498,7 +495,7 @@ FILE      2345  2023-01-01 00:00  files2
 DIR          -  2025-02-16 13:37  test2
 "##
         );
-        let httpdir = httpdir.sort_by_name(Sorting::Descending);
+        let httpdir = httpdir.sort_by_name(false);
         let entries = httpdir.entries();
         assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
         assert_entry(&entries[1], &EntryType::Directory, "test2", 0, "2025-02-16 13:37");
@@ -529,7 +526,7 @@ DIR          -  2025-03-01 07:11  debian3
 
     #[test]
     fn test_httpdirectory_sort_by_date() {
-        let httpdir = prepare_httpdir().sort_by_date(Sorting::Ascending);
+        let httpdir = prepare_httpdir().sort_by_date(true);
 
         let entries = httpdir.entries();
         assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
@@ -557,7 +554,7 @@ DIR          -  2025-03-01 07:11  debian3
 FILE       67K  2025-07-17 23:59  entry3
 "##
         );
-        let httpdir = httpdir.sort_by_date(Sorting::Descending);
+        let httpdir = httpdir.sort_by_date(false);
         let entries = httpdir.entries();
         assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
         assert_entry(&entries[1], &EntryType::File, "entry3", 68_608, "2025-07-17 23:59");
@@ -588,7 +585,7 @@ FILE       123  1987-10-09 04:37  file1
 
     #[test]
     fn test_httpdirectory_sort_by_size() {
-        let httpdir = prepare_httpdir().sort_by_size(Sorting::Ascending);
+        let httpdir = prepare_httpdir().sort_by_size(true);
 
         let entries = httpdir.entries();
         assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
@@ -616,7 +613,7 @@ FILE       67K  2025-07-17 23:59  entry3
 FILE      123M  2024-12-08 08:22  debian4
 "##
         );
-        let httpdir = httpdir.sort_by_size(Sorting::Descending);
+        let httpdir = httpdir.sort_by_size(false);
         let entries = httpdir.entries();
         assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
         assert_entry(&entries[1], &EntryType::File, "debian4", 128_974_848, "2024-12-08 08:22");
