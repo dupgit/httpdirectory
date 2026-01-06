@@ -1,8 +1,10 @@
-use crate::error::HttpDirError;
-use crate::httpdirectoryentry::{CompareField, HttpDirectoryEntry};
-use crate::requests::Request;
-use crate::scrape::scrape_body;
-use crate::stats::Stats;
+use crate::{
+    error::{ParseResultExt, RegexResultExt, ReqwestResultExt, Result},
+    httpdirectoryentry::{CompareField, HttpDirectoryEntry},
+    requests::Request,
+    scrape::scrape_body,
+    stats::Stats,
+};
 use regex::Regex;
 use reqwest::Url;
 use std::fmt;
@@ -49,7 +51,7 @@ impl HttpDirectory {
     /// or that the request to the url did not return correctly
     /// with a 200 HTTP status code
     #[cfg_attr(feature = "hotpath", hotpath::measure)]
-    pub async fn new(url: &str, timeout_s: Option<u64>) -> Result<Self, HttpDirError> {
+    pub async fn new(url: &str, timeout_s: Option<u64>) -> Result<Self> {
         let now = Instant::now();
         let client = Request::new(timeout_s)?;
         let response = client.get(url).await?;
@@ -57,7 +59,7 @@ impl HttpDirectory {
         trace!("Response to get '{url}': {response:?}");
 
         let now = Instant::now();
-        let entries = get_entries_from_body(&response.text().await?);
+        let entries = get_entries_from_body(&response.text().await.with_url(url)?);
         let get_entries = now.elapsed();
         let timings = Timings::new(http_request, get_entries);
 
@@ -79,15 +81,16 @@ impl HttpDirectory {
     ///   directory
     /// - the web server did not respond with 200 HTTP status code
     #[cfg_attr(feature = "hotpath", hotpath::measure)]
-    pub async fn cd(mut self, dir: &str) -> Result<Self, HttpDirError> {
-        let url = Url::parse(&self.url)?.join(dir)?.to_string();
+    pub async fn cd(mut self, dir: &str) -> Result<Self> {
+        let url =
+            Url::parse(&self.url).with_url(&self.url)?.join(dir).with_url(&format!("{}/{dir}", &self.url))?.to_string();
         debug!("cd is going to {url}");
         let now = Instant::now();
         let response = self.request.get(&url).await?;
         let http_request = now.elapsed();
 
         let now = Instant::now();
-        let entries = get_entries_from_body(&response.text().await?);
+        let entries = get_entries_from_body(&response.text().await.with_url(&self.url)?);
         let get_entries = now.elapsed();
 
         let timings = Timings::new(http_request, get_entries);
@@ -200,8 +203,8 @@ impl HttpDirectory {
     /// Will return an error if the regular expression can not be
     /// compiled (invalid pattern, or size limit exceeded). For more
     /// information see  [`Regex`][regex::Regex::new()]
-    pub fn filter_by_name(&self, regex: &str) -> Result<Self, HttpDirError> {
-        let re = Regex::new(regex)?;
+    pub fn filter_by_name(&self, regex: &str) -> Result<Self> {
+        let re = Regex::new(regex).with_regex(regex)?;
         Ok(self.filtering(|e| e.is_match_by_name(&re)))
     }
 
@@ -325,7 +328,7 @@ mod tests {
 
         match httpdir.cd("/dir").await {
             Ok(_) => panic!("This test should return Err()"),
-            Err(e) => assert_eq!(e.to_string(), "Error: relative URL without a base"),
+            Err(e) => assert_eq!(e.to_string(), "Error while parsing url '':\n -> relative URL without a base"),
         }
     }
 
@@ -431,7 +434,7 @@ DIR          -  2025-01-02 12:32  entry4
             Ok(_) => panic!("This call must return an Err(), not Ok()"),
             Err(e) => assert_eq!(
                 e.to_string(),
-                "Error: regex parse error:\n    deb-[n+-*\n          ^^^\nerror: invalid character class range, the start must be <= the end"
+                "Regular expression failed to compile 'deb-[n+-*':\n -> regex parse error:\n    deb-[n+-*\n          ^^^\nerror: invalid character class range, the start must be <= the end"
             ),
         }
     }

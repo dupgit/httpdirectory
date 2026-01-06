@@ -37,7 +37,7 @@ async fn test_empty_404_status() {
 
     match HttpDirectory::new(&url, None).await {
         Ok(httpdir) => panic!("This test should return an Error. We got {httpdir:?}"),
-        Err(e) => assert_eq!(e.to_string(), format!("Error: Error while retrieving url {url} content: 404 Not Found")),
+        Err(e) => assert_eq!(e.to_string(), format!("Error retrieving content from '{url}': 404 Not Found")),
     };
 
     mock.assert();

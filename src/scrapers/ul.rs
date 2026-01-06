@@ -1,13 +1,17 @@
-use crate::{error::HttpDirError, httpdirectoryentry::HttpDirectoryEntry, scrape::get_link_and_name};
+use crate::{
+    error::{Result, SelectorResultExt},
+    httpdirectoryentry::HttpDirectoryEntry,
+    scrape::get_link_and_name,
+};
 use scraper::{Html, Selector};
 use tracing::debug;
 
 #[cfg_attr(feature = "hotpath", hotpath::measure)]
-pub(crate) fn scrape_ul(body: &str) -> Result<Vec<HttpDirectoryEntry>, HttpDirError> {
+pub(crate) fn scrape_ul(body: &str) -> Result<Vec<HttpDirectoryEntry>> {
     let mut http_dir_entry = vec![];
 
     let html = Html::parse_document(body);
-    let ul_selector = Selector::parse("ul")?;
+    let ul_selector = Selector::parse("ul").with_selector("ul")?;
     for ul in html.select(&ul_selector) {
         debug!("{}", ul.html());
         for line in ul.inner_html().lines() {

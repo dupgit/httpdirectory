@@ -1,5 +1,7 @@
-use crate::HTTPDIR_USER_AGENT;
-use crate::error::HttpDirError;
+use crate::{
+    HTTPDIR_USER_AGENT,
+    error::{HttpDirError, ParseResultExt, ReqwestResultExt, Result},
+};
 use reqwest::{Client, Response, StatusCode};
 use std::time::Duration;
 use tracing::{error, trace};
@@ -17,7 +19,7 @@ impl Request {
     /// # Errors
     ///
     /// Returns an error if the request client can not be built
-    pub(crate) fn new(timeout_s: Option<u64>) -> Result<Self, HttpDirError> {
+    pub(crate) fn new(timeout_s: Option<u64>) -> Result<Self> {
         let client_builder;
         if let Some(timeout_s) = timeout_s {
             client_builder = Client::builder().user_agent(HTTPDIR_USER_AGENT).timeout(Duration::from_secs(timeout_s));
@@ -25,18 +27,11 @@ impl Request {
             client_builder = Client::builder().user_agent(HTTPDIR_USER_AGENT);
         }
 
-        match client_builder.build() {
-            Ok(client) => {
-                trace!("new reqwest client: {client:?}");
-                Ok(Request {
-                    client,
-                })
-            }
-            Err(e) => {
-                error!("Error building a new reqwest client: {e}");
-                Err(HttpDirError::HttpError(e))
-            }
-        }
+        let client = client_builder.build().with()?;
+        trace!("New reqwest client: {client:?}");
+        Ok(Request {
+            client,
+        })
     }
 
     /// Returns the content of an url if any
@@ -45,26 +40,21 @@ impl Request {
     ///
     /// Returns an error when the reqwest could not be made or that the server
     /// did not respond with a 200 HTTP status code.
-    pub(crate) async fn get(&self, url: &str) -> Result<Response, HttpDirError> {
-        match url::Url::parse(url) {
-            Ok(_) => {
-                trace!("Requesting '{url}'");
-                match self.client.get(url).send().await {
-                    Ok(response) if response.status() == StatusCode::OK => Ok(response),
-                    Ok(response) => {
-                        error!("Error while retrieving url {url} content: {}", response.status());
-                        Err(HttpDirError::ContentError(format!(
-                            "Error while retrieving url {url} content: {}",
-                            response.status()
-                        )))
-                    }
-                    Err(e) => Err(HttpDirError::HttpError(e)),
-                }
+    pub(crate) async fn get(&self, url: &str) -> Result<Response> {
+        url::Url::parse(url).with_url(url)?;
+
+        trace!("Requesting '{url}'");
+
+        match self.client.get(url).send().await.with_url(url) {
+            Ok(response) if response.status() == StatusCode::OK => Ok(response),
+            Ok(response) => {
+                error!("Error while retrieving url {url} content: {}", response.status());
+                Err(HttpDirError::HttpResponse {
+                    url: url.to_string(),
+                    status_code: response.status(),
+                })
             }
-            Err(e) => {
-                error!("Error parsing url '{url}': {e}");
-                Err(HttpDirError::ParseError(e))
-            }
+            Err(e) => Err(e),
         }
     }
 }
