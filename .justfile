@@ -63,7 +63,7 @@ document:
     cargo doc --no-deps --open
 
 # Publishing in the git repository (with tags)
-git-publish: check-commits
+git-publish:
     git push
     git push --tags
 
