@@ -1,3 +1,16 @@
+0.18.0
+  * Breaking changes:
+    * log library was replaced by tracing one
+    * error management is now done using snafu library: some error messages
+      are different.
+    * Request structure has been simplify and only supports reqwest library
+    * Sorting enum as been replaced by a boolean: true means ascending sort
+    * Some functions are now only public for the crate (this should not
+      break too much because the modules were private).
+    * Some test function are now only visible when running tests thanks to
+    * A timeout parameter has been introduced in HttpDirectory::new() method
+  * Fixes, refactoring and style modifications to try to simplify
+
 0.17.2
   * benches and hotpath features to ease performance measurements
   * updates hotpath to 0.9.0
