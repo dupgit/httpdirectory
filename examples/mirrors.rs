@@ -69,7 +69,7 @@ async fn main() {
         let semaphore = semaphore.clone();
         tasks.spawn(async move {
             let _permit = semaphore.acquire().await.expect("Semaphore closed prematurely");
-            HttpDirectory::new(&url, Some(30)).await
+            HttpDirectory::new(&url, Some(10)).await
         });
     }
 
