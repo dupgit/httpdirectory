@@ -67,7 +67,7 @@ impl<T> ReqwestResultExt<T> for std::result::Result<T, reqwest::Error> {
 }
 
 // Trait helper for Regex errors
-pub trait RegexResultExt<T> {
+pub(crate) trait RegexResultExt<T> {
     fn with_regex(self, regex: &str) -> Result<T>;
 }
 
@@ -81,7 +81,7 @@ impl<T> RegexResultExt<T> for std::result::Result<T, regex::Error> {
 }
 
 // Trait helper for Parse errors
-pub trait ParseResultExt<T> {
+pub(crate) trait ParseResultExt<T> {
     fn with_url(self, url: &str) -> Result<T>;
 }
 
@@ -95,7 +95,7 @@ impl<T> ParseResultExt<T> for std::result::Result<T, url::ParseError> {
 }
 
 // Trait helper for Selector errors
-pub trait SelectorResultExt<T> {
+pub(crate) trait SelectorResultExt<T> {
     fn with_selector(self, selector: &str) -> Result<T>;
 }
 
