@@ -13,7 +13,8 @@ async fn main() {
         // "https://mirrors.ircam.fr/pub/fedora/linux/releases",
         // "https://cloud.debian.org/images/cloud/",
         //"http://prodata.swmed.edu/download/pub",
-        "https://mirrors.ircam.fr/pub/elrepo/elrepo/el9/SRPMS/",
+        //"https://mirrors.ircam.fr/pub/elrepo/elrepo/el9/SRPMS/",
+        "https://stil.samake.se/demo/",
         // "http://127.0.0.1:8080",
     ];
 

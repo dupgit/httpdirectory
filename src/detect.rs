@@ -9,6 +9,7 @@ pub enum SiteType {
     H5ai(String),      // from https://github.com/lrsjng/h5ai
     Snt,               // SNT index generator from https://snt.utwente.nl/en/
     MiniServe(String), // Miniserv file server from https://crates.io/crates/miniserve
+    Stil,              // Stil STatic Index Listing from https://crates.io/crates/stil
     None,
 }
 
@@ -72,6 +73,11 @@ fn detect_miniserve(body: &str) -> Option<String> {
     }
 }
 
+#[cfg_attr(feature = "hotpath", hotpath::measure)]
+fn detect_stil(body: &str) -> bool {
+    body.contains("<title>stil</title>")
+}
+
 impl SiteType {
     /// Detects the possible type of the site we are
     /// scraping information from by "analyzing" it's
@@ -84,6 +90,8 @@ impl SiteType {
             SiteType::Snt
         } else if let Some(version) = detect_miniserve(body) {
             SiteType::MiniServe(version)
+        } else if detect_stil(body) {
+            SiteType::Stil
         } else if detect_table(body) {
             SiteType::NotNamed(PureHtml::Table)
         } else if body.contains("<pre>") {

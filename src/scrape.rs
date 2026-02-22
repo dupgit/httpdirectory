@@ -2,7 +2,7 @@ use crate::{
     detect::{PureHtml, SiteType},
     error::{Result, SelectorResultExt},
     httpdirectoryentry::HttpDirectoryEntry,
-    scrapers::{h5ai::scrape_h5ai, miniserve::scrape_miniserve, snt::scrape_snt, ul::scrape_ul},
+    scrapers::{h5ai::scrape_h5ai, miniserve::scrape_miniserve, snt::scrape_snt, stil::scrape_stil, ul::scrape_ul},
 };
 use scraper::{ElementRef, Html, Selector};
 use tracing::{debug, info, trace, warn};
@@ -328,6 +328,10 @@ pub fn scrape_body(body: &str) -> Result<Vec<HttpDirectoryEntry>> {
         SiteType::MiniServe(version) => {
             info!("Miniserve version {version} website detected");
             scrape_miniserve(body, &version)
+        }
+        SiteType::Stil => {
+            info!("Stil STatic Index List website detected");
+            scrape_stil(body)
         }
         SiteType::NotNamed(html) => match html {
             PureHtml::Table => {

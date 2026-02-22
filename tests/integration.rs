@@ -96,6 +96,12 @@ async fn test_debian_snt() {
 }
 
 #[tokio::test]
+async fn test_stil_demo() {
+    common::stil::run_stil_demo().unreachable();
+    common::stil::mock_stil_demo().await.unreachable();
+}
+
+#[tokio::test]
 async fn test_self_miniserve() {
     common::miniserve::run_self_miniserve().unreachable();
     common::miniserve::mock_self_miniserve().await.unreachable();
