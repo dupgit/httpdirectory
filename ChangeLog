@@ -17,8 +17,8 @@
 
 0.18.0
   * Breaking changes:
-    * log library was replaced by tracing one
-    * error management is now done using snafu library: some error messages
+    * Log library was replaced by tracing one
+    * Error management is now done using snafu library: some error messages
       are different.
     * Request structure has been simplify and only supports reqwest library
     * Sorting enum as been replaced by a boolean: true means ascending sort
@@ -37,17 +37,17 @@
 0.17.1
   * Removes lazy_static in favor of std::sync::LazyLock
   * Simplify Regex for h5ai
-  * examples:
-    * mirrors example uses a JoinSet instead of task vector
-  * tools:
-    * added a target to run examples with hotpath feature
-    * added a target to run clippy in pedantic mode
+  * Examples:
+    * Mirrors example uses a JoinSet instead of task vector
+  * Tools:
+    * Added a target to run examples with hotpath feature
+    * Added a target to run clippy in pedantic mode
 
 0.17.0
   * Speed improvements
   * Computing the size of a file only once and keeping it along in
     the Entry structure.
-  * hotpath features to enable timing of some chosen functions
+  * Hotpath features to enable timing of some chosen functions
   * MSRV is 1.88
 
 0.16.3
