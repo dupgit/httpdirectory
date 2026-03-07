@@ -154,8 +154,7 @@ fn scrape_pre_with_img(body: &str) -> Result<Vec<HttpDirectoryEntry>> {
                 if !new_line.is_empty() {
                     // Considering only non empty lines
                     trace!("{new_line}");
-                    let href =
-                        new_line.split("</a>").collect::<Vec<&str>>().into_iter().map(str::trim).collect::<Vec<&str>>();
+                    let href = new_line.split("</a>").map(str::trim).collect::<Vec<&str>>();
                     trace!("{href:?}");
                     if href.len() >= 4 {
                         // Headers with Name, Last modified, Size, Description columns
@@ -292,7 +291,7 @@ fn scrape_pre_simple(body: &str) -> Result<Vec<HttpDirectoryEntry>> {
             if !line.is_empty() {
                 // Considering only non empty lines
                 trace!("{line}");
-                let href = line.split("</a>").collect::<Vec<&str>>().into_iter().map(str::trim).collect::<Vec<&str>>();
+                let href = line.split("</a>").map(str::trim).collect::<Vec<&str>>();
                 trace!("{href:?}");
                 if href.len() >= 2 {
                     // Rows with a link and a name and may be the rest of the data (date, size and description)

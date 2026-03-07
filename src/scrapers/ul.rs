@@ -15,7 +15,7 @@ pub(crate) fn scrape_ul(body: &str) -> Result<Vec<HttpDirectoryEntry>> {
     for ul in html.select(&ul_selector) {
         debug!("{}", ul.html());
         for line in ul.inner_html().lines() {
-            let il = line.split("</li>").collect::<Vec<&str>>().into_iter().map(str::trim).collect::<Vec<&str>>();
+            let il = line.split("</li>").map(str::trim).collect::<Vec<&str>>();
             if !il.is_empty() && !il[0].is_empty() {
                 let name_and_link = il[0].replace("<li>", "").replace("</a>", "");
                 let (name, link) = get_link_and_name(&name_and_link);
