@@ -1,36 +1,43 @@
 use crate::{
     error::{Result, SelectorResultExt},
     httpdirectoryentry::HttpDirectoryEntry,
-    scrape::get_link_and_name,
+    scrape::{build_entry, get_link_and_name},
 };
 use scraper::{Html, Selector};
 use tracing::debug;
 
 #[cfg_attr(feature = "hotpath", hotpath::measure)]
 pub(crate) fn scrape_ul(body: &str) -> Result<Vec<HttpDirectoryEntry>> {
-    let mut http_dir_entry = vec![];
-
     let html = Html::parse_document(body);
     let ul_selector = Selector::parse("ul").with_selector("ul")?;
-    for ul in html.select(&ul_selector) {
-        debug!("{}", ul.html());
-        for line in ul.inner_html().lines() {
-            let il = line.split("</li>").map(str::trim).collect::<Vec<&str>>();
-            if !il.is_empty() && !il[0].is_empty() {
-                let name_and_link = il[0].replace("<li>", "").replace("</a>", "");
-                let (name, link) = get_link_and_name(&name_and_link);
-                // Names that finishes with a trailing / are directories others are files
-                if let Some(last) = name.chars().last() {
-                    if last == '/' {
-                        http_dir_entry.push(HttpDirectoryEntry::new(name, "", " - ", link));
-                    } else {
-                        http_dir_entry.push(HttpDirectoryEntry::new(name, "", "", link));
-                    }
-                }
 
-                debug!("{name} and {link}");
-            }
-        }
-    }
-    Ok(http_dir_entry)
+    let entries = html
+        .select(&ul_selector)
+        .flat_map(|ul| {
+            debug!("{}", ul.html());
+            ul.inner_html()
+                .lines()
+                .map(str::trim)
+                .filter_map(|line| {
+                    let il = line.split("</li>").next()?.trim();
+                    if il.is_empty() {
+                        return None;
+                    }
+                    let name_and_link = il.replace("<li>", "").replace("</a>", "");
+                    let (name, link) = get_link_and_name(&name_and_link);
+                    debug!("{name} and {link}");
+
+                    // Names ending with '/' are directories others are files
+                    let size: &[&str] = if name.ends_with('/') {
+                        &[]
+                    } else {
+                        &[""]
+                    };
+                    build_entry(&[name], &[], size, link)
+                })
+                .collect::<Vec<_>>()
+        })
+        .collect();
+
+    Ok(entries)
 }
