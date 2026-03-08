@@ -2,7 +2,9 @@
   * Updates snafu to 0.9.0 and hotpath to 0.14.0
   * Adds missing versions in ChangeLog file
   * Corrects typos in ChangeLog file
-  * Simplifying some code
+  * Simplifying code using filter, filter_map and flat_map and by
+    splitting functions into smaller ones to reuse them in other
+    parts
 
 0.19.1
   * Updates hotpath to 0.13.0

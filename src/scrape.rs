@@ -40,96 +40,82 @@ pub(crate) fn are_table_headers_present(table: ElementRef) -> bool {
     false
 }
 
+pub(crate) fn extract_link<'a>(col: &ElementRef<'a>, link_selector: &Selector) -> &'a str {
+    col.select(link_selector).next().and_then(|a| a.value().attr("href")).unwrap_or_default()
+}
+
+fn extract_name_and_link<'a>(
+    one_line_iter: &mut impl Iterator<Item = &'a ElementRef<'a>>,
+    link_selector: &Selector,
+) -> (Vec<&'a str>, &'a str) {
+    let Some(first_col) = one_line_iter.next() else {
+        return (vec![], "");
+    };
+
+    let first_col_txt = remove_empty_cell(first_col.text().collect());
+
+    if first_col_txt.is_empty() {
+        let Some(name_col) = one_line_iter.next() else {
+            return (vec![], "");
+        };
+        let name = remove_empty_cell(name_col.text().collect());
+        (name, extract_link(name_col, link_selector))
+    } else {
+        (first_col_txt, extract_link(first_col, link_selector))
+    }
+}
+
+pub(crate) fn extract_col_text<'a>(one_line_iter: &mut impl Iterator<Item = &'a ElementRef<'a>>) -> Vec<&'a str> {
+    one_line_iter.next().map(|col| remove_empty_cell(col.text().collect())).unwrap_or_default()
+}
+
+pub(crate) fn build_entry<'a>(
+    name: &[&'a str],
+    date: &[&'a str],
+    size: &[&'a str],
+    link: &'a str,
+) -> Option<HttpDirectoryEntry> {
+    let &name = name.first()?;
+    let (date, size) = match (date.first(), size.first()) {
+        (Some(&d), Some(&s)) => (d, s),
+        (Some(&d), None) => (d, " - "),
+        (None, Some(&s)) => ("", s),
+        (None, None) => ("", " - "),
+    };
+    Some(HttpDirectoryEntry::new(name, date, size, link))
+}
+
 // Parses `body` variable to find a table that may
 // have icon, name & link, date, size and description.
 // We do not mind description field. Sometimes icon
 // column (first one) is not empty (it has text) so
 // it may be that this is in fact the name & link
-// column
+// column,
 #[cfg_attr(feature = "hotpath", hotpath::measure)]
 pub(crate) fn scrape_table(body: &str) -> Vec<HttpDirectoryEntry> {
-    let mut http_dir_entry = vec![];
-
     let html = Html::parse_document(body);
     let table_selector = Selector::parse("table").unreachable();
-    let table_iter = html.select(&table_selector);
     let row_selector = Selector::parse("tr").unreachable();
     let col_selector = Selector::parse("td").unreachable();
     let link_selector = Selector::parse("a").unreachable();
 
-    for table in table_iter {
-        if are_table_headers_present(table) {
-            for row in table.select(&row_selector) {
-                let one_line: Vec<_> = row.select(&col_selector).collect();
-                let mut one_line_iter = one_line.iter();
+    html.select(&table_selector)
+        .filter(|&table| are_table_headers_present(table))
+        .flat_map(|table| table.select(&row_selector).collect::<Vec<_>>())
+        .filter_map(|row| {
+            let one_line: Vec<_> = row.select(&col_selector).collect();
+            let mut iter = one_line.iter();
 
-                let mut name = vec![];
-                let mut link = "";
-                let mut date = vec![];
-                let mut size = vec![];
+            let (name, link) = extract_name_and_link(&mut iter, &link_selector);
+            trace!("name: {name:?}, link: {link}");
 
-                // First column in the line is the icon that represents the entry
-                // (folder, file, parentdir,…) it has no text. Sometimes the website
-                // has no icon column but a text one it is likely to be the name of
-                // the file or directory along with it's link
-                if let Some(first_col) = one_line_iter.next() {
-                    let mut first_col_txt = first_col.text().collect::<Vec<_>>();
-                    first_col_txt = remove_empty_cell(first_col_txt);
-                    trace!("first_col: {first_col_txt:?}",);
-                    if first_col_txt.is_empty() {
-                        // First column was empty, the name should be in the second one
-                        if let Some(name_col) = one_line_iter.next() {
-                            // Second column is the name of the file or directory with its link
-                            name = name_col.text().collect::<Vec<_>>();
-                            name = remove_empty_cell(name);
-                            for link_selected in name_col.select(&link_selector) {
-                                link = link_selected.value().attr("href").unwrap_or_default();
-                            }
-                        }
-                    } else {
-                        name = first_col_txt;
-                        // Text exists so we have a name, now getting the link
-                        for link_selected in first_col.select(&link_selector) {
-                            link = link_selected.value().attr("href").unwrap_or_default();
-                        }
-                    }
-                    trace!("name: {name:?}, link: {link}");
-                }
+            let date = extract_col_text(&mut iter);
+            let size = extract_col_text(&mut iter);
+            trace!("date: {date:?}, size: {size:?}");
 
-                // Third column contains the date of the file or directory
-                // In some case it can be the size of the file Entry::new()
-                // handles this
-                if let Some(date_col) = one_line_iter.next() {
-                    date = date_col.text().collect::<Vec<_>>();
-                    date = remove_empty_cell(date);
-                }
-
-                // Fourth column contains the size of the file (' - ' for a
-                // directory). In some case it can be the date of the file
-                // (Entry::new() handles this
-                if let Some(size_col) = one_line_iter.next() {
-                    size = size_col.text().collect::<Vec<_>>();
-                    size = remove_empty_cell(size);
-                }
-
-                trace!("date: {date:?}, size: {size:?}");
-                if !name.is_empty() && !date.is_empty() && !size.is_empty() {
-                    http_dir_entry.push(HttpDirectoryEntry::new(name[0], date[0], size[0], link));
-                } else if !name.is_empty() && !date.is_empty() && size.is_empty() {
-                    // size is empty this may be is a directory
-                    http_dir_entry.push(HttpDirectoryEntry::new(name[0], date[0], " - ", link));
-                } else if !name.is_empty() && date.is_empty() && !size.is_empty() {
-                    // date may be empty for a parent directory for instance
-                    http_dir_entry.push(HttpDirectoryEntry::new(name[0], "", size[0], link));
-                } else if !name.is_empty() && date.is_empty() && size.is_empty() {
-                    // date and size may be empty for a parent directory for instance
-                    http_dir_entry.push(HttpDirectoryEntry::new(name[0], "", " - ", link));
-                }
-            }
-        }
-    }
-
-    http_dir_entry
+            build_entry(&name, &date, &size, link)
+        })
+        .collect()
 }
 
 // Tries to search in a <pre> formatted table that
