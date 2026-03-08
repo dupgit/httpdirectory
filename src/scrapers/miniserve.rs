@@ -67,17 +67,14 @@ pub(crate) fn parse_miniserve_table(table: ElementRef) -> Result<Vec<HttpDirecto
 
             trace!("date: {date:?}, size: {size:?}");
 
-            if !name.is_empty() && !date.is_empty() && !size.is_empty() {
-                http_dir_entry.push(HttpDirectoryEntry::new(name[0], date[0], size[0], link));
-            } else if !name.is_empty() && !date.is_empty() && size.is_empty() {
-                // size is empty this may be is a directory
-                http_dir_entry.push(HttpDirectoryEntry::new(name[0], date[0], " - ", link));
-            } else if !name.is_empty() && date.is_empty() && !size.is_empty() {
-                // date may be empty for a parent directory for instance
-                http_dir_entry.push(HttpDirectoryEntry::new(name[0], "", size[0], link));
-            } else if !name.is_empty() && date.is_empty() && size.is_empty() {
-                // date and size may be empty for a parent directory for instance
-                http_dir_entry.push(HttpDirectoryEntry::new(name[0], "", " - ", link));
+            if let Some(name) = name.first() {
+                let (date, size) = match (date.first(), size.first()) {
+                    (Some(&d), Some(&s)) => (d, s), // date and size both exists
+                    (Some(&d), None) => (d, " - "), // size is empty this may be a directory
+                    (None, Some(&s)) => ("", s),    // date may be empty for a parent directory for instance
+                    (None, None) => ("", " - "),    // date and size may be empty for a parent directory for instance
+                };
+                http_dir_entry.push(HttpDirectoryEntry::new(name, date, size, link));
             }
         }
     }
