@@ -1,5 +1,5 @@
 0.19.2
-  * Updates snafu to 0.9.0
+  * Updates snafu to 0.9.0 and hotpath to 0.14.0
   * Adds missing versions in ChangeLog file
   * Corrects typos in ChangeLog file
   * Simplifying some code
