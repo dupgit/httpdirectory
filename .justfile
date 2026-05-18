@@ -17,7 +17,7 @@ alias b := bench
 
 # Installs all cargo tools to build a release or test coverage
 install-dev-tools:
-    cargo install cargo-release cargo-sbom cargo-tarpaulin cargo-nextest typos-cli conventional_commits_linter
+    cargo install cargo-release cargo-sbom cargo-tarpaulin cargo-nextest typos-cli conventional_commits_linter cargo-msrv
 
 # Linting commits from latest tag
 check-commits:
