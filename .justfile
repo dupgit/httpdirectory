@@ -90,7 +90,7 @@ crap:
     cargo llvm-cov --lcov --output-path lcov.info --features test-output,test-helpers
 
     # Running crap with coverage information
-    cargo crap --lcov lcov.info --path src/ --baseline baseline.json --fail-regression`
+    cargo crap --lcov lcov.info --path src/ --baseline baseline.json --fail-regression
 
 # Runs benches (use module name in benches/ as bench_name)
 bench bench_name='integration_bench':
