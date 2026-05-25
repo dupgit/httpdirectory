@@ -45,11 +45,16 @@ bump patch: check-typos check-commits
     cargo test --release --features test-output,test-helpers
     cargo doc --no-deps
 
+    # Getting coverage information with cargo-llvm-cov and saving it for later use
+    # with cargo-crap: `just crap`
+    cargo llvm-cov --lcov --output-path lcov.info --features test-output,test-helpers
+    cargo crap --lcov lcov.info --path src/ --format json --output baseline.json
+
     # Generetaing a Software Bills of Materials in SPDX format (sorting will reduce the diff size and allow one to figure out what has really changed)
     cargo sbom | jq --sort-keys | jq '.files = (.files| sort_by(.SPDXID))' | jq '.packages = (.packages| sort_by(.SPDXID))' | jq '.relationships = (.relationships| sort_by(.spdxElementId, .relatedSpdxElement))'>{{ name }}.sbom.spdx.json
 
     # Creating the release
-    git add Cargo.toml Cargo.lock {{ name }}.sbom.spdx.json
+    git add Cargo.toml Cargo.lock {{ name }}.sbom.spdx.json baseline.json
     cargo release commit --no-confirm --execute
     cargo release tag --no-confirm --execute
 
@@ -85,7 +90,7 @@ crap:
     cargo llvm-cov --lcov --output-path lcov.info --features test-output,test-helpers
 
     # Running crap with coverage information
-    cargo crap --lcov lcov.info --path src/
+    cargo crap --lcov lcov.info --path src/ --baseline baseline.json --fail-regression`
 
 # Runs benches (use module name in benches/ as bench_name)
 bench bench_name='integration_bench':

@@ -1,0 +1,750 @@
+{
+  "$schema": "https://raw.githubusercontent.com/minikin/cargo-crap/main/schemas/report-v1.json",
+  "version": "0.2.2",
+  "entries": [
+    {
+      "file": "src/entry.rs",
+      "function": "capture_size_and_unit",
+      "line": 97,
+      "cyclomatic": 15.0,
+      "coverage": 86.11111111111111,
+      "crap": 15.602816358024691
+    },
+    {
+      "file": "src/scrapers/stil.rs",
+      "function": "scrape_stil",
+      "line": 27,
+      "cyclomatic": 14.0,
+      "coverage": 87.93103448275862,
+      "crap": 14.344561072614704
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "scrape_body",
+      "line": 303,
+      "cyclomatic": 13.0,
+      "coverage": 100.0,
+      "crap": 13.0
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "get_link_and_name",
+      "line": 206,
+      "cyclomatic": 8.0,
+      "coverage": 61.111111111111114,
+      "crap": 11.764060356652948
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "scrape_pre_with_img",
+      "line": 125,
+      "cyclomatic": 10.0,
+      "coverage": 91.42857142857143,
+      "crap": 10.062973760932945
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "are_table_headers_present",
+      "line": 19,
+      "cyclomatic": 8.0,
+      "coverage": 87.5,
+      "crap": 8.125
+    },
+    {
+      "file": "src/detect.rs",
+      "function": "SiteType::detect",
+      "line": 86,
+      "cyclomatic": 8.0,
+      "coverage": 100.0,
+      "crap": 8.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::new",
+      "line": 33,
+      "cyclomatic": 8.0,
+      "coverage": 100.0,
+      "crap": 8.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::cmp_by_field",
+      "line": 150,
+      "cyclomatic": 8.0,
+      "coverage": 100.0,
+      "crap": 8.0
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "strip_until_stop",
+      "line": 249,
+      "cyclomatic": 7.0,
+      "coverage": 90.9090909090909,
+      "crap": 7.036814425244177
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "scrape_pre_simple",
+      "line": 267,
+      "cyclomatic": 7.0,
+      "coverage": 91.66666666666666,
+      "crap": 7.028356481481482
+    },
+    {
+      "file": "src/stats.rs",
+      "function": "Stats::fmt",
+      "line": 58,
+      "cyclomatic": 7.0,
+      "coverage": 100.0,
+      "crap": 7.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::fmt",
+      "line": 174,
+      "cyclomatic": 7.0,
+      "coverage": 100.0,
+      "crap": 7.0
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "parse_float_to_usize",
+      "line": 153,
+      "cyclomatic": 6.0,
+      "coverage": 76.92307692307693,
+      "crap": 6.442421483841601
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "get_date_and_size",
+      "line": 181,
+      "cyclomatic": 6.0,
+      "coverage": 87.5,
+      "crap": 6.0703125
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "apparent_size",
+      "line": 193,
+      "cyclomatic": 6.0,
+      "coverage": 88.23529411764706,
+      "crap": 6.058619987787503
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "build_entry",
+      "line": 72,
+      "cyclomatic": 6.0,
+      "coverage": 100.0,
+      "crap": 6.0
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "try_parse_date",
+      "line": 36,
+      "cyclomatic": 6.0,
+      "coverage": 100.0,
+      "crap": 6.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "assert_entry",
+      "line": 199,
+      "cyclomatic": 6.0,
+      "coverage": 100.0,
+      "crap": 6.0
+    },
+    {
+      "file": "src/scrapers/h5ai.rs",
+      "function": "scrape_h5ai",
+      "line": 14,
+      "cyclomatic": 5.0,
+      "coverage": 90.9090909090909,
+      "crap": 5.018782870022539
+    },
+    {
+      "file": "src/scrapers/miniserve.rs",
+      "function": "scrape_miniserve",
+      "line": 10,
+      "cyclomatic": 5.0,
+      "coverage": 90.9090909090909,
+      "crap": 5.018782870022539
+    },
+    {
+      "file": "src/scrapers/miniserve.rs",
+      "function": "parse_miniserve_table",
+      "line": 25,
+      "cyclomatic": 5.0,
+      "coverage": 96.15384615384616,
+      "crap": 5.001422394173874
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::cd",
+      "line": 84,
+      "cyclomatic": 5.0,
+      "coverage": 100.0,
+      "crap": 5.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::stats",
+      "line": 186,
+      "cyclomatic": 5.0,
+      "coverage": 100.0,
+      "crap": 5.0
+    },
+    {
+      "file": "src/requests.rs",
+      "function": "Request::get",
+      "line": 43,
+      "cyclomatic": 5.0,
+      "coverage": 100.0,
+      "crap": 5.0
+    },
+    {
+      "file": "src/scrapers/snt.rs",
+      "function": "scrape_snt",
+      "line": 10,
+      "cyclomatic": 5.0,
+      "coverage": 100.0,
+      "crap": 5.0
+    },
+    {
+      "file": "src/scrapers/stil.rs",
+      "function": "extract",
+      "line": 8,
+      "cyclomatic": 4.0,
+      "coverage": 90.9090909090909,
+      "crap": 4.012021036814425
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::fmt",
+      "line": 260,
+      "cyclomatic": 4.0,
+      "coverage": 91.66666666666666,
+      "crap": 4.0092592592592595
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::new",
+      "line": 54,
+      "cyclomatic": 4.0,
+      "coverage": 100.0,
+      "crap": 4.0
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "get_date_from_inputs",
+      "line": 75,
+      "cyclomatic": 4.0,
+      "coverage": 100.0,
+      "crap": 4.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "entries_from_body",
+      "line": 290,
+      "cyclomatic": 3.0,
+      "coverage": 57.14285714285714,
+      "crap": 3.7084548104956268
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "parse_to_usize",
+      "line": 175,
+      "cyclomatic": 3.0,
+      "coverage": 57.14285714285714,
+      "crap": 3.7084548104956268
+    },
+    {
+      "file": "src/requests.rs",
+      "function": "Request::new",
+      "line": 22,
+      "cyclomatic": 3.0,
+      "coverage": 91.66666666666666,
+      "crap": 3.0052083333333335
+    },
+    {
+      "file": "src/stats.rs",
+      "function": "Stats::add_directory",
+      "line": 37,
+      "cyclomatic": 3.0,
+      "coverage": 100.0,
+      "crap": 3.0
+    },
+    {
+      "file": "src/stats.rs",
+      "function": "Stats::add_file",
+      "line": 46,
+      "cyclomatic": 3.0,
+      "coverage": 100.0,
+      "crap": 3.0
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "is_this_a_real_header",
+      "line": 236,
+      "cyclomatic": 3.0,
+      "coverage": 100.0,
+      "crap": 3.0
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "Entry::fmt",
+      "line": 318,
+      "cyclomatic": 3.0,
+      "coverage": 100.0,
+      "crap": 3.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::is_file",
+      "line": 60,
+      "cyclomatic": 3.0,
+      "coverage": 100.0,
+      "crap": 3.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::is_directory",
+      "line": 70,
+      "cyclomatic": 3.0,
+      "coverage": 100.0,
+      "crap": 3.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::is_parent_directory",
+      "line": 80,
+      "cyclomatic": 3.0,
+      "coverage": 100.0,
+      "crap": 3.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::is_match_by_name",
+      "line": 91,
+      "cyclomatic": 3.0,
+      "coverage": 100.0,
+      "crap": 3.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::filename",
+      "line": 105,
+      "cyclomatic": 3.0,
+      "coverage": 100.0,
+      "crap": 3.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::dirname",
+      "line": 116,
+      "cyclomatic": 3.0,
+      "coverage": 100.0,
+      "crap": 3.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::name",
+      "line": 128,
+      "cyclomatic": 3.0,
+      "coverage": 100.0,
+      "crap": 3.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::date",
+      "line": 140,
+      "cyclomatic": 3.0,
+      "coverage": 100.0,
+      "crap": 3.0
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "extract_name_and_link",
+      "line": 47,
+      "cyclomatic": 2.0,
+      "coverage": 92.85714285714286,
+      "crap": 2.001457725947522
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::filter_by_name",
+      "line": 206,
+      "cyclomatic": 2.0,
+      "coverage": 100.0,
+      "crap": 2.0
+    },
+    {
+      "file": "src/detect.rs",
+      "function": "detect_table",
+      "line": 45,
+      "cyclomatic": 2.0,
+      "coverage": 100.0,
+      "crap": 2.0
+    },
+    {
+      "file": "src/detect.rs",
+      "function": "detect_h5ai",
+      "line": 54,
+      "cyclomatic": 2.0,
+      "coverage": 100.0,
+      "crap": 2.0
+    },
+    {
+      "file": "src/detect.rs",
+      "function": "detect_miniserve",
+      "line": 68,
+      "cyclomatic": 2.0,
+      "coverage": 100.0,
+      "crap": 2.0
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "Entry::new",
+      "line": 225,
+      "cyclomatic": 2.0,
+      "coverage": 100.0,
+      "crap": 2.0
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "Entry::link",
+      "line": 276,
+      "cyclomatic": 1.0,
+      "coverage": 0.0,
+      "crap": 2.0
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "Entry::cmp_by_name",
+      "line": 288,
+      "cyclomatic": 2.0,
+      "coverage": 100.0,
+      "crap": 2.0
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "Entry::cmp_by_date",
+      "line": 298,
+      "cyclomatic": 2.0,
+      "coverage": 100.0,
+      "crap": 2.0
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "Entry::cmp_by_size",
+      "line": 308,
+      "cyclomatic": 2.0,
+      "coverage": 100.0,
+      "crap": 2.0
+    },
+    {
+      "file": "src/scrapers/ul.rs",
+      "function": "scrape_ul",
+      "line": 10,
+      "cyclomatic": 2.0,
+      "coverage": 100.0,
+      "crap": 2.0
+    },
+    {
+      "file": "src/error.rs",
+      "function": "Result::with",
+      "line": 55,
+      "cyclomatic": 1.0,
+      "coverage": 60.0,
+      "crap": 1.064
+    },
+    {
+      "file": "src/error.rs",
+      "function": "Result::with_selector",
+      "line": 103,
+      "cyclomatic": 1.0,
+      "coverage": 60.0,
+      "crap": 1.064
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "Timings::new",
+      "line": 33,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::sort_by_name",
+      "line": 107,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::sort_by_date",
+      "line": 116,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::sort_by_size",
+      "line": 126,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::filtering",
+      "line": 136,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::dirs",
+      "line": 152,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::files",
+      "line": 158,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::parent_directory",
+      "line": 164,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::last",
+      "line": 171,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::first",
+      "line": 178,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::is_empty",
+      "line": 213,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::len",
+      "line": 219,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::entries",
+      "line": 226,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::get_url",
+      "line": 233,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::http_request_time",
+      "line": 240,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::get_entries_time",
+      "line": 247,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::total_time",
+      "line": 254,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::default",
+      "line": 280,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "get_entries_from_body",
+      "line": 303,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
+      "function": "get_entries_from_body",
+      "line": 310,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/error.rs",
+      "function": "Result::with_url",
+      "line": 61,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/error.rs",
+      "function": "Result::with_regex",
+      "line": 75,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/error.rs",
+      "function": "Result::with_url",
+      "line": 89,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/stats.rs",
+      "function": "Stats::new",
+      "line": 27,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/stats.rs",
+      "function": "Stats::add_parent_directory",
+      "line": 31,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/detect.rs",
+      "function": "detect_snt",
+      "line": 63,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/detect.rs",
+      "function": "detect_stil",
+      "line": 77,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "extract_link",
+      "line": 43,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "extract_col_text",
+      "line": 68,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "scrape_table",
+      "line": 95,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/scrape.rs",
+      "function": "remove_empty_cell",
+      "line": 173,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "Entry::apparent_size",
+      "line": 256,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "Entry::size",
+      "line": 264,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "Entry::name",
+      "line": 270,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/entry.rs",
+      "function": "Entry::date",
+      "line": 282,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    }
+  ]
+}
