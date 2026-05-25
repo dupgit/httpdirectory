@@ -1,3 +1,10 @@
+0.19.3
+  * Bumps dependencies versions and hotpath to 0.16.0 and scraper to 0.27
+  * Adds cargo-llvm-cov and cargo-crap as tools to get CRAP measurements
+  * Fixes a typo in a comment in .justfile (unbreakable space)
+  * Simplifies SNT scraping removing an unneeded filtering
+  * Saves CRAP information for later diff usage and avoid adding complexity
+
 0.19.2
   * Updates snafu to 0.9.0 and hotpath to 0.14.0
   * Adds missing versions in ChangeLog file
