@@ -20,11 +20,8 @@ pub(crate) fn scrape_snt(body: &str) -> Result<Vec<HttpDirectoryEntry>> {
     // keeps all directories and <article> for all the files
 
     // Directories from <nav>
-    let dirs = html
-        .select(&nav_selector)
-        .filter(|nav| nav.inner_html().contains("Directories"))
-        .flat_map(|nav| nav.select(&a_selector).collect::<Vec<_>>())
-        .map(|name_and_link| {
+    let dirs =
+        html.select(&nav_selector).flat_map(|nav| nav.select(&a_selector).collect::<Vec<_>>()).map(|name_and_link| {
             let link = name_and_link.value().attr("href").unwrap_or_default();
             let name = name_and_link.text().collect::<String>();
             let name = name.trim();

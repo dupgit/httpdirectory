@@ -14,7 +14,8 @@ async fn main() {
         // "https://cloud.debian.org/images/cloud/",
         //"http://prodata.swmed.edu/download/pub",
         //"https://mirrors.ircam.fr/pub/elrepo/elrepo/el9/SRPMS/",
-        "https://stil.samake.se/demo/",
+        //"https://stil.samake.se/demo/",
+        "https://debian.snt.utwente.nl/debian/",
         // "http://127.0.0.1:8080",
     ];
 
