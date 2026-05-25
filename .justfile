@@ -17,7 +17,7 @@ alias b := bench
 
 # Installs all cargo tools to build a release or test coverage
 install-dev-tools:
-    cargo install cargo-release cargo-sbom cargo-tarpaulin cargo-nextest typos-cli conventional_commits_linter cargo-msrv
+    cargo install cargo-release cargo-sbom cargo-tarpaulin cargo-nextest typos-cli conventional_commits_linter cargo-msrv cargo-llvm-cov cargo-crap
 
 # Linting commits from latest tag
 check-commits:
@@ -78,6 +78,14 @@ publish: git-publish rust-publish
 coverage:
     cargo tarpaulin --frozen --exclude-files benches/*.rs -o Html --features test-helpers
     open tarpaulin-report.html
+
+# Runs cargo-crap to get the CRAP score of each functions
+crap:
+    # Running coverage report with llvm-cov
+    cargo llvm-cov --lcov --output-path lcov.info --features test-output,test-helpers
+
+    # Running crap with coverage information
+    cargo crap --lcov lcov.info --path src/
 
 # Runs benches (use module name in benches/ as bench_name)
 bench bench_name='integration_bench':
