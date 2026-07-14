@@ -83,7 +83,7 @@ impl HttpDirectory {
     #[cfg_attr(feature = "hotpath", hotpath::measure)]
     pub async fn cd(mut self, dir: &str) -> Result<Self> {
         let url =
-            Url::parse(&self.url).with_url(&self.url)?.join(dir).with_url(&format!("{}/{dir}", &self.url))?.to_string();
+            Url::parse(&self.url).with_url(&self.url)?.join(dir).with_url(&format!("{}/{dir}", self.url))?.to_string();
         debug!("cd is going to {url}");
         let now = Instant::now();
         let response = self.request.get(&url).await?;
@@ -261,7 +261,7 @@ impl fmt::Display for HttpDirectory {
         writeln!(
             f,
             "Processed '{}' in {:.2?} ({:.2?} + {:.2?})",
-            &self.url,
+            self.url,
             self.total_time(),
             self.http_request_time(),
             self.get_entries_time()
