@@ -106,4 +106,4 @@ clippy:
 
 # Run examples with hotpath feature
 example example="debug_me":
-    cargo r --release --example {{ example }} --features=hotpath
+    cargo r --release --example {{ example }} --features=hotpath,hotpath-alloc
