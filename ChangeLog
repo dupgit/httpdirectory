@@ -1,3 +1,10 @@
+0.19.4
+ * bumps dependencies versions and hotpath to 0.24
+ * avoid late initialization refactoring
+ * removes useless borrowing
+ * renames scrapers/mod.rs to scrapers.rs file to get less confusion
+ * fixes a typo deleting a forgotten ` character
+
 0.19.3
   * Bumps dependencies versions and hotpath to 0.16.0 and scraper to 0.27
   * Adds cargo-llvm-cov and cargo-crap as tools to get CRAP measurements
