@@ -1,14 +1,14 @@
 {
   "$schema": "https://raw.githubusercontent.com/minikin/cargo-crap/main/schemas/report-v1.json",
-  "version": "0.2.2",
+  "version": "0.4.3",
   "entries": [
     {
       "file": "src/entry.rs",
       "function": "capture_size_and_unit",
       "line": 97,
       "cyclomatic": 15.0,
-      "coverage": 86.11111111111111,
-      "crap": 15.602816358024691
+      "coverage": 85.71428571428571,
+      "crap": 15.65597667638484
     },
     {
       "file": "src/scrapers/stil.rs",
@@ -109,7 +109,7 @@
     {
       "file": "src/entry.rs",
       "function": "parse_float_to_usize",
-      "line": 153,
+      "line": 152,
       "cyclomatic": 6.0,
       "coverage": 76.92307692307693,
       "crap": 6.442421483841601
@@ -125,7 +125,7 @@
     {
       "file": "src/entry.rs",
       "function": "apparent_size",
-      "line": 193,
+      "line": 192,
       "cyclomatic": 6.0,
       "coverage": 88.23529411764706,
       "crap": 6.058619987787503
@@ -211,20 +211,20 @@
       "crap": 5.0
     },
     {
+      "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::fmt",
+      "line": 260,
+      "cyclomatic": 4.0,
+      "coverage": 90.9090909090909,
+      "crap": 4.012021036814425
+    },
+    {
       "file": "src/scrapers/stil.rs",
       "function": "extract",
       "line": 8,
       "cyclomatic": 4.0,
       "coverage": 90.9090909090909,
       "crap": 4.012021036814425
-    },
-    {
-      "file": "src/httpdirectory.rs",
-      "function": "HttpDirectory::fmt",
-      "line": 260,
-      "cyclomatic": 4.0,
-      "coverage": 91.66666666666666,
-      "crap": 4.0092592592592595
     },
     {
       "file": "src/httpdirectory.rs",
@@ -253,7 +253,7 @@
     {
       "file": "src/entry.rs",
       "function": "parse_to_usize",
-      "line": 175,
+      "line": 174,
       "cyclomatic": 3.0,
       "coverage": 57.14285714285714,
       "crap": 3.7084548104956268
@@ -293,7 +293,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::fmt",
-      "line": 318,
+      "line": 317,
       "cyclomatic": 3.0,
       "coverage": 100.0,
       "crap": 3.0
@@ -405,7 +405,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::new",
-      "line": 225,
+      "line": 224,
       "cyclomatic": 2.0,
       "coverage": 100.0,
       "crap": 2.0
@@ -413,7 +413,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::link",
-      "line": 276,
+      "line": 275,
       "cyclomatic": 1.0,
       "coverage": 0.0,
       "crap": 2.0
@@ -421,7 +421,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::cmp_by_name",
-      "line": 288,
+      "line": 287,
       "cyclomatic": 2.0,
       "coverage": 100.0,
       "crap": 2.0
@@ -429,7 +429,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::cmp_by_date",
-      "line": 298,
+      "line": 297,
       "cyclomatic": 2.0,
       "coverage": 100.0,
       "crap": 2.0
@@ -437,7 +437,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::cmp_by_size",
-      "line": 308,
+      "line": 307,
       "cyclomatic": 2.0,
       "coverage": 100.0,
       "crap": 2.0
@@ -717,7 +717,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::apparent_size",
-      "line": 256,
+      "line": 255,
       "cyclomatic": 1.0,
       "coverage": 100.0,
       "crap": 1.0
@@ -725,7 +725,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::size",
-      "line": 264,
+      "line": 263,
       "cyclomatic": 1.0,
       "coverage": 100.0,
       "crap": 1.0
@@ -733,7 +733,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::name",
-      "line": 270,
+      "line": 269,
       "cyclomatic": 1.0,
       "coverage": 100.0,
       "crap": 1.0
@@ -741,10 +741,23 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::date",
-      "line": 282,
+      "line": 281,
       "cyclomatic": 1.0,
       "coverage": 100.0,
       "crap": 1.0
     }
-  ]
+  ],
+  "diagnostics": {
+    "analyzed_files": 13,
+    "lcov_files": 13,
+    "matched_files": 13,
+    "source_only": {
+      "count": 0,
+      "examples": []
+    },
+    "lcov_only": {
+      "count": 0,
+      "examples": []
+    }
+  }
 }
