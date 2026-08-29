@@ -101,17 +101,16 @@ fn capture_size_and_unit(size: &str) -> Option<(String, usize)> {
     let captured_size: String;
 
     if let Some(value) = SIZE_RE.captures(size) {
-        let match_cap: usize;
         trace!("Captured some value: {value:?}");
-        if value.get(1).is_some() {
-            match_cap = 1;
+        let match_cap: usize = if value.get(1).is_some() {
+            1
         } else if value.get(3).is_some() {
-            match_cap = 3;
+            3
         } else if value.get(5).is_some() {
-            match_cap = 5;
+            5
         } else {
             return None;
-        }
+        };
 
         trace!("match group: {match_cap}");
         if let Some(modifier) = value.get(match_cap + 1) {
