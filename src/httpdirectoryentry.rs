@@ -30,7 +30,7 @@ pub enum CompareField {
 impl HttpDirectoryEntry {
     /// Creates a new `HttpDirectoryEntry` entry with name, date, size and link
     /// string slices
-    pub(crate) fn new(name: &str, date: &str, size: &str, link: &str) -> Self {
+    fn real_new(name: &str, date: &str, size: &str, link: &str) -> Self {
         trace!("name: {name}, date: {date}, size: {size}, link: {link}");
         if name.to_lowercase() == "parent directory"
             || name.to_lowercase() == "parent directory/"
@@ -52,6 +52,20 @@ impl HttpDirectoryEntry {
         } else {
             HttpDirectoryEntry::File(entry)
         }
+    }
+
+    /// Creates a new `HttpDirectoryEntry` entry with name, date, size and link
+    /// string slices
+    #[cfg(not(any(test, feature = "test-helpers")))]
+    pub(crate) fn new(name: &str, date: &str, size: &str, link: &str) -> Self {
+        HttpDirectoryEntry::real_new(name, date, size, link)
+    }
+
+    /// Creates a new `HttpDirectoryEntry` entry with name, date, size and link
+    /// string slices only available publicly with test-helpers feature
+    #[cfg(any(test, feature = "test-helpers"))]
+    pub fn new(name: &str, date: &str, size: &str, link: &str) -> Self {
+        HttpDirectoryEntry::real_new(name, date, size, link)
     }
 
     /// Tells whether this `HttpDirectoryEntry` represents
