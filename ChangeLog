@@ -1,3 +1,9 @@
+0.19.5
+ * using `test-helpers` feature
+   * enables new() method for `HttpDirectoryEntry` structure
+   * enables from_entries() method for `HttpDirectory` structure
+ * adds msrv check
+
 0.19.4
  * bumps dependencies versions and hotpath to 0.24
  * avoid late initialization refactoring
