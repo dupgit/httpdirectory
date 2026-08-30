@@ -60,7 +60,7 @@
     },
     {
       "file": "src/httpdirectoryentry.rs",
-      "function": "HttpDirectoryEntry::new",
+      "function": "HttpDirectoryEntry::real_new",
       "line": 33,
       "cyclomatic": 8.0,
       "coverage": 100.0,
@@ -69,7 +69,7 @@
     {
       "file": "src/httpdirectoryentry.rs",
       "function": "HttpDirectoryEntry::cmp_by_field",
-      "line": 150,
+      "line": 164,
       "cyclomatic": 8.0,
       "coverage": 100.0,
       "crap": 8.0
@@ -101,7 +101,7 @@
     {
       "file": "src/httpdirectoryentry.rs",
       "function": "HttpDirectoryEntry::fmt",
-      "line": 174,
+      "line": 188,
       "cyclomatic": 7.0,
       "coverage": 100.0,
       "crap": 7.0
@@ -149,7 +149,7 @@
     {
       "file": "src/httpdirectoryentry.rs",
       "function": "assert_entry",
-      "line": 199,
+      "line": 213,
       "cyclomatic": 6.0,
       "coverage": 100.0,
       "crap": 6.0
@@ -213,7 +213,7 @@
     {
       "file": "src/httpdirectory.rs",
       "function": "HttpDirectory::fmt",
-      "line": 260,
+      "line": 270,
       "cyclomatic": 4.0,
       "coverage": 90.9090909090909,
       "crap": 4.012021036814425
@@ -245,7 +245,7 @@
     {
       "file": "src/httpdirectory.rs",
       "function": "entries_from_body",
-      "line": 290,
+      "line": 300,
       "cyclomatic": 3.0,
       "coverage": 57.14285714285714,
       "crap": 3.7084548104956268
@@ -301,7 +301,7 @@
     {
       "file": "src/httpdirectoryentry.rs",
       "function": "HttpDirectoryEntry::is_file",
-      "line": 60,
+      "line": 74,
       "cyclomatic": 3.0,
       "coverage": 100.0,
       "crap": 3.0
@@ -309,7 +309,7 @@
     {
       "file": "src/httpdirectoryentry.rs",
       "function": "HttpDirectoryEntry::is_directory",
-      "line": 70,
+      "line": 84,
       "cyclomatic": 3.0,
       "coverage": 100.0,
       "crap": 3.0
@@ -317,7 +317,7 @@
     {
       "file": "src/httpdirectoryentry.rs",
       "function": "HttpDirectoryEntry::is_parent_directory",
-      "line": 80,
+      "line": 94,
       "cyclomatic": 3.0,
       "coverage": 100.0,
       "crap": 3.0
@@ -325,14 +325,6 @@
     {
       "file": "src/httpdirectoryentry.rs",
       "function": "HttpDirectoryEntry::is_match_by_name",
-      "line": 91,
-      "cyclomatic": 3.0,
-      "coverage": 100.0,
-      "crap": 3.0
-    },
-    {
-      "file": "src/httpdirectoryentry.rs",
-      "function": "HttpDirectoryEntry::filename",
       "line": 105,
       "cyclomatic": 3.0,
       "coverage": 100.0,
@@ -340,8 +332,16 @@
     },
     {
       "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::filename",
+      "line": 119,
+      "cyclomatic": 3.0,
+      "coverage": 100.0,
+      "crap": 3.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
       "function": "HttpDirectoryEntry::dirname",
-      "line": 116,
+      "line": 130,
       "cyclomatic": 3.0,
       "coverage": 100.0,
       "crap": 3.0
@@ -349,7 +349,7 @@
     {
       "file": "src/httpdirectoryentry.rs",
       "function": "HttpDirectoryEntry::name",
-      "line": 128,
+      "line": 142,
       "cyclomatic": 3.0,
       "coverage": 100.0,
       "crap": 3.0
@@ -357,7 +357,7 @@
     {
       "file": "src/httpdirectoryentry.rs",
       "function": "HttpDirectoryEntry::date",
-      "line": 140,
+      "line": 154,
       "cyclomatic": 3.0,
       "coverage": 100.0,
       "crap": 3.0
@@ -604,8 +604,16 @@
     },
     {
       "file": "src/httpdirectory.rs",
+      "function": "HttpDirectory::from_entries",
+      "line": 261,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectory.rs",
       "function": "HttpDirectory::default",
-      "line": 280,
+      "line": 290,
       "cyclomatic": 1.0,
       "coverage": 100.0,
       "crap": 1.0
@@ -613,7 +621,7 @@
     {
       "file": "src/httpdirectory.rs",
       "function": "get_entries_from_body",
-      "line": 303,
+      "line": 313,
       "cyclomatic": 1.0,
       "coverage": 100.0,
       "crap": 1.0
@@ -621,7 +629,7 @@
     {
       "file": "src/httpdirectory.rs",
       "function": "get_entries_from_body",
-      "line": 310,
+      "line": 320,
       "cyclomatic": 1.0,
       "coverage": 100.0,
       "crap": 1.0
@@ -742,6 +750,22 @@
       "file": "src/entry.rs",
       "function": "Entry::date",
       "line": 281,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::new",
+      "line": 60,
+      "cyclomatic": 1.0,
+      "coverage": 100.0,
+      "crap": 1.0
+    },
+    {
+      "file": "src/httpdirectoryentry.rs",
+      "function": "HttpDirectoryEntry::new",
+      "line": 67,
       "cyclomatic": 1.0,
       "coverage": 100.0,
       "crap": 1.0
