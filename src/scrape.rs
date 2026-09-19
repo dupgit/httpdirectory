@@ -19,21 +19,14 @@ use unwrap_unreachable::UnwrapUnreachable;
 pub(crate) fn are_table_headers_present(table: ElementRef) -> bool {
     let th_selector = Selector::parse("th").unreachable();
 
-    for th in table.select(&th_selector) {
-        let columns: Vec<_> = th.text().collect();
-        for column in columns {
-            // This is may be less beautiful than a Regex but it
-            // is x100 times faster !
+    let terms = ["last modified", "modified", "date", "modification time", "last modification"];
+    if table.select(&th_selector).any(|th| {
+        th.text().any(|column| {
             let lowered = column.to_lowercase();
-            if lowered.contains("last modified")
-                || lowered.contains("modified")
-                || lowered.contains("date")
-                || lowered.contains("modification time")
-                || lowered.contains("last modification")
-            {
-                return true;
-            }
-        }
+            terms.iter().any(|term| lowered.contains(term))
+        })
+    }) {
+        return true;
     }
 
     warn!("This table does not contain any date header field");
