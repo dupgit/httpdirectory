@@ -230,8 +230,8 @@ impl HttpDirectory {
     /// Returns the String that represents the url of
     /// that `HttpDirectory`
     #[must_use]
-    pub fn get_url(&self) -> Arc<String> {
-        self.url.clone()
+    pub fn get_url(&self) -> &str {
+        self.url.as_str()
     }
 
     /// Returns the process time that the HTTP request in itself
