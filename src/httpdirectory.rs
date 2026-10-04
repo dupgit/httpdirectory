@@ -87,16 +87,17 @@ impl HttpDirectory {
         debug!("cd is going to {url}");
         let now = Instant::now();
         let response = self.request.get(&url).await?;
+        let real_url = response.url().to_string();
         let http_request = now.elapsed();
 
         let now = Instant::now();
-        let entries = get_entries_from_body(&response.text().await.with_url(&self.url)?);
+        let entries = get_entries_from_body(&response.text().await.with_url(&url)?);
         let get_entries = now.elapsed();
 
         let timings = Timings::new(http_request, get_entries);
         self.entries = entries;
         self.timings = Arc::new(timings);
-        self.url = Arc::new(url);
+        self.url = Arc::new(real_url);
         Ok(self)
     }
 
