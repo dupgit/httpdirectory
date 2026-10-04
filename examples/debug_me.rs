@@ -15,8 +15,11 @@ async fn main() {
         //"http://prodata.swmed.edu/download/pub",
         //"https://mirrors.ircam.fr/pub/elrepo/elrepo/el9/SRPMS/",
         //"https://stil.samake.se/demo/",
-        "https://debian.snt.utwente.nl/debian/",
-        // "http://127.0.0.1:8080",
+        //"https://debian.snt.utwente.nl/debian/",
+        //"http://security.debian.org/",
+        // use `python3 -m http.server -b 127.0.0.1 8888` command to
+        // expose the current directory to your local machine port 8888
+        "http://127.0.0.1:8888",
     ];
 
     for url in url_array {
