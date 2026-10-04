@@ -94,7 +94,10 @@ pub(crate) fn scrape_table(body: &str) -> Vec<HttpDirectoryEntry> {
 
     html.select(&table_selector)
         .filter(|&table| are_table_headers_present(table))
-        .flat_map(|table| table.select(&row_selector).collect::<Vec<_>>())
+        .flat_map(|table| {
+            trace!("{}", table.inner_html());
+            table.select(&row_selector).collect::<Vec<_>>()
+        })
         .filter_map(|row| {
             let one_line: Vec<_> = row.select(&col_selector).collect();
             let mut iter = one_line.iter();
