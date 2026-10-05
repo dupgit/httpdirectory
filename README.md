@@ -85,6 +85,10 @@ You can see some examples in the example directory:
   sessions to try to improve the program by being able to interpret
   more websites
 
+## Known limitation
+
+Javascript is not interpreted by httpdirectory thus all sites that uses
+javascript based web pages to give their directories will not work at all!
 
 ## Features
 
