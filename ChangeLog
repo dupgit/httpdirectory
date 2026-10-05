@@ -1,3 +1,12 @@
+0.20.0
+ * simplifies get_url() method that now returns a &str instead of an
+   Arc<String>
+ * ul type of page has now a limitation to only one <ul></ul> section. A page
+   that has more than one section of this type is considered invalid
+ * url points now to the url returned by the server because it can differ from
+   the one that was passed to the request
+ * refactoring are_table_headers_present() to be rustier
+
 0.19.5
  * using `test-helpers` feature
    * enables new() method for `HttpDirectoryEntry` structure
