@@ -17,6 +17,7 @@ async fn main() {
         //"https://stil.samake.se/demo/",
         //"https://debian.snt.utwente.nl/debian/",
         //"http://security.debian.org/",
+        "https://codeberg.org/miroo/karatepe",
         // use `python3 -m http.server -b 127.0.0.1 8888` command to
         // expose the current directory to your local machine port 8888
         "http://127.0.0.1:8888",

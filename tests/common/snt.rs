@@ -232,21 +232,21 @@ const DEBIAN_SNT_INPUT: &str = r##"
 fn assert_debian_snt_entries(entries: &Vec<HttpDirectoryEntry>) {
     assert_eq!(entries.len(), 15);
 
-    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
-    assert_entry(&entries[1], &EntryType::Directory, "dists", 0, "2025-09-06 10:15");
-    assert_entry(&entries[2], &EntryType::Directory, "doc", 0, "2025-10-19 14:12");
-    assert_entry(&entries[3], &EntryType::Directory, "indices", 0, "2025-10-19 14:59");
-    assert_entry(&entries[4], &EntryType::Directory, "pool", 0, "2022-10-05 17:09");
-    assert_entry(&entries[5], &EntryType::Directory, "project", 0, "2008-11-17 23:05");
-    assert_entry(&entries[6], &EntryType::Directory, "tools", 0, "2012-10-10 16:29");
-    assert_entry(&entries[7], &EntryType::Directory, "zzz-dists", 0, "2025-08-09 12:48");
-    assert_entry(&entries[8], &EntryType::File, "README", 1201, "2025-09-06 12:15");
-    assert_entry(&entries[9], &EntryType::File, "README.CD-manufacture", 1290, "2010-06-26 11:52");
-    assert_entry(&entries[10], &EntryType::File, "README.html", 2919, "2025-09-06 12:15");
-    assert_entry(&entries[11], &EntryType::File, "README.mirrors.html", 291, "2017-03-04 21:08");
-    assert_entry(&entries[12], &EntryType::File, "README.mirrors.txt", 86, "2017-03-04 21:08");
-    assert_entry(&entries[13], &EntryType::File, "extrafiles", 211968, "2025-10-20 16:23");
-    assert_entry(&entries[14], &EntryType::File, "ls-lR.gz", 13631488, "2025-10-20 16:17");
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::Directory, "dists", Some(0), "2025-09-06 10:15");
+    assert_entry(&entries[2], &EntryType::Directory, "doc", Some(0), "2025-10-19 14:12");
+    assert_entry(&entries[3], &EntryType::Directory, "indices", Some(0), "2025-10-19 14:59");
+    assert_entry(&entries[4], &EntryType::Directory, "pool", Some(0), "2022-10-05 17:09");
+    assert_entry(&entries[5], &EntryType::Directory, "project", Some(0), "2008-11-17 23:05");
+    assert_entry(&entries[6], &EntryType::Directory, "tools", Some(0), "2012-10-10 16:29");
+    assert_entry(&entries[7], &EntryType::Directory, "zzz-dists", Some(0), "2025-08-09 12:48");
+    assert_entry(&entries[8], &EntryType::File, "README", Some(1201), "2025-09-06 12:15");
+    assert_entry(&entries[9], &EntryType::File, "README.CD-manufacture", Some(1290), "2010-06-26 11:52");
+    assert_entry(&entries[10], &EntryType::File, "README.html", Some(2919), "2025-09-06 12:15");
+    assert_entry(&entries[11], &EntryType::File, "README.mirrors.html", Some(291), "2017-03-04 21:08");
+    assert_entry(&entries[12], &EntryType::File, "README.mirrors.txt", Some(86), "2017-03-04 21:08");
+    assert_entry(&entries[13], &EntryType::File, "extrafiles", Some(211968), "2025-10-20 16:23");
+    assert_entry(&entries[14], &EntryType::File, "ls-lR.gz", Some(13631488), "2025-10-20 16:17");
 }
 
 #[allow(dead_code)]

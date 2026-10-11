@@ -147,18 +147,18 @@ current images, please reach us on the list: <b>debian-cloud at lists.debian.org
 fn assert_debian_example_entries(entries: &Vec<HttpDirectoryEntry>) {
     assert_eq!(entries.len(), 12);
 
-    assert_entry(&entries[0], &EntryType::ParentDirectory, "/images/", 0, "0000-00-00, 00:00");
-    assert_entry(&entries[1], &EntryType::Directory, "OpenStack/", 0, "2024-07-01 23:19");
-    assert_entry(&entries[2], &EntryType::Directory, "bookworm-backports/", 0, "2025-04-28 21:33");
-    assert_entry(&entries[3], &EntryType::Directory, "bookworm/", 0, "2025-04-28 20:53");
-    assert_entry(&entries[4], &EntryType::Directory, "bullseye-backports/", 0, "2025-05-05 17:45");
-    assert_entry(&entries[5], &EntryType::Directory, "bullseye/", 0, "2025-05-05 16:52");
-    assert_entry(&entries[6], &EntryType::Directory, "buster-backports/", 0, "2024-07-03 21:46");
-    assert_entry(&entries[7], &EntryType::Directory, "buster/", 0, "2024-07-03 21:46");
-    assert_entry(&entries[8], &EntryType::Directory, "sid/", 0, "2024-04-01 14:20");
-    assert_entry(&entries[9], &EntryType::Directory, "stretch-backports/", 0, "2019-07-18 10:40");
-    assert_entry(&entries[10], &EntryType::Directory, "stretch/", 0, "2019-07-18 10:40");
-    assert_entry(&entries[11], &EntryType::Directory, "trixie/", 0, "2023-07-25 07:43");
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "/images/", Some(0), "0000-00-00, 00:00");
+    assert_entry(&entries[1], &EntryType::Directory, "OpenStack/", Some(0), "2024-07-01 23:19");
+    assert_entry(&entries[2], &EntryType::Directory, "bookworm-backports/", Some(0), "2025-04-28 21:33");
+    assert_entry(&entries[3], &EntryType::Directory, "bookworm/", Some(0), "2025-04-28 20:53");
+    assert_entry(&entries[4], &EntryType::Directory, "bullseye-backports/", Some(0), "2025-05-05 17:45");
+    assert_entry(&entries[5], &EntryType::Directory, "bullseye/", Some(0), "2025-05-05 16:52");
+    assert_entry(&entries[6], &EntryType::Directory, "buster-backports/", Some(0), "2024-07-03 21:46");
+    assert_entry(&entries[7], &EntryType::Directory, "buster/", Some(0), "2024-07-03 21:46");
+    assert_entry(&entries[8], &EntryType::Directory, "sid/", Some(0), "2024-04-01 14:20");
+    assert_entry(&entries[9], &EntryType::Directory, "stretch-backports/", Some(0), "2019-07-18 10:40");
+    assert_entry(&entries[10], &EntryType::Directory, "stretch/", Some(0), "2019-07-18 10:40");
+    assert_entry(&entries[11], &EntryType::Directory, "trixie/", Some(0), "2023-07-25 07:43");
 }
 
 #[allow(dead_code)]
@@ -191,13 +191,13 @@ pub async fn mock_debian_example() -> Result<(), Box<dyn std::error::Error>> {
 
     assert_eq!(entries.len(), 7);
 
-    assert_entry(&entries[0], &EntryType::Directory, "bookworm-backports/", 0, "2025-04-28 21:33");
-    assert_entry(&entries[1], &EntryType::Directory, "bookworm/", 0, "2025-04-28 20:53");
-    assert_entry(&entries[2], &EntryType::Directory, "bullseye-backports/", 0, "2025-05-05 17:45");
-    assert_entry(&entries[3], &EntryType::Directory, "bullseye/", 0, "2025-05-05 16:52");
-    assert_entry(&entries[4], &EntryType::Directory, "buster-backports/", 0, "2024-07-03 21:46");
-    assert_entry(&entries[5], &EntryType::Directory, "buster/", 0, "2024-07-03 21:46");
-    assert_entry(&entries[6], &EntryType::Directory, "stretch-backports/", 0, "2019-07-18 10:40");
+    assert_entry(&entries[0], &EntryType::Directory, "bookworm-backports/", Some(0), "2025-04-28 21:33");
+    assert_entry(&entries[1], &EntryType::Directory, "bookworm/", Some(0), "2025-04-28 20:53");
+    assert_entry(&entries[2], &EntryType::Directory, "bullseye-backports/", Some(0), "2025-05-05 17:45");
+    assert_entry(&entries[3], &EntryType::Directory, "bullseye/", Some(0), "2025-05-05 16:52");
+    assert_entry(&entries[4], &EntryType::Directory, "buster-backports/", Some(0), "2024-07-03 21:46");
+    assert_entry(&entries[5], &EntryType::Directory, "buster/", Some(0), "2024-07-03 21:46");
+    assert_entry(&entries[6], &EntryType::Directory, "stretch-backports/", Some(0), "2019-07-18 10:40");
 
     mock.assert();
     Ok(())
@@ -304,29 +304,29 @@ const FIRST_OLD_BSD_EXAMPLE_INPUT: &str = r##"
 fn assert_first_old_bsd_example_entries(entries: &Vec<HttpDirectoryEntry>) {
     assert_eq!(entries.len(), 76);
 
-    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
-    assert_entry(&entries[1], &EntryType::Directory, "2.0/", 0, "2001-06-04 14:06");
-    assert_entry(&entries[2], &EntryType::Directory, "2.1/", 0, "2001-06-04 15:20");
-    assert_entry(&entries[56], &EntryType::Directory, "7.5/", 0, "2024-04-05 11:59");
-    assert_entry(&entries[57], &EntryType::Directory, "7.6/", 0, "2024-10-08 17:17");
-    assert_entry(&entries[58], &EntryType::Directory, "7.7/", 0, "2025-04-27 17:58");
-    assert_entry(&entries[59], &EntryType::Directory, "Changelogs/", 0, "2025-05-16 07:33");
-    assert_entry(&entries[60], &EntryType::Directory, "LibreSSL/", 0, "2025-04-30 07:35");
-    assert_entry(&entries[61], &EntryType::Directory, "OpenBGPD/", 0, "2025-02-06 16:49");
-    assert_entry(&entries[62], &EntryType::Directory, "OpenIKED/", 0, "2025-04-10 18:11");
-    assert_entry(&entries[63], &EntryType::Directory, "OpenNTPD/", 0, "2020-12-09 14:56");
-    assert_entry(&entries[64], &EntryType::Directory, "OpenSSH/", 0, "2025-04-09 07:54");
-    assert_entry(&entries[65], &EntryType::Directory, "doc/", 0, "2013-04-28 15:57");
-    assert_entry(&entries[66], &EntryType::Directory, "patches/", 0, "2025-05-16 14:07");
-    assert_entry(&entries[67], &EntryType::Directory, "rpki-client/", 0, "2025-04-11 22:25");
-    assert_entry(&entries[68], &EntryType::Directory, "snapshots/", 0, "2023-03-26 14:18");
-    assert_entry(&entries[69], &EntryType::Directory, "songs/", 0, "2023-04-06 22:15");
-    assert_entry(&entries[70], &EntryType::Directory, "stable/", 0, "2022-01-18 16:25");
-    assert_entry(&entries[71], &EntryType::Directory, "syspatch/", 0, "2025-03-03 16:19");
-    assert_entry(&entries[72], &EntryType::Directory, "tools/", 0, "2005-01-07 19:40");
-    assert_entry(&entries[73], &EntryType::File, "README", 1_249, "2021-05-25 20:15");
-    assert_entry(&entries[74], &EntryType::File, "ftplist", 4_836, "2025-05-16 14:13");
-    assert_entry(&entries[75], &EntryType::File, "timestamp", 11, "2025-05-16 14:13");
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::Directory, "2.0/", Some(0), "2001-06-04 14:06");
+    assert_entry(&entries[2], &EntryType::Directory, "2.1/", Some(0), "2001-06-04 15:20");
+    assert_entry(&entries[56], &EntryType::Directory, "7.5/", Some(0), "2024-04-05 11:59");
+    assert_entry(&entries[57], &EntryType::Directory, "7.6/", Some(0), "2024-10-08 17:17");
+    assert_entry(&entries[58], &EntryType::Directory, "7.7/", Some(0), "2025-04-27 17:58");
+    assert_entry(&entries[59], &EntryType::Directory, "Changelogs/", Some(0), "2025-05-16 07:33");
+    assert_entry(&entries[60], &EntryType::Directory, "LibreSSL/", Some(0), "2025-04-30 07:35");
+    assert_entry(&entries[61], &EntryType::Directory, "OpenBGPD/", Some(0), "2025-02-06 16:49");
+    assert_entry(&entries[62], &EntryType::Directory, "OpenIKED/", Some(0), "2025-04-10 18:11");
+    assert_entry(&entries[63], &EntryType::Directory, "OpenNTPD/", Some(0), "2020-12-09 14:56");
+    assert_entry(&entries[64], &EntryType::Directory, "OpenSSH/", Some(0), "2025-04-09 07:54");
+    assert_entry(&entries[65], &EntryType::Directory, "doc/", Some(0), "2013-04-28 15:57");
+    assert_entry(&entries[66], &EntryType::Directory, "patches/", Some(0), "2025-05-16 14:07");
+    assert_entry(&entries[67], &EntryType::Directory, "rpki-client/", Some(0), "2025-04-11 22:25");
+    assert_entry(&entries[68], &EntryType::Directory, "snapshots/", Some(0), "2023-03-26 14:18");
+    assert_entry(&entries[69], &EntryType::Directory, "songs/", Some(0), "2023-04-06 22:15");
+    assert_entry(&entries[70], &EntryType::Directory, "stable/", Some(0), "2022-01-18 16:25");
+    assert_entry(&entries[71], &EntryType::Directory, "syspatch/", Some(0), "2025-03-03 16:19");
+    assert_entry(&entries[72], &EntryType::Directory, "tools/", Some(0), "2005-01-07 19:40");
+    assert_entry(&entries[73], &EntryType::File, "README", Some(1_249), "2021-05-25 20:15");
+    assert_entry(&entries[74], &EntryType::File, "ftplist", Some(4_836), "2025-05-16 14:13");
+    assert_entry(&entries[75], &EntryType::File, "timestamp", Some(11), "2025-05-16 14:13");
 }
 
 const SECOND_OLD_BSD_EXAMPLE_INPUT: &str = r##"
@@ -347,8 +347,8 @@ const SECOND_OLD_BSD_EXAMPLE_INPUT: &str = r##"
 fn assert_second_old_bsd_example_entries(entries: &Vec<HttpDirectoryEntry>) {
     assert_eq!(entries.len(), 2);
 
-    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
-    assert_entry(&entries[1], &EntryType::File, "zenicb.el", 26_902, "1996-11-04 07:00");
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::File, "zenicb.el", Some(26_902), "1996-11-04 07:00");
 }
 
 #[allow(dead_code)]
@@ -374,24 +374,24 @@ pub async fn mock_old_bsd_example() -> Result<(), Box<dyn std::error::Error>> {
     let httpdir = httpdir.sort_by_date(true);
     let entries = httpdir.entries();
 
-    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
-    assert_entry(&entries[1], &EntryType::Directory, "2.5/", 0, "2000-07-08 02:57");
-    assert_entry(&entries[2], &EntryType::Directory, "2.0/", 0, "2001-06-04 14:06");
-    assert_entry(&entries[3], &EntryType::Directory, "2.1/", 0, "2001-06-04 15:20");
-    assert_entry(&entries[73], &EntryType::Directory, "patches/", 0, "2025-05-16 14:07");
-    assert_entry(&entries[74], &EntryType::File, "ftplist", 4_836, "2025-05-16 14:13");
-    assert_entry(&entries[75], &EntryType::File, "timestamp", 11, "2025-05-16 14:13");
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::Directory, "2.5/", Some(0), "2000-07-08 02:57");
+    assert_entry(&entries[2], &EntryType::Directory, "2.0/", Some(0), "2001-06-04 14:06");
+    assert_entry(&entries[3], &EntryType::Directory, "2.1/", Some(0), "2001-06-04 15:20");
+    assert_entry(&entries[73], &EntryType::Directory, "patches/", Some(0), "2025-05-16 14:07");
+    assert_entry(&entries[74], &EntryType::File, "ftplist", Some(4_836), "2025-05-16 14:13");
+    assert_entry(&entries[75], &EntryType::File, "timestamp", Some(11), "2025-05-16 14:13");
 
     let httpdir = httpdir.sort_by_date(false);
     let entries = httpdir.entries();
 
-    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
-    assert_entry(&entries[1], &EntryType::File, "ftplist", 4_836, "2025-05-16 14:13");
-    assert_entry(&entries[2], &EntryType::File, "timestamp", 11, "2025-05-16 14:13");
-    assert_entry(&entries[3], &EntryType::Directory, "patches/", 0, "2025-05-16 14:07");
-    assert_entry(&entries[73], &EntryType::Directory, "2.1/", 0, "2001-06-04 15:20");
-    assert_entry(&entries[74], &EntryType::Directory, "2.0/", 0, "2001-06-04 14:06");
-    assert_entry(&entries[75], &EntryType::Directory, "2.5/", 0, "2000-07-08 02:57");
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::File, "ftplist", Some(4_836), "2025-05-16 14:13");
+    assert_entry(&entries[2], &EntryType::File, "timestamp", Some(11), "2025-05-16 14:13");
+    assert_entry(&entries[3], &EntryType::Directory, "patches/", Some(0), "2025-05-16 14:07");
+    assert_entry(&entries[73], &EntryType::Directory, "2.1/", Some(0), "2001-06-04 15:20");
+    assert_entry(&entries[74], &EntryType::Directory, "2.0/", Some(0), "2001-06-04 14:06");
+    assert_entry(&entries[75], &EntryType::Directory, "2.5/", Some(0), "2000-07-08 02:57");
 
     mock.assert();
 

@@ -35,21 +35,21 @@ const DEBIAN_UL_INPUT: &str = r##"
 fn assert_debian_ul_entries(entries: &Vec<HttpDirectoryEntry>) {
     assert_eq!(entries.len(), 15);
 
-    assert_entry(&entries[0], &EntryType::ParentDirectory, "Parent Directory", 0, "0000-00-00 00:00");
-    assert_entry(&entries[1], &EntryType::File, "README", 0, "0000-00-00 00:00");
-    assert_entry(&entries[2], &EntryType::File, "README.CD-manufacture", 0, "0000-00-00 00:00");
-    assert_entry(&entries[3], &EntryType::File, "README.html", 0, "0000-00-00 00:00");
-    assert_entry(&entries[4], &EntryType::File, "README.mirrors.html", 0, "0000-00-00 00:00");
-    assert_entry(&entries[5], &EntryType::File, "README.mirrors.txt", 0, "0000-00-00 00:00");
-    assert_entry(&entries[6], &EntryType::Directory, "dists/", 0, "0000-00-00 00:00");
-    assert_entry(&entries[7], &EntryType::Directory, "doc/", 0, "0000-00-00 00:00");
-    assert_entry(&entries[8], &EntryType::File, "extrafiles", 0, "0000-00-00 00:00");
-    assert_entry(&entries[9], &EntryType::Directory, "indices/", 0, "0000-00-00 00:00");
-    assert_entry(&entries[10], &EntryType::File, "ls-lR.gz", 0, "0000-00-00 00:00");
-    assert_entry(&entries[11], &EntryType::Directory, "pool/", 0, "0000-00-00 00:00");
-    assert_entry(&entries[12], &EntryType::Directory, "project/", 0, "0000-00-00 00:00");
-    assert_entry(&entries[13], &EntryType::Directory, "tools/", 0, "0000-00-00 00:00");
-    assert_entry(&entries[14], &EntryType::Directory, "zzz-dists/", 0, "0000-00-00 00:00");
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "Parent Directory", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::File, "README", None, "0000-00-00 00:00");
+    assert_entry(&entries[2], &EntryType::File, "README.CD-manufacture", None, "0000-00-00 00:00");
+    assert_entry(&entries[3], &EntryType::File, "README.html", None, "0000-00-00 00:00");
+    assert_entry(&entries[4], &EntryType::File, "README.mirrors.html", None, "0000-00-00 00:00");
+    assert_entry(&entries[5], &EntryType::File, "README.mirrors.txt", None, "0000-00-00 00:00");
+    assert_entry(&entries[6], &EntryType::Directory, "dists/", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[7], &EntryType::Directory, "doc/", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[8], &EntryType::File, "extrafiles", None, "0000-00-00 00:00");
+    assert_entry(&entries[9], &EntryType::Directory, "indices/", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[10], &EntryType::File, "ls-lR.gz", None, "0000-00-00 00:00");
+    assert_entry(&entries[11], &EntryType::Directory, "pool/", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[12], &EntryType::Directory, "project/", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[13], &EntryType::Directory, "tools/", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[14], &EntryType::Directory, "zzz-dists/", Some(0), "0000-00-00 00:00");
 }
 
 #[allow(dead_code)]

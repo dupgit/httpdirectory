@@ -43,9 +43,11 @@ impl Stats {
         self
     }
 
-    pub(crate) fn add_file(&mut self, file_date: Option<NaiveDateTime>, file_size: usize) -> &Self {
+    pub(crate) fn add_file(&mut self, file_date: Option<NaiveDateTime>, file_size: Option<usize>) -> &Self {
         self.files += 1;
-        self.total_size += file_size as u64;
+        if let Some(size) = file_size {
+            self.total_size += size as u64;
+        }
         match file_date {
             Some(_) => self.with_date += 1,
             None => self.without_date += 1,

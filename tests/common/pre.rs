@@ -35,28 +35,28 @@ const BSD_EXAMPLE_INPUT: &str = r##"
 fn assert_bsd_example_entries(entries: &Vec<HttpDirectoryEntry>) {
     assert_eq!(entries.len(), 22);
 
-    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
-    assert_entry(&entries[1], &EntryType::Directory, "7.5/", 0, "2024-04-05 11:59");
-    assert_entry(&entries[2], &EntryType::Directory, "7.6/", 0, "2024-10-08 17:17");
-    assert_entry(&entries[3], &EntryType::Directory, "7.7/", 0, "2025-04-27 17:58");
-    assert_entry(&entries[4], &EntryType::Directory, "Changelogs/", 0, "2025-05-12 17:21");
-    assert_entry(&entries[5], &EntryType::Directory, "LibreSSL/", 0, "2025-04-30 06:55");
-    assert_entry(&entries[6], &EntryType::Directory, "OpenBGPD/", 0, "2025-02-06 15:30");
-    assert_entry(&entries[7], &EntryType::Directory, "OpenIKED/", 0, "2025-04-10 17:10");
-    assert_entry(&entries[8], &EntryType::Directory, "OpenNTPD/", 0, "2020-12-09 14:56");
-    assert_entry(&entries[9], &EntryType::Directory, "OpenSSH/", 0, "2025-04-09 07:08");
-    assert_entry(&entries[10], &EntryType::Directory, "doc/", 0, "2013-04-28 15:57");
-    assert_entry(&entries[11], &EntryType::Directory, "patches/", 0, "2025-05-04 21:25");
-    assert_entry(&entries[12], &EntryType::Directory, "rpki-client/", 0, "2025-04-11 22:09");
-    assert_entry(&entries[13], &EntryType::Directory, "signify/", 0, "2025-05-06 15:03");
-    assert_entry(&entries[14], &EntryType::Directory, "snapshots/", 0, "2025-05-13 04:06");
-    assert_entry(&entries[15], &EntryType::Directory, "songs/", 0, "2023-04-06 22:15");
-    assert_entry(&entries[16], &EntryType::Directory, "stable/", 0, "2022-01-18 16:25");
-    assert_entry(&entries[17], &EntryType::Directory, "syspatch/", 0, "2025-03-03 15:17");
-    assert_entry(&entries[18], &EntryType::Directory, "tools/", 0, "2005-01-07 19:40");
-    assert_entry(&entries[19], &EntryType::File, "README", 1329, "2017-10-06 11:51");
-    assert_entry(&entries[20], &EntryType::File, "ftplist", 4836, "2025-05-13 03:57");
-    assert_entry(&entries[21], &EntryType::File, "timestamp", 11, "2025-05-13 04:00");
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "../", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::Directory, "7.5/", Some(0), "2024-04-05 11:59");
+    assert_entry(&entries[2], &EntryType::Directory, "7.6/", Some(0), "2024-10-08 17:17");
+    assert_entry(&entries[3], &EntryType::Directory, "7.7/", Some(0), "2025-04-27 17:58");
+    assert_entry(&entries[4], &EntryType::Directory, "Changelogs/", Some(0), "2025-05-12 17:21");
+    assert_entry(&entries[5], &EntryType::Directory, "LibreSSL/", Some(0), "2025-04-30 06:55");
+    assert_entry(&entries[6], &EntryType::Directory, "OpenBGPD/", Some(0), "2025-02-06 15:30");
+    assert_entry(&entries[7], &EntryType::Directory, "OpenIKED/", Some(0), "2025-04-10 17:10");
+    assert_entry(&entries[8], &EntryType::Directory, "OpenNTPD/", Some(0), "2020-12-09 14:56");
+    assert_entry(&entries[9], &EntryType::Directory, "OpenSSH/", Some(0), "2025-04-09 07:08");
+    assert_entry(&entries[10], &EntryType::Directory, "doc/", Some(0), "2013-04-28 15:57");
+    assert_entry(&entries[11], &EntryType::Directory, "patches/", Some(0), "2025-05-04 21:25");
+    assert_entry(&entries[12], &EntryType::Directory, "rpki-client/", Some(0), "2025-04-11 22:09");
+    assert_entry(&entries[13], &EntryType::Directory, "signify/", Some(0), "2025-05-06 15:03");
+    assert_entry(&entries[14], &EntryType::Directory, "snapshots/", Some(0), "2025-05-13 04:06");
+    assert_entry(&entries[15], &EntryType::Directory, "songs/", Some(0), "2023-04-06 22:15");
+    assert_entry(&entries[16], &EntryType::Directory, "stable/", Some(0), "2022-01-18 16:25");
+    assert_entry(&entries[17], &EntryType::Directory, "syspatch/", Some(0), "2025-03-03 15:17");
+    assert_entry(&entries[18], &EntryType::Directory, "tools/", Some(0), "2005-01-07 19:40");
+    assert_entry(&entries[19], &EntryType::File, "README", Some(1329), "2017-10-06 11:51");
+    assert_entry(&entries[20], &EntryType::File, "ftplist", Some(4836), "2025-05-13 03:57");
+    assert_entry(&entries[21], &EntryType::File, "timestamp", Some(11), "2025-05-13 04:00");
 }
 
 #[allow(dead_code)]
@@ -241,13 +241,13 @@ Launch the noble image:
 fn assert_pre_img_example_entries(entries: &Vec<HttpDirectoryEntry>) {
     assert_eq!(entries.len(), 70);
 
-    assert_entry(&entries[0], &EntryType::ParentDirectory, "/noble/", 0, "0000-00-00 00:00");
-    assert_entry(&entries[1], &EntryType::File, "MD5SUMS", 5_120, "2025-05-01 16:23");
-    assert_entry(&entries[2], &EntryType::File, "MD5SUMS.gpg", 833, "2025-05-01 16:23");
-    assert_entry(&entries[3], &EntryType::File, "SHA256SUMS", 7_168, "2025-05-01 16:23");
-    assert_entry(&entries[4], &EntryType::File, "SHA256SUMS.gpg", 833, "2025-05-01 16:23");
+    assert_entry(&entries[0], &EntryType::ParentDirectory, "/noble/", Some(0), "0000-00-00 00:00");
+    assert_entry(&entries[1], &EntryType::File, "MD5SUMS", Some(5_120), "2025-05-01 16:23");
+    assert_entry(&entries[2], &EntryType::File, "MD5SUMS.gpg", Some(833), "2025-05-01 16:23");
+    assert_entry(&entries[3], &EntryType::File, "SHA256SUMS", Some(7_168), "2025-05-01 16:23");
+    assert_entry(&entries[4], &EntryType::File, "SHA256SUMS.gpg", Some(833), "2025-05-01 16:23");
 
-    assert_entry(&entries[69], &EntryType::Directory, "unpacked/", 0, "2025-05-01 16:23");
+    assert_entry(&entries[69], &EntryType::Directory, "unpacked/", Some(0), "2025-05-01 16:23");
 }
 
 #[allow(dead_code)]
@@ -279,7 +279,13 @@ pub async fn mock_pre_img_example() -> Result<(), Box<dyn std::error::Error>> {
 
     assert_eq!(filtered.len(), 1);
 
-    assert_entry(&entries[0], &EntryType::File, "noble-server-cloudimg-amd64.img", 612_368_384, "2025-04-30 13:11");
+    assert_entry(
+        &entries[0],
+        &EntryType::File,
+        "noble-server-cloudimg-amd64.img",
+        Some(612_368_384),
+        "2025-04-30 13:11",
+    );
 
     mock.assert();
 

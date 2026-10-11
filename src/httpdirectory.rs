@@ -365,26 +365,26 @@ mod tests {
         let httpdir = prepare_httpdir();
 
         if let Some(entry) = httpdir.first() {
-            assert_entry(entry, &EntryType::Directory, "dir1", 0, "2025-01-26 12:54");
+            assert_entry(entry, &EntryType::Directory, "dir1", Some(0), "2025-01-26 12:54");
         } else {
             panic!("This test should return an entry");
         }
 
         if let Some(entry) = httpdir.last() {
-            assert_entry(entry, &EntryType::ParentDirectory, "../", 0, "2025-01-26 12:54");
+            assert_entry(entry, &EntryType::ParentDirectory, "../", Some(0), "2025-01-26 12:54");
         } else {
             panic!("This test should return an entry");
         }
 
         let httpdir = httpdir.files();
         if let Some(entry) = httpdir.first() {
-            assert_entry(entry, &EntryType::File, "file1", 123, "1987-10-09 04:37");
+            assert_entry(entry, &EntryType::File, "file1", Some(123), "1987-10-09 04:37");
         } else {
             panic!("This test should return an entry");
         }
 
         if let Some(entry) = httpdir.last() {
-            assert_entry(entry, &EntryType::File, "debian4", 128_974_848, "2024-12-08 08:22");
+            assert_entry(entry, &EntryType::File, "debian4", Some(128_974_848), "2024-12-08 08:22");
         } else {
             panic!("This test should return an entry");
         }
@@ -397,10 +397,10 @@ mod tests {
         assert_eq!(httpdir.len(), 4);
 
         let entries = httpdir.entries();
-        assert_entry(&entries[0], &EntryType::Directory, "dir1", 0, "2025-01-26 12:54");
-        assert_entry(&entries[1], &EntryType::Directory, "test2", 0, "2025-02-16 13:37");
-        assert_entry(&entries[2], &EntryType::Directory, "debian3", 0, "2025-03-01 07:11");
-        assert_entry(&entries[3], &EntryType::Directory, "entry4", 0, "2025-01-02 12:32");
+        assert_entry(&entries[0], &EntryType::Directory, "dir1", Some(0), "2025-01-26 12:54");
+        assert_entry(&entries[1], &EntryType::Directory, "test2", Some(0), "2025-02-16 13:37");
+        assert_entry(&entries[2], &EntryType::Directory, "debian3", Some(0), "2025-03-01 07:11");
+        assert_entry(&entries[3], &EntryType::Directory, "entry4", Some(0), "2025-01-02 12:32");
 
         let output = format!("{httpdir}");
         assert_eq!(
@@ -420,10 +420,10 @@ DIR          -  2025-01-02 12:32  entry4
         assert_eq!(httpdir.len(), 4);
 
         let entries = httpdir.entries();
-        assert_entry(&entries[0], &EntryType::File, "file1", 123, "1987-10-09 04:37");
-        assert_entry(&entries[1], &EntryType::File, "files2", 2_345, "2023-01-01 00:00");
-        assert_entry(&entries[2], &EntryType::File, "entry3", 68_608, "2025-07-17 23:59");
-        assert_entry(&entries[3], &EntryType::File, "debian4", 128_974_848, "2024-12-08 08:22");
+        assert_entry(&entries[0], &EntryType::File, "file1", Some(123), "1987-10-09 04:37");
+        assert_entry(&entries[1], &EntryType::File, "files2", Some(2_345), "2023-01-01 00:00");
+        assert_entry(&entries[2], &EntryType::File, "entry3", Some(68_608), "2025-07-17 23:59");
+        assert_entry(&entries[3], &EntryType::File, "debian4", Some(128_974_848), "2024-12-08 08:22");
     }
 
     #[test]
@@ -434,8 +434,8 @@ DIR          -  2025-01-02 12:32  entry4
         assert_eq!(httpdir.len(), 2);
 
         let entries = httpdir.entries();
-        assert_entry(&entries[0], &EntryType::Directory, "debian3", 0, "2025-03-01 07:11");
-        assert_entry(&entries[1], &EntryType::File, "debian4", 128_974_848, "2024-12-08 08:22");
+        assert_entry(&entries[0], &EntryType::Directory, "debian3", Some(0), "2025-03-01 07:11");
+        assert_entry(&entries[1], &EntryType::File, "debian4", Some(128_974_848), "2024-12-08 08:22");
     }
 
     #[test]
@@ -457,11 +457,11 @@ DIR          -  2025-01-02 12:32  entry4
         assert_eq!(httpdir.len(), 5);
 
         let entries = httpdir.entries();
-        assert_entry(&entries[0], &EntryType::Directory, "debian3", 0, "2025-03-01 07:11");
-        assert_entry(&entries[1], &EntryType::Directory, "entry4", 0, "2025-01-02 12:32");
-        assert_entry(&entries[2], &EntryType::File, "file1", 123, "1987-10-09 04:37");
-        assert_entry(&entries[3], &EntryType::File, "entry3", 68_608, "2025-07-17 23:59");
-        assert_entry(&entries[4], &EntryType::File, "debian4", 128_974_848, "2024-12-08 08:22");
+        assert_entry(&entries[0], &EntryType::Directory, "debian3", Some(0), "2025-03-01 07:11");
+        assert_entry(&entries[1], &EntryType::Directory, "entry4", Some(0), "2025-01-02 12:32");
+        assert_entry(&entries[2], &EntryType::File, "file1", Some(123), "1987-10-09 04:37");
+        assert_entry(&entries[3], &EntryType::File, "entry3", Some(68_608), "2025-07-17 23:59");
+        assert_entry(&entries[4], &EntryType::File, "debian4", Some(128_974_848), "2024-12-08 08:22");
     }
 
     #[test]
@@ -471,7 +471,7 @@ DIR          -  2025-01-02 12:32  entry4
 
         assert_eq!(httpdir.len(), 1);
 
-        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
+        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", Some(0), "0000-00-00 00:00");
     }
 
     #[test]
@@ -486,15 +486,15 @@ DIR          -  2025-01-02 12:32  entry4
         let httpdir = prepare_httpdir().sort_by_name(true);
 
         let entries = httpdir.entries();
-        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
-        assert_entry(&entries[1], &EntryType::Directory, "debian3", 0, "2025-03-01 07:11");
-        assert_entry(&entries[2], &EntryType::File, "debian4", 128_974_848, "2024-12-08 08:22");
-        assert_entry(&entries[3], &EntryType::Directory, "dir1", 0, "2025-01-26 12:54");
-        assert_entry(&entries[4], &EntryType::File, "entry3", 6_8608, "2025-07-17 23:59");
-        assert_entry(&entries[5], &EntryType::Directory, "entry4", 0, "2025-01-02 12:32");
-        assert_entry(&entries[6], &EntryType::File, "file1", 123, "1987-10-09 04:37");
-        assert_entry(&entries[7], &EntryType::File, "files2", 2_345, "2023-01-01 00:00");
-        assert_entry(&entries[8], &EntryType::Directory, "test2", 0, "2025-02-16 13:37");
+        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", Some(0), "0000-00-00 00:00");
+        assert_entry(&entries[1], &EntryType::Directory, "debian3", Some(0), "2025-03-01 07:11");
+        assert_entry(&entries[2], &EntryType::File, "debian4", Some(128_974_848), "2024-12-08 08:22");
+        assert_entry(&entries[3], &EntryType::Directory, "dir1", Some(0), "2025-01-26 12:54");
+        assert_entry(&entries[4], &EntryType::File, "entry3", Some(6_8608), "2025-07-17 23:59");
+        assert_entry(&entries[5], &EntryType::Directory, "entry4", Some(0), "2025-01-02 12:32");
+        assert_entry(&entries[6], &EntryType::File, "file1", Some(123), "1987-10-09 04:37");
+        assert_entry(&entries[7], &EntryType::File, "files2", Some(2_345), "2023-01-01 00:00");
+        assert_entry(&entries[8], &EntryType::Directory, "test2", Some(0), "2025-02-16 13:37");
 
         let output = format!("{httpdir}");
         assert_eq!(
@@ -513,15 +513,15 @@ DIR          -  2025-02-16 13:37  test2
         );
         let httpdir = httpdir.sort_by_name(false);
         let entries = httpdir.entries();
-        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
-        assert_entry(&entries[1], &EntryType::Directory, "test2", 0, "2025-02-16 13:37");
-        assert_entry(&entries[2], &EntryType::File, "files2", 2_345, "2023-01-01 00:00");
-        assert_entry(&entries[3], &EntryType::File, "file1", 123, "1987-10-09 04:37");
-        assert_entry(&entries[4], &EntryType::Directory, "entry4", 0, "2025-01-02 12:32");
-        assert_entry(&entries[5], &EntryType::File, "entry3", 68_608, "2025-07-17 23:59");
-        assert_entry(&entries[6], &EntryType::Directory, "dir1", 0, "2025-01-26 12:54");
-        assert_entry(&entries[7], &EntryType::File, "debian4", 128_974_848, "2024-12-08 08:22");
-        assert_entry(&entries[8], &EntryType::Directory, "debian3", 0, "2025-03-01 07:11");
+        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", Some(0), "0000-00-00 00:00");
+        assert_entry(&entries[1], &EntryType::Directory, "test2", Some(0), "2025-02-16 13:37");
+        assert_entry(&entries[2], &EntryType::File, "files2", Some(2_345), "2023-01-01 00:00");
+        assert_entry(&entries[3], &EntryType::File, "file1", Some(123), "1987-10-09 04:37");
+        assert_entry(&entries[4], &EntryType::Directory, "entry4", Some(0), "2025-01-02 12:32");
+        assert_entry(&entries[5], &EntryType::File, "entry3", Some(68_608), "2025-07-17 23:59");
+        assert_entry(&entries[6], &EntryType::Directory, "dir1", Some(0), "2025-01-26 12:54");
+        assert_entry(&entries[7], &EntryType::File, "debian4", Some(128_974_848), "2024-12-08 08:22");
+        assert_entry(&entries[8], &EntryType::Directory, "debian3", Some(0), "2025-03-01 07:11");
 
         let output = format!("{httpdir}");
         assert_eq!(
@@ -545,15 +545,15 @@ DIR          -  2025-03-01 07:11  debian3
         let httpdir = prepare_httpdir().sort_by_date(true);
 
         let entries = httpdir.entries();
-        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
-        assert_entry(&entries[1], &EntryType::File, "file1", 123, "1987-10-09 04:37");
-        assert_entry(&entries[2], &EntryType::File, "files2", 2_345, "2023-01-01 00:00");
-        assert_entry(&entries[3], &EntryType::File, "debian4", 128_974_848, "2024-12-08 08:22");
-        assert_entry(&entries[4], &EntryType::Directory, "entry4", 0, "2025-01-02 12:32");
-        assert_entry(&entries[5], &EntryType::Directory, "dir1", 0, "2025-01-26 12:54");
-        assert_entry(&entries[6], &EntryType::Directory, "test2", 0, "2025-02-16 13:37");
-        assert_entry(&entries[7], &EntryType::Directory, "debian3", 0, "2025-03-01 07:11");
-        assert_entry(&entries[8], &EntryType::File, "entry3", 68_608, "2025-07-17 23:59");
+        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", Some(0), "0000-00-00 00:00");
+        assert_entry(&entries[1], &EntryType::File, "file1", Some(123), "1987-10-09 04:37");
+        assert_entry(&entries[2], &EntryType::File, "files2", Some(2_345), "2023-01-01 00:00");
+        assert_entry(&entries[3], &EntryType::File, "debian4", Some(128_974_848), "2024-12-08 08:22");
+        assert_entry(&entries[4], &EntryType::Directory, "entry4", Some(0), "2025-01-02 12:32");
+        assert_entry(&entries[5], &EntryType::Directory, "dir1", Some(0), "2025-01-26 12:54");
+        assert_entry(&entries[6], &EntryType::Directory, "test2", Some(0), "2025-02-16 13:37");
+        assert_entry(&entries[7], &EntryType::Directory, "debian3", Some(0), "2025-03-01 07:11");
+        assert_entry(&entries[8], &EntryType::File, "entry3", Some(68_608), "2025-07-17 23:59");
 
         let output = format!("{httpdir}");
         assert_eq!(
@@ -572,15 +572,15 @@ FILE       67K  2025-07-17 23:59  entry3
         );
         let httpdir = httpdir.sort_by_date(false);
         let entries = httpdir.entries();
-        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
-        assert_entry(&entries[1], &EntryType::File, "entry3", 68_608, "2025-07-17 23:59");
-        assert_entry(&entries[2], &EntryType::Directory, "debian3", 0, "2025-03-01 07:11");
-        assert_entry(&entries[3], &EntryType::Directory, "test2", 0, "2025-02-16 13:37");
-        assert_entry(&entries[4], &EntryType::Directory, "dir1", 0, "2025-01-26 12:54");
-        assert_entry(&entries[5], &EntryType::Directory, "entry4", 0, "2025-01-02 12:32");
-        assert_entry(&entries[6], &EntryType::File, "debian4", 128_974_848, "2024-12-08 08:22");
-        assert_entry(&entries[7], &EntryType::File, "files2", 2_345, "2023-01-01 00:00");
-        assert_entry(&entries[8], &EntryType::File, "file1", 123, "1987-10-09 04:37");
+        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", Some(0), "0000-00-00 00:00");
+        assert_entry(&entries[1], &EntryType::File, "entry3", Some(68_608), "2025-07-17 23:59");
+        assert_entry(&entries[2], &EntryType::Directory, "debian3", Some(0), "2025-03-01 07:11");
+        assert_entry(&entries[3], &EntryType::Directory, "test2", Some(0), "2025-02-16 13:37");
+        assert_entry(&entries[4], &EntryType::Directory, "dir1", Some(0), "2025-01-26 12:54");
+        assert_entry(&entries[5], &EntryType::Directory, "entry4", Some(0), "2025-01-02 12:32");
+        assert_entry(&entries[6], &EntryType::File, "debian4", Some(128_974_848), "2024-12-08 08:22");
+        assert_entry(&entries[7], &EntryType::File, "files2", Some(2_345), "2023-01-01 00:00");
+        assert_entry(&entries[8], &EntryType::File, "file1", Some(123), "1987-10-09 04:37");
 
         let output = format!("{httpdir}");
         assert_eq!(
@@ -604,15 +604,15 @@ FILE       123  1987-10-09 04:37  file1
         let httpdir = prepare_httpdir().sort_by_size(true);
 
         let entries = httpdir.entries();
-        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
-        assert_entry(&entries[1], &EntryType::Directory, "dir1", 0, "2025-01-26 12:54");
-        assert_entry(&entries[2], &EntryType::Directory, "test2", 0, "2025-02-16 13:37");
-        assert_entry(&entries[3], &EntryType::Directory, "debian3", 0, "2025-03-01 07:11");
-        assert_entry(&entries[4], &EntryType::Directory, "entry4", 0, "2025-01-02 12:32");
-        assert_entry(&entries[5], &EntryType::File, "file1", 123, "1987-10-09 04:37");
-        assert_entry(&entries[6], &EntryType::File, "files2", 2_345, "2023-01-01 00:00");
-        assert_entry(&entries[7], &EntryType::File, "entry3", 68_608, "2025-07-17 23:59");
-        assert_entry(&entries[8], &EntryType::File, "debian4", 128_974_848, "2024-12-08 08:22");
+        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", Some(0), "0000-00-00 00:00");
+        assert_entry(&entries[1], &EntryType::Directory, "dir1", Some(0), "2025-01-26 12:54");
+        assert_entry(&entries[2], &EntryType::Directory, "test2", Some(0), "2025-02-16 13:37");
+        assert_entry(&entries[3], &EntryType::Directory, "debian3", Some(0), "2025-03-01 07:11");
+        assert_entry(&entries[4], &EntryType::Directory, "entry4", Some(0), "2025-01-02 12:32");
+        assert_entry(&entries[5], &EntryType::File, "file1", Some(123), "1987-10-09 04:37");
+        assert_entry(&entries[6], &EntryType::File, "files2", Some(2_345), "2023-01-01 00:00");
+        assert_entry(&entries[7], &EntryType::File, "entry3", Some(68_608), "2025-07-17 23:59");
+        assert_entry(&entries[8], &EntryType::File, "debian4", Some(128_974_848), "2024-12-08 08:22");
 
         let output = format!("{httpdir}");
         assert_eq!(
@@ -631,15 +631,15 @@ FILE      123M  2024-12-08 08:22  debian4
         );
         let httpdir = httpdir.sort_by_size(false);
         let entries = httpdir.entries();
-        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", 0, "0000-00-00 00:00");
-        assert_entry(&entries[1], &EntryType::File, "debian4", 128_974_848, "2024-12-08 08:22");
-        assert_entry(&entries[2], &EntryType::File, "entry3", 68_608, "2025-07-17 23:59");
-        assert_entry(&entries[3], &EntryType::File, "files2", 2_345, "2023-01-01 00:00");
-        assert_entry(&entries[4], &EntryType::File, "file1", 123, "1987-10-09 04:37");
-        assert_entry(&entries[5], &EntryType::Directory, "dir1", 0, "2025-01-26 12:54");
-        assert_entry(&entries[6], &EntryType::Directory, "test2", 0, "2025-02-16 13:37");
-        assert_entry(&entries[7], &EntryType::Directory, "debian3", 0, "2025-03-01 07:11");
-        assert_entry(&entries[8], &EntryType::Directory, "entry4", 0, "2025-01-02 12:32");
+        assert_entry(&entries[0], &EntryType::ParentDirectory, "../", Some(0), "0000-00-00 00:00");
+        assert_entry(&entries[1], &EntryType::File, "debian4", Some(128_974_848), "2024-12-08 08:22");
+        assert_entry(&entries[2], &EntryType::File, "entry3", Some(68_608), "2025-07-17 23:59");
+        assert_entry(&entries[3], &EntryType::File, "files2", Some(2_345), "2023-01-01 00:00");
+        assert_entry(&entries[4], &EntryType::File, "file1", Some(123), "1987-10-09 04:37");
+        assert_entry(&entries[5], &EntryType::Directory, "dir1", Some(0), "2025-01-26 12:54");
+        assert_entry(&entries[6], &EntryType::Directory, "test2", Some(0), "2025-02-16 13:37");
+        assert_entry(&entries[7], &EntryType::Directory, "debian3", Some(0), "2025-03-01 07:11");
+        assert_entry(&entries[8], &EntryType::Directory, "entry4", Some(0), "2025-01-02 12:32");
 
         let output = format!("{httpdir}");
         assert_eq!(

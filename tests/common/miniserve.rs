@@ -73,25 +73,25 @@ const SELF_MINISERVE_INPUT: &str = r##"
 fn assert_self_miniserve_entries(entries: &Vec<HttpDirectoryEntry>) {
     assert_eq!(entries.len(), 19);
 
-    assert_entry(&entries[0], &EntryType::Directory, "benches/", 0, "2025-07-07 21:56");
-    assert_entry(&entries[1], &EntryType::File, "Cargo.lock", 72192, "2025-10-21 23:03");
-    assert_entry(&entries[2], &EntryType::File, "Cargo.toml", 886, "2025-10-21 23:03");
-    assert_entry(&entries[3], &EntryType::File, "ChangeLog", 972, "2025-10-21 22:23");
-    assert_entry(&entries[4], &EntryType::File, "cloud_debian.png", 14950, "2025-05-16 22:40");
-    assert_entry(&entries[5], &EntryType::File, "deny.toml", 34, "2025-04-26 00:00");
-    assert_entry(&entries[6], &EntryType::Directory, "examples/", 0, "2025-10-21 22:23");
-    assert_entry(&entries[7], &EntryType::File, "httpdirectory.sbom.spdx.json", 235315, "2025-10-21 23:04");
-    assert_entry(&entries[8], &EntryType::File, "LICENSE-APACHE", 10854, "2025-05-12 23:18");
-    assert_entry(&entries[9], &EntryType::File, "LICENSE-MIT", 1024, "2025-05-12 23:18");
-    assert_entry(&entries[10], &EntryType::File, "mirror.list", 14540, "2025-05-31 23:10");
-    assert_entry(&entries[11], &EntryType::Directory, "mutants.out/", 0, "2025-06-05 20:57");
-    assert_entry(&entries[12], &EntryType::File, "README.md", 3174, "2025-10-22 10:06");
-    assert_entry(&entries[13], &EntryType::File, "release.toml", 198, "2025-04-26 00:16");
-    assert_entry(&entries[14], &EntryType::File, "rustfmt.toml", 45, "2025-06-03 22:35");
-    assert_entry(&entries[15], &EntryType::Directory, "src/", 0, "2025-10-21 22:23");
-    assert_entry(&entries[16], &EntryType::Directory, "target/", 0, "2025-10-22 14:45");
-    assert_entry(&entries[17], &EntryType::File, "tarpaulin-report.html", 790528, "2025-10-22 14:45");
-    assert_entry(&entries[18], &EntryType::Directory, "tests/", 0, "2025-05-31 23:10");
+    assert_entry(&entries[0], &EntryType::Directory, "benches/", Some(0), "2025-07-07 21:56");
+    assert_entry(&entries[1], &EntryType::File, "Cargo.lock", Some(72192), "2025-10-21 23:03");
+    assert_entry(&entries[2], &EntryType::File, "Cargo.toml", Some(886), "2025-10-21 23:03");
+    assert_entry(&entries[3], &EntryType::File, "ChangeLog", Some(972), "2025-10-21 22:23");
+    assert_entry(&entries[4], &EntryType::File, "cloud_debian.png", Some(14950), "2025-05-16 22:40");
+    assert_entry(&entries[5], &EntryType::File, "deny.toml", Some(34), "2025-04-26 00:00");
+    assert_entry(&entries[6], &EntryType::Directory, "examples/", Some(0), "2025-10-21 22:23");
+    assert_entry(&entries[7], &EntryType::File, "httpdirectory.sbom.spdx.json", Some(235315), "2025-10-21 23:04");
+    assert_entry(&entries[8], &EntryType::File, "LICENSE-APACHE", Some(10854), "2025-05-12 23:18");
+    assert_entry(&entries[9], &EntryType::File, "LICENSE-MIT", Some(1024), "2025-05-12 23:18");
+    assert_entry(&entries[10], &EntryType::File, "mirror.list", Some(14540), "2025-05-31 23:10");
+    assert_entry(&entries[11], &EntryType::Directory, "mutants.out/", Some(0), "2025-06-05 20:57");
+    assert_entry(&entries[12], &EntryType::File, "README.md", Some(3174), "2025-10-22 10:06");
+    assert_entry(&entries[13], &EntryType::File, "release.toml", Some(198), "2025-04-26 00:16");
+    assert_entry(&entries[14], &EntryType::File, "rustfmt.toml", Some(45), "2025-06-03 22:35");
+    assert_entry(&entries[15], &EntryType::Directory, "src/", Some(0), "2025-10-21 22:23");
+    assert_entry(&entries[16], &EntryType::Directory, "target/", Some(0), "2025-10-22 14:45");
+    assert_entry(&entries[17], &EntryType::File, "tarpaulin-report.html", Some(790528), "2025-10-22 14:45");
+    assert_entry(&entries[18], &EntryType::Directory, "tests/", Some(0), "2025-05-31 23:10");
 }
 
 #[allow(dead_code)]

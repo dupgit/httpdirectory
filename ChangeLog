@@ -1,3 +1,8 @@
+0.21.0
+ * refactor: Breaking change : size() method on `Entry` struct now
+   returns an Option<usize> instead of a usize. None indicates that
+   the parsing could not get a valid usize number.
+
 0.20.0
  * simplifies get_url() method that now returns a &str instead of an
    Arc<String>

@@ -74,18 +74,18 @@ footer {
 fn assert_stil_demo_entries(entries: &Vec<HttpDirectoryEntry>) {
     assert_eq!(entries.len(), 12);
 
-    assert_entry(&entries[0], &EntryType::File, "CHANGELOG.md", 6041, "2025-11-14 12:50");
-    assert_entry(&entries[1], &EntryType::File, "Cargo.lock", 11468, "2025-11-14 12:50");
-    assert_entry(&entries[2], &EntryType::File, "Cargo.toml", 792, "2025-11-14 12:50");
-    assert_entry(&entries[3], &EntryType::File, "Dockerfile", 539, "2025-11-14 12:50");
-    assert_entry(&entries[4], &EntryType::File, "Justfile", 369, "2025-11-14 12:50");
-    assert_entry(&entries[5], &EntryType::File, "LICENSE", 494, "2025-11-14 12:50");
-    assert_entry(&entries[6], &EntryType::File, "README.md", 2252, "2025-11-14 12:50");
-    assert_entry(&entries[7], &EntryType::File, "build.rs", 304, "2025-11-14 12:50");
-    assert_entry(&entries[8], &EntryType::File, "cliff.toml", 1638, "2025-11-14 12:50");
-    assert_entry(&entries[9], &EntryType::Directory, "media", 0, "2025-11-14 12:50");
-    assert_entry(&entries[10], &EntryType::File, "release.toml", 83, "2025-11-14 12:50");
-    assert_entry(&entries[11], &EntryType::Directory, "src", 0, "2025-11-14 12:50");
+    assert_entry(&entries[0], &EntryType::File, "CHANGELOG.md", Some(6041), "2025-11-14 12:50");
+    assert_entry(&entries[1], &EntryType::File, "Cargo.lock", Some(11468), "2025-11-14 12:50");
+    assert_entry(&entries[2], &EntryType::File, "Cargo.toml", Some(792), "2025-11-14 12:50");
+    assert_entry(&entries[3], &EntryType::File, "Dockerfile", Some(539), "2025-11-14 12:50");
+    assert_entry(&entries[4], &EntryType::File, "Justfile", Some(369), "2025-11-14 12:50");
+    assert_entry(&entries[5], &EntryType::File, "LICENSE", Some(494), "2025-11-14 12:50");
+    assert_entry(&entries[6], &EntryType::File, "README.md", Some(2252), "2025-11-14 12:50");
+    assert_entry(&entries[7], &EntryType::File, "build.rs", Some(304), "2025-11-14 12:50");
+    assert_entry(&entries[8], &EntryType::File, "cliff.toml", Some(1638), "2025-11-14 12:50");
+    assert_entry(&entries[9], &EntryType::Directory, "media", Some(0), "2025-11-14 12:50");
+    assert_entry(&entries[10], &EntryType::File, "release.toml", Some(83), "2025-11-14 12:50");
+    assert_entry(&entries[11], &EntryType::Directory, "src", Some(0), "2025-11-14 12:50");
 }
 
 #[allow(dead_code)]
