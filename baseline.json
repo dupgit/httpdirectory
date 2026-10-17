@@ -5,22 +5,22 @@
     {
       "file": "src/entry.rs",
       "function": "capture_size_and_unit",
-      "line": 97,
+      "line": 98,
       "cyclomatic": 15.0,
       "coverage": 85.71428571428571,
       "crap": 15.65597667638484,
       "uncovered": [
         {
-          "start": 112,
-          "end": 112
+          "start": 113,
+          "end": 113
         },
         {
-          "start": 124,
-          "end": 124
+          "start": 125,
+          "end": 125
         },
         {
-          "start": 139,
-          "end": 143
+          "start": 140,
+          "end": 144
         }
       ]
     },
@@ -153,7 +153,7 @@
     {
       "file": "src/stats.rs",
       "function": "Stats::fmt",
-      "line": 58,
+      "line": 60,
       "cyclomatic": 7.0,
       "coverage": 100.0,
       "crap": 7.0
@@ -169,14 +169,14 @@
     {
       "file": "src/entry.rs",
       "function": "parse_float_to_usize",
-      "line": 152,
+      "line": 153,
       "cyclomatic": 6.0,
       "coverage": 76.92307692307693,
       "crap": 6.442421483841601,
       "uncovered": [
         {
-          "start": 167,
-          "end": 169
+          "start": 168,
+          "end": 170
         }
       ]
     },
@@ -197,14 +197,14 @@
     {
       "file": "src/entry.rs",
       "function": "apparent_size",
-      "line": 192,
+      "line": 193,
       "cyclomatic": 6.0,
       "coverage": 88.23529411764706,
       "crap": 6.058619987787503,
       "uncovered": [
         {
-          "start": 216,
-          "end": 218
+          "start": 217,
+          "end": 219
         }
       ]
     },
@@ -219,7 +219,7 @@
     {
       "file": "src/entry.rs",
       "function": "try_parse_date",
-      "line": 36,
+      "line": 37,
       "cyclomatic": 6.0,
       "coverage": 100.0,
       "crap": 6.0
@@ -343,9 +343,17 @@
       "crap": 4.0
     },
     {
+      "file": "src/stats.rs",
+      "function": "Stats::add_file",
+      "line": 46,
+      "cyclomatic": 4.0,
+      "coverage": 100.0,
+      "crap": 4.0
+    },
+    {
       "file": "src/entry.rs",
       "function": "get_date_from_inputs",
-      "line": 75,
+      "line": 76,
       "cyclomatic": 4.0,
       "coverage": 100.0,
       "crap": 4.0
@@ -367,14 +375,14 @@
     {
       "file": "src/entry.rs",
       "function": "parse_to_usize",
-      "line": 174,
+      "line": 175,
       "cyclomatic": 3.0,
       "coverage": 57.14285714285714,
       "crap": 3.7084548104956268,
       "uncovered": [
         {
-          "start": 177,
-          "end": 179
+          "start": 178,
+          "end": 180
         }
       ]
     },
@@ -415,14 +423,6 @@
       "crap": 3.0
     },
     {
-      "file": "src/stats.rs",
-      "function": "Stats::add_file",
-      "line": 46,
-      "cyclomatic": 3.0,
-      "coverage": 100.0,
-      "crap": 3.0
-    },
-    {
       "file": "src/scrape.rs",
       "function": "is_this_a_real_header",
       "line": 232,
@@ -433,7 +433,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::fmt",
-      "line": 317,
+      "line": 319,
       "cyclomatic": 3.0,
       "coverage": 100.0,
       "crap": 3.0
@@ -565,7 +565,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::new",
-      "line": 224,
+      "line": 225,
       "cyclomatic": 2.0,
       "coverage": 100.0,
       "crap": 2.0
@@ -573,21 +573,21 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::link",
-      "line": 275,
+      "line": 277,
       "cyclomatic": 1.0,
       "coverage": 0.0,
       "crap": 2.0,
       "uncovered": [
         {
-          "start": 275,
-          "end": 277
+          "start": 277,
+          "end": 279
         }
       ]
     },
     {
       "file": "src/entry.rs",
       "function": "Entry::cmp_by_name",
-      "line": 287,
+      "line": 289,
       "cyclomatic": 2.0,
       "coverage": 100.0,
       "crap": 2.0
@@ -595,7 +595,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::cmp_by_date",
-      "line": 297,
+      "line": 299,
       "cyclomatic": 2.0,
       "coverage": 100.0,
       "crap": 2.0
@@ -603,7 +603,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::cmp_by_size",
-      "line": 307,
+      "line": 309,
       "cyclomatic": 2.0,
       "coverage": 100.0,
       "crap": 2.0
@@ -895,7 +895,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::apparent_size",
-      "line": 255,
+      "line": 256,
       "cyclomatic": 1.0,
       "coverage": 100.0,
       "crap": 1.0
@@ -903,7 +903,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::size",
-      "line": 263,
+      "line": 265,
       "cyclomatic": 1.0,
       "coverage": 100.0,
       "crap": 1.0
@@ -911,7 +911,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::name",
-      "line": 269,
+      "line": 271,
       "cyclomatic": 1.0,
       "coverage": 100.0,
       "crap": 1.0
@@ -919,7 +919,7 @@
     {
       "file": "src/entry.rs",
       "function": "Entry::date",
-      "line": 281,
+      "line": 283,
       "cyclomatic": 1.0,
       "coverage": 100.0,
       "crap": 1.0
