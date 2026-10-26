@@ -99,7 +99,7 @@ pub(crate) trait SelectorResultExt<T> {
     fn with_selector(self, selector: &str) -> Result<T>;
 }
 
-impl<T> SelectorResultExt<T> for std::result::Result<T, scraper::error::SelectorErrorKind<'_>> {
+impl<T> SelectorResultExt<T> for std::result::Result<T, scraper::error::SelectorErrorKind> {
     fn with_selector(self, selector: &str) -> Result<T> {
         self.map_err(|_source| HttpDirError::Selector {
             selector: selector.to_string(),
