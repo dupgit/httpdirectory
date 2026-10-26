@@ -1,3 +1,9 @@
+0.21.2
+ * fixed filtering_bench benchmark that was broken due to 0.21 refactoring
+
+0.21.1
+ * versions bumps only
+
 0.21.0
  * refactor: Breaking change : size() method on `Entry` struct now
    returns an Option<usize> instead of a usize. None indicates that
