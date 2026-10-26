@@ -21,7 +21,7 @@ pub struct Entry {
     apparent_size: String,
 
     /// Computed size used for sorting. None if the size couldn't be
-    /// extracted from apparent_size
+    /// extracted from `apparent_size`
     size: Option<usize>,
 }
 
@@ -257,7 +257,7 @@ impl Entry {
         &self.apparent_size
     }
 
-    /// Gets the size of the file as an Option<usize> number. This size
+    /// Gets the size of the file as an `Option<usize>` number. This size
     /// has been guessed and calculated when parsing each line of data
     /// scraping the website. If it has been guessed correctly it will
     /// return Some(number) and None otherwise.
