@@ -1,20 +1,20 @@
 {
   "SPDXID": "SPDXRef-DOCUMENT",
   "creationInfo": {
-    "created": "2026-10-25T18:20:40Z",
+    "created": "2026-10-26T17:21:08Z",
     "creators": [
       "Tool: cargo-sbom-v0.10.0"
     ]
   },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-134e3c0a-081e-43db-9668-df0d7b9b05b5",
+  "documentNamespace": "https://spdx.org/spdxdocs/httpdirectory-30730819-597b-4432-ba1f-403f7af236d7",
   "files": [
     {
       "SPDXID": "SPDXRef-File-httpdirectory",
       "checksums": [
         {
           "algorithm": "SHA1",
-          "checksumValue": "b8636450ceb77b815874ac6196527edfd98d9902"
+          "checksumValue": "39f394b5f28499a009988df558f54bdeb3e3298d"
         }
       ],
       "fileName": "./Cargo.lock",
@@ -454,20 +454,20 @@
       "versionInfo": "0.8.23"
     },
     {
-      "SPDXID": "SPDXRef-Package-cssparser-0.37.0",
+      "SPDXID": "SPDXRef-Package-cssparser-0.38.0",
       "description": "Rust implementation of CSS Syntax Level 3",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/cssparser@0.37.0",
+          "referenceLocator": "pkg:cargo/cssparser@0.38.0",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MPL-2.0",
       "licenseDeclared": "MPL-2.0",
       "name": "cssparser",
-      "versionInfo": "0.37.0"
+      "versionInfo": "0.38.0"
     },
     {
       "SPDXID": "SPDXRef-Package-cssparser-macros-0.7.1",
@@ -959,20 +959,20 @@
       "versionInfo": "0.28.7"
     },
     {
-      "SPDXID": "SPDXRef-Package-html5ever-0.39.0",
+      "SPDXID": "SPDXRef-Package-html5ever-0.40.1",
       "description": "High-performance browser-grade HTML5 parser",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/html5ever@0.39.0",
+          "referenceLocator": "pkg:cargo/html5ever@0.40.1",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "html5ever",
-      "versionInfo": "0.39.0"
+      "versionInfo": "0.40.1"
     },
     {
       "SPDXID": "SPDXRef-Package-http-1.5.0",
@@ -1055,13 +1055,13 @@
       "versionInfo": "1.0.3"
     },
     {
-      "SPDXID": "SPDXRef-Package-httpdirectory-0.21.1",
+      "SPDXID": "SPDXRef-Package-httpdirectory-0.21.2",
       "description": "Library to get a directory webpage (an HTTP index) into a Rust structure",
       "downloadLocation": "NONE",
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "httpdirectory",
-      "versionInfo": "0.21.1"
+      "versionInfo": "0.21.2"
     },
     {
       "SPDXID": "SPDXRef-Package-hyper-1.12.0",
@@ -1540,20 +1540,20 @@
       "versionInfo": "0.1.3"
     },
     {
-      "SPDXID": "SPDXRef-Package-markup5ever-0.39.0",
+      "SPDXID": "SPDXRef-Package-markup5ever-0.40.0",
       "description": "Common code for xml5ever and html5ever",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/markup5ever@0.39.0",
+          "referenceLocator": "pkg:cargo/markup5ever@0.40.0",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "markup5ever",
-      "versionInfo": "0.39.0"
+      "versionInfo": "0.40.0"
     },
     {
       "SPDXID": "SPDXRef-Package-memchr-2.8.3",
@@ -1688,13 +1688,13 @@
       "versionInfo": "1.21.4"
     },
     {
-      "SPDXID": "SPDXRef-Package-openssl-probe-0.2.1",
+      "SPDXID": "SPDXRef-Package-openssl-probe-0.2.2",
       "description": "A library for helping to find system-wide trust anchor (\"root\") certificate\nlocations based on paths typically used by `openssl`.\n",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/openssl-probe@0.2.1",
+          "referenceLocator": "pkg:cargo/openssl-probe@0.2.2",
           "referenceType": "purl"
         }
       ],
@@ -1702,7 +1702,7 @@
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "openssl-probe",
-      "versionInfo": "0.2.1"
+      "versionInfo": "0.2.2"
     },
     {
       "SPDXID": "SPDXRef-Package-parking--lot--core-0.9.12",
@@ -1753,68 +1753,68 @@
       "versionInfo": "2.3.2"
     },
     {
-      "SPDXID": "SPDXRef-Package-phf--generator-0.13.1",
+      "SPDXID": "SPDXRef-Package-phf--generator-0.14.0",
       "description": "PHF generation logic",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/phf_generator@0.13.1",
+          "referenceLocator": "pkg:cargo/phf_generator@0.14.0",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT",
       "licenseDeclared": "MIT",
       "name": "phf_generator",
-      "versionInfo": "0.13.1"
+      "versionInfo": "0.14.0"
     },
     {
-      "SPDXID": "SPDXRef-Package-phf--macros-0.13.1",
+      "SPDXID": "SPDXRef-Package-phf--macros-0.14.0",
       "description": "Macros to generate types in the phf crate",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/phf_macros@0.13.1",
+          "referenceLocator": "pkg:cargo/phf_macros@0.14.0",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT",
       "licenseDeclared": "MIT",
       "name": "phf_macros",
-      "versionInfo": "0.13.1"
+      "versionInfo": "0.14.0"
     },
     {
-      "SPDXID": "SPDXRef-Package-phf--shared-0.13.1",
+      "SPDXID": "SPDXRef-Package-phf--shared-0.14.0",
       "description": "Support code shared by PHF libraries",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/phf_shared@0.13.1",
+          "referenceLocator": "pkg:cargo/phf_shared@0.14.0",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT",
       "licenseDeclared": "MIT",
       "name": "phf_shared",
-      "versionInfo": "0.13.1"
+      "versionInfo": "0.14.0"
     },
     {
-      "SPDXID": "SPDXRef-Package-phf-0.13.1",
+      "SPDXID": "SPDXRef-Package-phf-0.14.0",
       "description": "Runtime support for perfect hash function data structures",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/phf@0.13.1",
+          "referenceLocator": "pkg:cargo/phf@0.14.0",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT",
       "licenseDeclared": "MIT",
       "name": "phf",
-      "versionInfo": "0.13.1"
+      "versionInfo": "0.14.0"
     },
     {
       "SPDXID": "SPDXRef-Package-pin-project-lite-0.2.17",
@@ -2343,20 +2343,20 @@
       "versionInfo": "1.2.0"
     },
     {
-      "SPDXID": "SPDXRef-Package-scraper-0.27.0",
+      "SPDXID": "SPDXRef-Package-scraper-0.29.0",
       "description": "HTML parsing and querying with CSS selectors",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/scraper@0.27.0",
+          "referenceLocator": "pkg:cargo/scraper@0.29.0",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "ISC",
       "licenseDeclared": "ISC",
       "name": "scraper",
-      "versionInfo": "0.27.0"
+      "versionInfo": "0.29.0"
     },
     {
       "SPDXID": "SPDXRef-Package-security-framework-3.7.0",
@@ -2393,20 +2393,20 @@
       "versionInfo": "2.17.0"
     },
     {
-      "SPDXID": "SPDXRef-Package-selectors-0.38.0",
+      "SPDXID": "SPDXRef-Package-selectors-0.41.0",
       "description": "CSS Selectors matching for Rust",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/selectors@0.38.0",
+          "referenceLocator": "pkg:cargo/selectors@0.41.0",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MPL-2.0",
       "licenseDeclared": "MPL-2.0",
       "name": "selectors",
-      "versionInfo": "0.38.0"
+      "versionInfo": "0.41.0"
     },
     {
       "SPDXID": "SPDXRef-Package-serde--core-1.0.229",
@@ -2476,20 +2476,20 @@
       "versionInfo": "1.0.229"
     },
     {
-      "SPDXID": "SPDXRef-Package-servo--arc-0.4.3",
+      "SPDXID": "SPDXRef-Package-servo--arc-0.5.0",
       "description": "A fork of std::sync::Arc with some extra functionality and without weak references",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/servo_arc@0.4.3",
+          "referenceLocator": "pkg:cargo/servo_arc@0.5.0",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "servo_arc",
-      "versionInfo": "0.4.3"
+      "versionInfo": "0.5.0"
     },
     {
       "SPDXID": "SPDXRef-Package-signal-hook-registry-1.4.8",
@@ -2656,20 +2656,20 @@
       "versionInfo": "1.2.1"
     },
     {
-      "SPDXID": "SPDXRef-Package-string--cache-0.9.0",
+      "SPDXID": "SPDXRef-Package-string--cache-0.11.0",
       "description": "A string interning library for Rust, developed as part of the Servo project.",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/string_cache@0.9.0",
+          "referenceLocator": "pkg:cargo/string_cache@0.11.0",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "string_cache",
-      "versionInfo": "0.9.0"
+      "versionInfo": "0.11.0"
     },
     {
       "SPDXID": "SPDXRef-Package-subtle-2.6.1",
@@ -3367,20 +3367,20 @@
       "versionInfo": "0.2.129"
     },
     {
-      "SPDXID": "SPDXRef-Package-web--atoms-0.2.6",
+      "SPDXID": "SPDXRef-Package-web--atoms-0.3.0",
       "description": "Atoms for xml5ever and html5ever",
       "downloadLocation": "registry+https://github.com/rust-lang/crates.io-index",
       "externalRefs": [
         {
           "referenceCategory": "PACKAGE-MANAGER",
-          "referenceLocator": "pkg:cargo/web_atoms@0.2.6",
+          "referenceLocator": "pkg:cargo/web_atoms@0.3.0",
           "referenceType": "purl"
         }
       ],
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "web_atoms",
-      "versionInfo": "0.2.6"
+      "versionInfo": "0.3.0"
     },
     {
       "SPDXID": "SPDXRef-Package-web-sys-0.3.106",
@@ -3937,7 +3937,7 @@
       "spdxElementId": "SPDXRef-DOCUMENT"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.21.1",
+      "relatedSpdxElement": "SPDXRef-Package-httpdirectory-0.21.2",
       "relationshipType": "GENERATED_FROM",
       "spdxElementId": "SPDXRef-File-httpdirectory"
     },
@@ -4079,27 +4079,27 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-cssparser-macros-0.7.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-cssparser-0.37.0"
+      "spdxElementId": "SPDXRef-Package-cssparser-0.38.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-dtoa-short-0.3.5",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-cssparser-0.37.0"
+      "spdxElementId": "SPDXRef-Package-cssparser-0.38.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-itoa-1.0.18",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-cssparser-0.37.0"
+      "spdxElementId": "SPDXRef-Package-cssparser-0.38.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-phf-0.13.1",
+      "relatedSpdxElement": "SPDXRef-Package-phf-0.14.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-cssparser-0.37.0"
+      "spdxElementId": "SPDXRef-Package-cssparser-0.38.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-smallvec-1.16.4",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-cssparser-0.37.0"
+      "spdxElementId": "SPDXRef-Package-cssparser-0.38.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-quote-1.0.47",
@@ -4459,12 +4459,17 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-log-0.4.34",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-html5ever-0.39.0"
+      "spdxElementId": "SPDXRef-Package-html5ever-0.40.1"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-markup5ever-0.39.0",
+      "relatedSpdxElement": "SPDXRef-Package-markup5ever-0.40.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-html5ever-0.39.0"
+      "spdxElementId": "SPDXRef-Package-html5ever-0.40.1"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-memchr-2.8.3",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-html5ever-0.40.1"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-bytes-1.12.1",
@@ -4514,57 +4519,57 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-chrono-0.4.45",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-const--format-0.2.37",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-hotpath-0.28.7",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-regex-1.13.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-reqwest-0.13.5",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.2"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-scraper-0.27.0",
+      "relatedSpdxElement": "SPDXRef-Package-scraper-0.29.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-snafu-0.9.2",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tokio-1.54.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tracing-0.1.44",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-unwrap--unreachable-0.1.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-url-2.5.8",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.1"
+      "spdxElementId": "SPDXRef-Package-httpdirectory-0.21.2"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-atomic-waker-1.1.2",
@@ -5089,17 +5094,17 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-log-0.4.34",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-markup5ever-0.39.0"
+      "spdxElementId": "SPDXRef-Package-markup5ever-0.40.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-tendril-0.5.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-markup5ever-0.39.0"
+      "spdxElementId": "SPDXRef-Package-markup5ever-0.40.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-web--atoms-0.2.6",
+      "relatedSpdxElement": "SPDXRef-Package-web--atoms-0.3.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-markup5ever-0.39.0"
+      "spdxElementId": "SPDXRef-Package-markup5ever-0.40.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-libc-0.2.191",
@@ -5154,57 +5159,57 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-fastrand-2.5.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-phf--generator-0.13.1"
+      "spdxElementId": "SPDXRef-Package-phf--generator-0.14.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-phf--shared-0.13.1",
+      "relatedSpdxElement": "SPDXRef-Package-phf--shared-0.14.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-phf--generator-0.13.1"
+      "spdxElementId": "SPDXRef-Package-phf--generator-0.14.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-phf--generator-0.13.1",
+      "relatedSpdxElement": "SPDXRef-Package-phf--generator-0.14.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-phf--macros-0.13.1"
+      "spdxElementId": "SPDXRef-Package-phf--macros-0.14.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-phf--shared-0.13.1",
+      "relatedSpdxElement": "SPDXRef-Package-phf--shared-0.14.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-phf--macros-0.13.1"
+      "spdxElementId": "SPDXRef-Package-phf--macros-0.14.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-proc-macro2-1.0.107",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-phf--macros-0.13.1"
+      "spdxElementId": "SPDXRef-Package-phf--macros-0.14.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-quote-1.0.47",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-phf--macros-0.13.1"
+      "spdxElementId": "SPDXRef-Package-phf--macros-0.14.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-syn-2.0.119",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-phf--macros-0.13.1"
+      "spdxElementId": "SPDXRef-Package-phf--macros-0.14.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-siphasher-1.0.4",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-phf--shared-0.13.1"
+      "spdxElementId": "SPDXRef-Package-phf--shared-0.14.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-phf--macros-0.13.1",
+      "relatedSpdxElement": "SPDXRef-Package-phf--macros-0.14.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-phf-0.13.1"
+      "spdxElementId": "SPDXRef-Package-phf-0.14.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-phf--shared-0.13.1",
+      "relatedSpdxElement": "SPDXRef-Package-phf--shared-0.14.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-phf-0.13.1"
+      "spdxElementId": "SPDXRef-Package-phf-0.14.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-serde-1.0.229",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-phf-0.13.1"
+      "spdxElementId": "SPDXRef-Package-phf-0.14.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-zerovec-0.11.9",
@@ -5682,7 +5687,7 @@
       "spdxElementId": "SPDXRef-Package-rustls-0.23.46"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-openssl-probe-0.2.1",
+      "relatedSpdxElement": "SPDXRef-Package-openssl-probe-0.2.2",
       "relationshipType": "DEPENDS_ON",
       "spdxElementId": "SPDXRef-Package-rustls-native-certs-0.8.5"
     },
@@ -5802,39 +5807,34 @@
       "spdxElementId": "SPDXRef-Package-schannel-0.1.30"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-cssparser-0.37.0",
+      "relatedSpdxElement": "SPDXRef-Package-cssparser-0.38.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-scraper-0.27.0"
+      "spdxElementId": "SPDXRef-Package-scraper-0.29.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-ego-tree-0.11.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-scraper-0.27.0"
+      "spdxElementId": "SPDXRef-Package-scraper-0.29.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-getopts-0.2.24",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-scraper-0.27.0"
+      "spdxElementId": "SPDXRef-Package-scraper-0.29.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-html5ever-0.39.0",
+      "relatedSpdxElement": "SPDXRef-Package-html5ever-0.40.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-scraper-0.27.0"
+      "spdxElementId": "SPDXRef-Package-scraper-0.29.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-precomputed-hash-0.1.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-scraper-0.27.0"
+      "spdxElementId": "SPDXRef-Package-scraper-0.29.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-selectors-0.38.0",
+      "relatedSpdxElement": "SPDXRef-Package-selectors-0.41.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-scraper-0.27.0"
-    },
-    {
-      "relatedSpdxElement": "SPDXRef-Package-tendril-0.5.1",
-      "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-scraper-0.27.0"
+      "spdxElementId": "SPDXRef-Package-scraper-0.29.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-bitflags-2.13.2",
@@ -5874,52 +5874,47 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-bitflags-2.13.2",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-selectors-0.38.0"
+      "spdxElementId": "SPDXRef-Package-selectors-0.41.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-cssparser-0.37.0",
+      "relatedSpdxElement": "SPDXRef-Package-cssparser-0.38.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-selectors-0.38.0"
+      "spdxElementId": "SPDXRef-Package-selectors-0.41.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-derive--more-2.1.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-selectors-0.38.0"
+      "spdxElementId": "SPDXRef-Package-selectors-0.41.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-log-0.4.34",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-selectors-0.38.0"
+      "spdxElementId": "SPDXRef-Package-selectors-0.41.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-new--debug--unreachable-1.0.6",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-selectors-0.38.0"
-    },
-    {
-      "relatedSpdxElement": "SPDXRef-Package-phf-0.13.1",
-      "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-selectors-0.38.0"
+      "spdxElementId": "SPDXRef-Package-selectors-0.41.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-precomputed-hash-0.1.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-selectors-0.38.0"
+      "spdxElementId": "SPDXRef-Package-selectors-0.41.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-rustc-hash-2.1.3",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-selectors-0.38.0"
+      "spdxElementId": "SPDXRef-Package-selectors-0.41.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-servo--arc-0.4.3",
+      "relatedSpdxElement": "SPDXRef-Package-servo--arc-0.5.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-selectors-0.38.0"
+      "spdxElementId": "SPDXRef-Package-selectors-0.41.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-smallvec-1.16.4",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-selectors-0.38.0"
+      "spdxElementId": "SPDXRef-Package-selectors-0.41.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-serde--derive-1.0.229",
@@ -5979,7 +5974,7 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-stable--deref--trait-1.2.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-servo--arc-0.4.3"
+      "spdxElementId": "SPDXRef-Package-servo--arc-0.5.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-errno-0.3.14",
@@ -6034,22 +6029,22 @@
     {
       "relatedSpdxElement": "SPDXRef-Package-new--debug--unreachable-1.0.6",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-string--cache-0.9.0"
+      "spdxElementId": "SPDXRef-Package-string--cache-0.11.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-parking--lot-0.12.5",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-string--cache-0.9.0"
+      "spdxElementId": "SPDXRef-Package-string--cache-0.11.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-phf--shared-0.13.1",
+      "relatedSpdxElement": "SPDXRef-Package-phf--shared-0.14.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-string--cache-0.9.0"
+      "spdxElementId": "SPDXRef-Package-string--cache-0.11.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-precomputed-hash-0.1.1",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-string--cache-0.9.0"
+      "spdxElementId": "SPDXRef-Package-string--cache-0.11.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-proc-macro2-1.0.107",
@@ -6542,14 +6537,14 @@
       "spdxElementId": "SPDXRef-Package-wasm-bindgen-shared-0.2.129"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-phf-0.13.1",
+      "relatedSpdxElement": "SPDXRef-Package-phf-0.14.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-web--atoms-0.2.6"
+      "spdxElementId": "SPDXRef-Package-web--atoms-0.3.0"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-string--cache-0.9.0",
+      "relatedSpdxElement": "SPDXRef-Package-string--cache-0.11.0",
       "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-web--atoms-0.2.6"
+      "spdxElementId": "SPDXRef-Package-web--atoms-0.3.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-js-sys-0.3.106",
